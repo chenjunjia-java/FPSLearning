@@ -1,0 +1,15 @@
+---
+description: Unity 玩法/系统架构约束（模块化、依赖方向、解耦）
+globs: Assets/**/*.cs
+alwaysApply: false
+---
+
+# Unity 架构约束
+
+- **分层**：Gameplay(规则/状态) 与 Presentation(动画/特效/UI) 分离；状态变更由 Gameplay 发起，Presentation 只订阅/映射。
+- **依赖方向**：低层不依赖高层；运行时代码不依赖 Editor；跨模块依赖必须显式（优先 `asmdef` 管边界）。
+- **模块化**：每个系统有清晰入口（Facade/Service）与公开 API；禁止把逻辑散落在场景对象的脚本里。
+- **数据驱动**：配置/数值/表用 `ScriptableObject`（或项目既定数据层）；不要把配置写死在 MonoBehaviour 里。
+- **通信方式**：优先显式依赖（构造/初始化注入）与接口；事件总线仅用于低频跨模块广播，避免成为“全局耦合点”。
+- **单例克制**：避免随处 `Singleton.Instance`；如必须使用，限定作用域（模块内）并提供可替换接口以便测试。
+- **可测试性**：纯逻辑尽量脱离 `MonoBehaviour`（POCO/服务类）；`MonoBehaviour` 负责桥接 Unity 生命周期与输入/表现。

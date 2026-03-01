@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3421cdff3ac7e47b8e85e0b08ecd5c, type: 3}
+  m_Name: RoguelikeAffixDefinition_MoveSpeed_Mul
+  m_EditorClassIdentifier: 
+  m_Id: move_speed_mul
+  m_DisplayName: Move Speed
+  m_DescriptionTemplate: Move speed x{value}
+  m_IconUiPrefab: {fileID: 0}
+  m_Rarity: 1
+  m_Target: 0
+  m_StatId: 4
+  m_ModifierKind: 1
+  m_ValueRange:
+    Min: 1.05
+    Max: 1.2
+  m_ValueDisplayMode: 2
+  m_AllowedShootTypes: -1
+  m_AllowDuplicateInRun: 1

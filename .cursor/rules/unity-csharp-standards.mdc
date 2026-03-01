@@ -1,0 +1,17 @@
+---
+description: Unity C# 脚本代码规范（命名、序列化、热路径性能）
+globs: Assets/**/*.cs
+alwaysApply: false
+---
+
+# Unity C# 代码规范
+
+- **命名/结构**：文件名=类型名；一个文件一个主要类型；命名空间与目录一致（至少到模块级）。
+- **字段可见性**：默认 `private`；Inspector 暴露用 `[SerializeField] private`，禁止 `public` 可变字段直出。
+- **序列化安全**：不要在运行时改动配置型 `ScriptableObject` 资源本体；需要可变数据用运行时实例/拷贝。
+- **组件缓存**：`Awake/OnEnable` 缓存 `Transform`/组件引用；禁止在热路径反复 `GetComponent`（用 `TryGetComponent`）。
+- **热路径禁忌**：避免 LINQ、`foreach`(遍历非数组/列表时)、装箱、`string` 拼接、`new` 分配、`ToString()` 频繁调用、隐式捕获 lambda。
+- **Update 设计**：能事件驱动就别轮询；必须轮询则做节流/分帧（tick）；保持方法短小且无分配。
+- **生命周期对称**：订阅/反订阅、注册/注销、启动/停止协程必须成对出现在对称回调中。
+- **日志**：运行时热路径禁用频繁 `Debug.Log`；需要可控日志用开关与级别（或条件编译）。
+- **异常**：不要用异常做流程控制；对外边界（IO/加载/网络）才捕获并补充上下文后再抛或降级。

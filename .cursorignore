@@ -1,0 +1,54 @@
+﻿# Cursor ignore for Unity projects
+# Goal: exclude generated/cache/build outputs to keep context lean.
+
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Ll]ogs/
+[Mm]emory[Cc]aptures/
+
+# Build outputs (keep source under Assets/ and ProjectSettings/)
+[Bb]uild/
+[Bb]uilds/
+Artifacts/
+Dist/
+Release/
+
+# IDE / editor caches
+.vs/
+.idea/
+.vscode/
+
+# Unity/Visual Studio generated files
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# OS / tooling noise
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Crash / profiling dumps (usually huge)
+*.log
+*.dmp
+*.pdb
+*.mdb
+
+# Distributables / packages (usually binary + large)
+*.unitypackage
+*.apk
+*.aab
+*.ipa
+*.xcodeproj
+
+# Addressables build output (generated)
+Assets/AddressableAssetsData/*/BuildScriptLogs/
+Assets/AddressableAssetsData/*/BuildTargetData/
+Assets/AddressableAssetsData/*/Builds/

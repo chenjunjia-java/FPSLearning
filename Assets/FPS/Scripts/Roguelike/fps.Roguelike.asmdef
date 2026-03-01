@@ -1,0 +1,20 @@
+{
+    "name": "fps.Roguelike",
+    "references": [
+        "GUID:9c5543eabb73a6249ac07b2c065ee8b4",
+        "GUID:e9dc24b3d0971d64a9e95b6986d97af5",
+        "GUID:27b7e9efd224f064990a97ed99e4456f",
+        "GUID:d6d92838a3d402f428f84ca33dd36fe4",
+        "Unity.AI.Navigation",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

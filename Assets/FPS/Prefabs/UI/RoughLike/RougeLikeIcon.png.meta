@@ -1,0 +1,4395 @@
+fileFormatVersion: 2
+guid: 86721ebd97bc5c34d89dd610bd3a9880
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: RougeLikeIcon_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1261
+        width: 45
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a9c8d55fe1631848a87bfdac752877a
+      internalID: -9213027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_1
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 1258
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f642f026d6fe5694eb4a6a2276e09cd5
+      internalID: 2066689231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_2
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 1258
+        width: 43
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7fff19f18bfec54b8463e685b565e97
+      internalID: -895430951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_3
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 1258
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77a9e7165020fd64f8d10b7e463e6a8b
+      internalID: -749453183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_4
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 1258
+        width: 40
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 573e19b218ef3234c92e24620e2d568c
+      internalID: 1036883036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_5
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 1258
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2f5184c2b4633f4c89e1e2996ec3600
+      internalID: 923434011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_6
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 1258
+        width: 45
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4680d50aacea7b34fbb67db3c0734628
+      internalID: -1369967831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_7
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 1258
+        width: 37
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e85406f67c23e8843a9a3618fe8eab9c
+      internalID: 956973929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_8
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 1258
+        width: 45
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 713fa651129dfb049997941a0bd81b06
+      internalID: 13142511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_9
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 1258
+        width: 44
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 724c038980eafdc48aa77c69272beb7f
+      internalID: 1739577089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_10
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 1194
+        width: 36
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 227a86478622ad440b82a32f4deef374
+      internalID: -1716823930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_11
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 1194
+        width: 39
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b1a9082a94ae164c8d98c1db7b87995
+      internalID: -1983489638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_12
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 1194
+        width: 36
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eac51afbd06e9c64b9c329be949b6341
+      internalID: -1330683523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_13
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 1194
+        width: 40
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ec706c1dc7a7d749b2656ad2362fff9
+      internalID: -708396808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_14
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 1197
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6240960801372f4a80b629e3fbc56f8
+      internalID: -1260381806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_15
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 1201
+        width: 41
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 194bd2e1e8e433f468278e84ab04a5c6
+      internalID: -1318978745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_16
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 1195
+        width: 43
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b9c725c0691a404d83b8dd39e5e081a
+      internalID: -353745498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_17
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 1196
+        width: 47
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed680fdda79b45f4da31fdd7a27a61e4
+      internalID: 210741127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_18
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 1194
+        width: 45
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5013454e295013041bce525051403208
+      internalID: -2122452389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_19
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 1195
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 368cd3172e454154faa614ac88061634
+      internalID: -273756098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_20
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 1131
+        width: 37
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 899be1e5e21ae8948a805be38734caf2
+      internalID: 126115782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_21
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 1130
+        width: 45
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4993f4dd519b9a84cb62027a61efc46e
+      internalID: 40865147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_22
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 1130
+        width: 36
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9717f87a1c203f4dbe41345e16e8752
+      internalID: -582773895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_23
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 1131
+        width: 43
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bce221675fc3e042aa576079ba0f8d7
+      internalID: 1883537465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_24
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 1151
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d84609b1da65bb439ffff2c9985ec32
+      internalID: 1548902516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_25
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 1155
+        width: 38
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c3fb5460c9d95a4e92e592ca8196345
+      internalID: -1613291124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_26
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 1130
+        width: 42
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69f68e81219c6d5439250c9ee492dabd
+      internalID: -2035489907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_27
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 1130
+        width: 43
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2de4e240f84d0bb4c92d08bd62fecbb7
+      internalID: -2055351937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_28
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 1147
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73230ec52a1b4f74d8d6f3ab23ab26d9
+      internalID: 331612874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_29
+      rect:
+        serializedVersion: 2
+        x: 481
+        y: 1130
+        width: 31
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cba071ae688f8c249b76f588ade0ed6f
+      internalID: -394317659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_30
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 1134
+        width: 45
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1828e1a14ebe7d42b944e133f773fa3
+      internalID: -23878697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_31
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 1135
+        width: 41
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dc5dedd03cf46244bb2df7cc9e9102c
+      internalID: -1690402723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_32
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 1130
+        width: 39
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e1e2349981898c42973e0760724da0e
+      internalID: 1302260261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_33
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 1146
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b2aee71f6a6b8e488652c5a092879bd
+      internalID: -26437877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_34
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 1141
+        width: 10
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544fdc6cd1a97ca47a57e8c6d11251f9
+      internalID: -1529901358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_35
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 1141
+        width: 9
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65f272db58f13c54396090bffdc3a2f0
+      internalID: -1679673789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_36
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1066
+        width: 45
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ae0c36c4f3dd1b49a8c32ed1c62fc92
+      internalID: -1010973149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_37
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 1066
+        width: 44
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6570dab52ff998a40acd7812a931afb1
+      internalID: -634795018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_38
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 1066
+        width: 44
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99b2e8d1ddc37604a8c92de495c7a5c6
+      internalID: -1352071981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_39
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 1067
+        width: 39
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39b5c6bd1b0d0df48b8a567bf29ec0ce
+      internalID: 397611153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_40
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 1066
+        width: 44
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd01c3df589ab774589afdd1d74aa53d
+      internalID: 688312342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_41
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 1066
+        width: 44
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9dd67e4f8c7ca644b29dd89a966ee9f
+      internalID: -812149453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_42
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 1066
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41cc0cc77d23ba44bb213d8e57458db9
+      internalID: -1707525271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_43
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 1067
+        width: 44
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a85145cb608ea94292f5b83f975a215
+      internalID: -225194245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_44
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 1084
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6711444a27bfd984e8a3954399366fd3
+      internalID: 972432115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_45
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 1066
+        width: 38
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e32386eeab115940a1f378e3a724113
+      internalID: -829769710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_46
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 1088
+        width: 26
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a0279104c0806a47b6718938d90c694
+      internalID: -1628122977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_47
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 1066
+        width: 40
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5a2cfb44638236468bc0caba2323e44
+      internalID: 544503375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_48
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 1002
+        width: 40
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9df8adf018249d242aeda1e3d1177d7e
+      internalID: -981290877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_49
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 1001
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52b1d195a64a14744842ed8512870759
+      internalID: -856243026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_50
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 1002
+        width: 41
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b838266f60a4a724caf1963719ed0659
+      internalID: 684610836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_51
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 1004
+        width: 46
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94f9ac5406bba6448b5bbf583c36ffad
+      internalID: 774253078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_52
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 1001
+        width: 42
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23657e4b0b45fc344ba2982ee2bdb816
+      internalID: 856408480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_53
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 1003
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a15484f077778f4ab47a0447fff9ada
+      internalID: 1371517008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_54
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 1002
+        width: 43
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15c397af4176a9b4ea6434fb9bbb5958
+      internalID: -402934746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_55
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 1003
+        width: 46
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1daa3fef80904440acbe0dcf1090294
+      internalID: -2103373607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_56
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 1003
+        width: 47
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36911804724f6ac428ec95bab295e3e3
+      internalID: 822896145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_57
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 1002
+        width: 43
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 833d770f5c3501f439957c1caeeb6040
+      internalID: -1322062456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_58
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 938
+        width: 43
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9e23de7fc7fac04da6495815e1c909c
+      internalID: -1603796319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_59
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 963
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c9d9151214f2004e90db901bde9dc02
+      internalID: 1977070975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_60
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 938
+        width: 39
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6b36d6468c9fea4e8927ce3513611b8
+      internalID: 1678056572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_61
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 941
+        width: 41
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e51da84db40a9a441a7c4a973f223319
+      internalID: -1471359589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_62
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 938
+        width: 38
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8bc7576c964cc142af89a041a0c8dc9
+      internalID: 263705505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_63
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 939
+        width: 38
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7660af709abb7344990fd89a8f17876a
+      internalID: 2036946607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_64
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 878
+        width: 37
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 778e8d6833e93514fb32951c07ab231e
+      internalID: 1458068555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_65
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 875
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf7aa469087589c4e9c4131f5b368875
+      internalID: -2076984068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_66
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 893
+        width: 31
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9c2fc4393587ac44acd85ffa40c14eb
+      internalID: -1087882936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_67
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 878
+        width: 39
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91c3ab05a90fe5c40b1b74c0718188ae
+      internalID: -667446256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_68
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 877
+        width: 39
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eb91650e27fe1d46ab48a40bbfcf759
+      internalID: 86452095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_69
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 878
+        width: 42
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2ee2a3081944194ba858fba3b6e777e
+      internalID: 537383507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_70
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 875
+        width: 39
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f35dc5adf7505ec488bdb3f9ae026133
+      internalID: -609266642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_71
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 876
+        width: 42
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54be308a21b2029408b1b7767a73fc97
+      internalID: -436667476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_72
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 875
+        width: 44
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae201a10201a43e49a76966f88692352
+      internalID: 940326973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_73
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 877
+        width: 42
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bf34a7e11f99e743a69a7469983b00d
+      internalID: -1559743531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_74
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 889
+        width: 45
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69b1bcaea41ef5347af9f441cf2524eb
+      internalID: 442891387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_75
+      rect:
+        serializedVersion: 2
+        x: 615
+        y: 878
+        width: 21
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5b1e5090cbaaee4c95ba43326c7496c
+      internalID: -1385105017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_76
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 813
+        width: 38
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e58caf4ea3887474c8c23bb76ea93040
+      internalID: -826975066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_77
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 810
+        width: 45
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b24cf35522801f43a54ce035c2c7fa5
+      internalID: -302006412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_78
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 813
+        width: 46
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a75ba1ee09b05924ca20c5e270cd85ac
+      internalID: 160445081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_79
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 814
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c404e408a099964c8a7a2732d13ef08
+      internalID: -826184154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_80
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 811
+        width: 44
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55663650b2efd05488ee2a79af5cb7ac
+      internalID: 959308808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_81
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 836
+        width: 23
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59c15ff8f2513a478729235536b72b6
+      internalID: -2097450926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_82
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 810
+        width: 44
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29909b16cc42fa14386cfdca768dbac8
+      internalID: 1699360238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_83
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 809
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dadab1af45bed0a4f93a1cbc3e82ae57
+      internalID: -457968691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_84
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 813
+        width: 43
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51659d82172983d4aa4cf82e1948601e
+      internalID: 1189459155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_85
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 812
+        width: 40
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 447ce4d0e5093c049bb6bd191229d60c
+      internalID: 1583436926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_86
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 809
+        width: 43
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 208e354d635b3d4469d8a5a9c702a9c7
+      internalID: 723624670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_87
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 810
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26f99dd2da696be4b84ea69f0ff1351e
+      internalID: -1907815152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_88
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 745
+        width: 46
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72175f1de59ba384d8d8527c72564963
+      internalID: 292500699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_89
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 748
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13b99b7f7e828814c9508836f19d4d16
+      internalID: -1075641495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_90
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 745
+        width: 43
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a87ed6ca7be1a14c97a24064a36cbe0
+      internalID: -1122141801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_91
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 745
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bf107b4e27bda841aeb542757a5db62
+      internalID: -1777797631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_92
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 749
+        width: 42
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35e1a74cc0200aa4eb102b62d0f4840d
+      internalID: -1854347328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_93
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 745
+        width: 42
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9d87e2886b757842b9bc5ff86e155de
+      internalID: 1611470630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_94
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 745
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 959fc3b84d821a6408a45ddf20cb4ad1
+      internalID: -896534405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_95
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 745
+        width: 43
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b11bf2e907d07a740855fbfe1dea7e73
+      internalID: -2066619946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_96
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 749
+        width: 45
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ec8a9d89a3bc034691bd839be57f1cb
+      internalID: -408115567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_97
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 745
+        width: 44
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 996cd48573733094aa91d631ee620db6
+      internalID: 1139409678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_98
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 683
+        width: 44
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f335e4e477be2a94e89dff5769579ab8
+      internalID: -1504189020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_99
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 682
+        width: 46
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e51a73c34ebafb043a9531e7e8e549d2
+      internalID: 1002032203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_100
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 682
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12bd8f79c0523d94f85a8a1e713f4486
+      internalID: 740337965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_101
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 681
+        width: 46
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10130b01965b23a4abf0601ef0504e77
+      internalID: -1556054183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_102
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 684
+        width: 44
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 462f18b205c3487438f48be5ee2ccd51
+      internalID: 1595928293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_103
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 683
+        width: 45
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 333101eac6951794b9ea1ba0d95ba9a3
+      internalID: -2127618231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_104
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 685
+        width: 39
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4b29f2ece6b14b4ba42f99641485fa9
+      internalID: -820813235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_105
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 685
+        width: 41
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a34fc27d981c4eb4cbb93f585a79a0ba
+      internalID: 236090882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_106
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 681
+        width: 44
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71197a20f7e6276438a7ed1a367d49a6
+      internalID: -624618120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_107
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 682
+        width: 42
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf172acaacdf92c478e5cb1e566d9e55
+      internalID: -1903779120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_108
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 617
+        width: 42
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb6206176747de24ca539bdafc475d24
+      internalID: 531392646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_109
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 619
+        width: 42
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc30aa31294634f4eb165a52b175c87b
+      internalID: -560970340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_110
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 615
+        width: 39
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 513241ec7ffb2b044b7a93f538580b5c
+      internalID: -1917686191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_111
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 609
+        width: 42
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdae3315553db7c43ba396f3f558fd75
+      internalID: 608014214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_112
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 611
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ee2ff28f93aec84a9302b6833d9c92d
+      internalID: -1000636097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_113
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 609
+        width: 43
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8501df1d7dd1af46886d8fb43c2d7ad
+      internalID: -1586567355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_114
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 609
+        width: 41
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b14cbf3d240af744aaf4292582a4b58a
+      internalID: -1088003041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_115
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 610
+        width: 37
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6da91491e53363f47815082a8924cea5
+      internalID: -1014091453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_116
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 610
+        width: 40
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab096f3ded963b846b22d26b337df408
+      internalID: -626569295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_117
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 610
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 256ec5a5ee7956444bb7c7d2e724ed17
+      internalID: 1126774590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_118
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 531
+        width: 41
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fabeeb0b34c0a1d479d8d0830c3ea5b4
+      internalID: 191213707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_119
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 532
+        width: 35
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 353868c52d6438043ad22225ab2b9749
+      internalID: 48162208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_120
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 528
+        width: 36
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98abc136fd2c50a4fa584689c13788e9
+      internalID: -1158330059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_121
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 530
+        width: 43
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bd4cf7c8a4188c42adee88296bdb111
+      internalID: 1185723912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_122
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 530
+        width: 43
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c46c3e22505eeca46a6969407d93b84a
+      internalID: -252459120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_123
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 531
+        width: 37
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27b359051e33c2643bfceedade0be3a2
+      internalID: -729143167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_124
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 531
+        width: 37
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23483cf44f722dc4d8eb21de9ff3e838
+      internalID: 64589974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_125
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 529
+        width: 40
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb5e04cc5f4e8ea4999362203faec405
+      internalID: -293976155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_126
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 533
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 919a78b975fec7d4795cee073999bc69
+      internalID: 463247050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_127
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 530
+        width: 37
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb1bef3728abab44ab61cddda62bd8c9
+      internalID: 1466695158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_128
+      rect:
+        serializedVersion: 2
+        x: 623
+        y: 553
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 580f274cb5345f1458d5c8277f6d6c0e
+      internalID: 243429276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_129
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 456
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fd6036886ab7554d86857295d088c08
+      internalID: 705785943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_130
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 453
+        width: 40
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cff08c5b16df96840bb8b663f7f5df00
+      internalID: 1610309210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_131
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 454
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea5288c5b84b4184c9077c27b2b2c13b
+      internalID: 1269662410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_132
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 453
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5de52f2e8d0433f4dac9f01a6aa7e249
+      internalID: -1508238242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_133
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 453
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a48d3079e31ccc4a8c0fe46fb2a1a46
+      internalID: -1730595535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_134
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 456
+        width: 39
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51a942806b978c34cad007cb378b682c
+      internalID: -1387273448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_135
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 454
+        width: 41
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa15fba7a88b19846a362389b7d28788
+      internalID: 370738092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_136
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 456
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec54890e110fff94fbec83c03971732c
+      internalID: 1518060711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_137
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 453
+        width: 45
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6ddb626bb27b7d498d297a148c79930
+      internalID: 1921988217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_138
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 455
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb561d8da7fef7046bbac42b2753c6d9
+      internalID: 1089886624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_139
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 378
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72a5eef3987b67e459fa6d5e34ff98bc
+      internalID: -1871376496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_140
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 377
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1e18378931d8fc498a26c3f284fd16b
+      internalID: 640553901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_141
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 376
+        width: 39
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb5b4c0318de5d64a8dee000848c67c3
+      internalID: 1290362824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_142
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 378
+        width: 37
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dc123c8986f1cb4d878810d34ac05cc
+      internalID: 1866573933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_143
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 377
+        width: 38
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be589ba8abfc4884bac2e6d64cbd494d
+      internalID: -574025610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_144
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 378
+        width: 43
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36263d84f8bb1fc4893f8eb84726bbdc
+      internalID: 1530449220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_145
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 377
+        width: 42
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5601a4a053a5ef44f81d0b0b010c77c0
+      internalID: 1090919199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_146
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 382
+        width: 40
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94c4b4d448491fa4f80b38bb4b3ae093
+      internalID: 1798656510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_147
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 379
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 521f329eaa0429d4cad664f92dde6a77
+      internalID: -1597323435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_148
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 378
+        width: 39
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9e68223c77bd1a4f9e3e7fab6274345
+      internalID: 932491614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_149
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 303
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55f8f8c9966d6e540a08d675a4da2b0a
+      internalID: -1195531054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_150
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 301
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a08838ac0d7a96746b34b355749f3905
+      internalID: -1260669781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_151
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 299
+        width: 40
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0430a9eb22a4fd41ba2c26f8557a17e
+      internalID: -1779393686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_152
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 303
+        width: 42
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0df5e0ac80e4bc4e970750d9c000b6a
+      internalID: -1377988683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_153
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 300
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc11bd96179987d4895cd7fce6918dd2
+      internalID: 736717892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_154
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 302
+        width: 44
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a7f9772838f1e2489988357869a8b71
+      internalID: -1819989944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_155
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 302
+        width: 42
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bb4d10f83d16f74094512b6bb724db8
+      internalID: -570818708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_156
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 303
+        width: 34
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88e7e4c07f6cf384f8e6e74a76ce6efb
+      internalID: 1787487627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_157
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 301
+        width: 43
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d7b6ccbb5cc7d24394a2bbc209fc980
+      internalID: 915168929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_158
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 302
+        width: 45
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3b812108024dd540bf3be6e3df6c079
+      internalID: 1393146983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_159
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 227
+        width: 40
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b13d5ad8335331549bd28fd76e49adc7
+      internalID: 1546876647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_160
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 229
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91d69b9a09081f04a9fefe20f0be1050
+      internalID: -225017280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_161
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 232
+        width: 40
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07313841c19482941b35e85a83c6969d
+      internalID: -778749935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_162
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 225
+        width: 37
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97aad68bc37a74048af0224c86d58b49
+      internalID: 1780015841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_163
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 227
+        width: 41
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 391a66c0cb6794d42afed50de6b2bfe4
+      internalID: -1359383577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_164
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 224
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58a79fdd501cc8f4ca5edb914599b291
+      internalID: 2020777132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_165
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 227
+        width: 39
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d145eda486b3eba429a36314aefffbdb
+      internalID: -2070023063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_166
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 225
+        width: 42
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47b30384d0fdbc04d96f18b5653efb0f
+      internalID: 1391888766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_167
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 226
+        width: 41
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7260ffabbc606e549a02c024de83ac09
+      internalID: 704192232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_168
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 227
+        width: 42
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc34579b8826b294f90c41a5af167f2d
+      internalID: -1285373979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_169
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 149
+        width: 39
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84d7b744f457a8f4b9cf43b94e262c49
+      internalID: 223739332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_170
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 153
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5b84ecc1367900499a11c8330508fee
+      internalID: 1052243555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_171
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 151
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e43ebb6a9095728458ffe118f79497bf
+      internalID: -487980543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_172
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 149
+        width: 40
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77ef8466815f3ac4bae76c3a97dc4c5e
+      internalID: -1899460651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_173
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 149
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2839d87db19b854c8d8ecb340520f4a
+      internalID: -1630815034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_174
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 150
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8bd1a6086433a0469afc5253673db6e
+      internalID: 1364089478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_175
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 148
+        width: 43
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83d71367674aa2044bc5065ad0ef5d56
+      internalID: 1414179319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_176
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 150
+        width: 40
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c479baecf5cb5f4eb852d50010cf3e0
+      internalID: 916808738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_177
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 150
+        width: 38
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08fbfd3b1ececdd4e9722e4ed57b5174
+      internalID: -1200435318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_178
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 151
+        width: 39
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b991afeef2d84243bf4bcafb74d7e06
+      internalID: 686768342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_179
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 77
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 621e769e687a8bd46afa6a8af39826b7
+      internalID: -1010291159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_180
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 75
+        width: 43
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35497bcd5373938419375126278b8a1d
+      internalID: 1664528509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_181
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 76
+        width: 41
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baee4cab3d3b3cc4795cdf16c7a550bd
+      internalID: 681882211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_182
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 79
+        width: 40
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d49f17a39b48c154abb273969e537ef6
+      internalID: 2003364811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_183
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 78
+        width: 35
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8342f417ccb0114b98c68bde9a2a61d
+      internalID: -1585657859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_184
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 76
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31e9cf6d830e3d1449200df0a3ab7da8
+      internalID: -1755344751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_185
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 78
+        width: 43
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbbb8c87ea9261047aba8ba8bc8442f6
+      internalID: 311802930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_186
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 76
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5eb44715690cc804c979da03b942c374
+      internalID: -1893174160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_187
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 78
+        width: 41
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42f2d5eda14c8d14d8e3a9e30f28ca36
+      internalID: 1187776207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_188
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 75
+        width: 41
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b1c68c44002f064f84c140004ae0e03
+      internalID: -1063952477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_189
+      rect:
+        serializedVersion: 2
+        x: 615
+        y: 12
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06e7b90869e8c744fb925740168621af
+      internalID: 1229624236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_190
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 12
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32d7ae6be1d5c1f41912872fd6030a3d
+      internalID: -1494563095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_191
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 12
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c2a75e2fed9377488891a73e196a435
+      internalID: 1776122619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_192
+      rect:
+        serializedVersion: 2
+        x: 644
+        y: 12
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4036ddb9303b0f84e9c8ded406ac186e
+      internalID: -1869963471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RougeLikeIcon_193
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 12
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcad4ff5814c1c34cb894f45755a75ce
+      internalID: 1023365328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      RougeLikeIcon_0: -9213027
+      RougeLikeIcon_1: 2066689231
+      RougeLikeIcon_10: -1716823930
+      RougeLikeIcon_100: 740337965
+      RougeLikeIcon_101: -1556054183
+      RougeLikeIcon_102: 1595928293
+      RougeLikeIcon_103: -2127618231
+      RougeLikeIcon_104: -820813235
+      RougeLikeIcon_105: 236090882
+      RougeLikeIcon_106: -624618120
+      RougeLikeIcon_107: -1903779120
+      RougeLikeIcon_108: 531392646
+      RougeLikeIcon_109: -560970340
+      RougeLikeIcon_11: -1983489638
+      RougeLikeIcon_110: -1917686191
+      RougeLikeIcon_111: 608014214
+      RougeLikeIcon_112: -1000636097
+      RougeLikeIcon_113: -1586567355
+      RougeLikeIcon_114: -1088003041
+      RougeLikeIcon_115: -1014091453
+      RougeLikeIcon_116: -626569295
+      RougeLikeIcon_117: 1126774590
+      RougeLikeIcon_118: 191213707
+      RougeLikeIcon_119: 48162208
+      RougeLikeIcon_12: -1330683523
+      RougeLikeIcon_120: -1158330059
+      RougeLikeIcon_121: 1185723912
+      RougeLikeIcon_122: -252459120
+      RougeLikeIcon_123: -729143167
+      RougeLikeIcon_124: 64589974
+      RougeLikeIcon_125: -293976155
+      RougeLikeIcon_126: 463247050
+      RougeLikeIcon_127: 1466695158
+      RougeLikeIcon_128: 243429276
+      RougeLikeIcon_129: 705785943
+      RougeLikeIcon_13: -708396808
+      RougeLikeIcon_130: 1610309210
+      RougeLikeIcon_131: 1269662410
+      RougeLikeIcon_132: -1508238242
+      RougeLikeIcon_133: -1730595535
+      RougeLikeIcon_134: -1387273448
+      RougeLikeIcon_135: 370738092
+      RougeLikeIcon_136: 1518060711
+      RougeLikeIcon_137: 1921988217
+      RougeLikeIcon_138: 1089886624
+      RougeLikeIcon_139: -1871376496
+      RougeLikeIcon_14: -1260381806
+      RougeLikeIcon_140: 640553901
+      RougeLikeIcon_141: 1290362824
+      RougeLikeIcon_142: 1866573933
+      RougeLikeIcon_143: -574025610
+      RougeLikeIcon_144: 1530449220
+      RougeLikeIcon_145: 1090919199
+      RougeLikeIcon_146: 1798656510
+      RougeLikeIcon_147: -1597323435
+      RougeLikeIcon_148: 932491614
+      RougeLikeIcon_149: -1195531054
+      RougeLikeIcon_15: -1318978745
+      RougeLikeIcon_150: -1260669781
+      RougeLikeIcon_151: -1779393686
+      RougeLikeIcon_152: -1377988683
+      RougeLikeIcon_153: 736717892
+      RougeLikeIcon_154: -1819989944
+      RougeLikeIcon_155: -570818708
+      RougeLikeIcon_156: 1787487627
+      RougeLikeIcon_157: 915168929
+      RougeLikeIcon_158: 1393146983
+      RougeLikeIcon_159: 1546876647
+      RougeLikeIcon_16: -353745498
+      RougeLikeIcon_160: -225017280
+      RougeLikeIcon_161: -778749935
+      RougeLikeIcon_162: 1780015841
+      RougeLikeIcon_163: -1359383577
+      RougeLikeIcon_164: 2020777132
+      RougeLikeIcon_165: -2070023063
+      RougeLikeIcon_166: 1391888766
+      RougeLikeIcon_167: 704192232
+      RougeLikeIcon_168: -1285373979
+      RougeLikeIcon_169: 223739332
+      RougeLikeIcon_17: 210741127
+      RougeLikeIcon_170: 1052243555
+      RougeLikeIcon_171: -487980543
+      RougeLikeIcon_172: -1899460651
+      RougeLikeIcon_173: -1630815034
+      RougeLikeIcon_174: 1364089478
+      RougeLikeIcon_175: 1414179319
+      RougeLikeIcon_176: 916808738
+      RougeLikeIcon_177: -1200435318
+      RougeLikeIcon_178: 686768342
+      RougeLikeIcon_179: -1010291159
+      RougeLikeIcon_18: -2122452389
+      RougeLikeIcon_180: 1664528509
+      RougeLikeIcon_181: 681882211
+      RougeLikeIcon_182: 2003364811
+      RougeLikeIcon_183: -1585657859
+      RougeLikeIcon_184: -1755344751
+      RougeLikeIcon_185: 311802930
+      RougeLikeIcon_186: -1893174160
+      RougeLikeIcon_187: 1187776207
+      RougeLikeIcon_188: -1063952477
+      RougeLikeIcon_189: 1229624236
+      RougeLikeIcon_19: -273756098
+      RougeLikeIcon_190: -1494563095
+      RougeLikeIcon_191: 1776122619
+      RougeLikeIcon_192: -1869963471
+      RougeLikeIcon_193: 1023365328
+      RougeLikeIcon_2: -895430951
+      RougeLikeIcon_20: 126115782
+      RougeLikeIcon_21: 40865147
+      RougeLikeIcon_22: -582773895
+      RougeLikeIcon_23: 1883537465
+      RougeLikeIcon_24: 1548902516
+      RougeLikeIcon_25: -1613291124
+      RougeLikeIcon_26: -2035489907
+      RougeLikeIcon_27: -2055351937
+      RougeLikeIcon_28: 331612874
+      RougeLikeIcon_29: -394317659
+      RougeLikeIcon_3: -749453183
+      RougeLikeIcon_30: -23878697
+      RougeLikeIcon_31: -1690402723
+      RougeLikeIcon_32: 1302260261
+      RougeLikeIcon_33: -26437877
+      RougeLikeIcon_34: -1529901358
+      RougeLikeIcon_35: -1679673789
+      RougeLikeIcon_36: -1010973149
+      RougeLikeIcon_37: -634795018
+      RougeLikeIcon_38: -1352071981
+      RougeLikeIcon_39: 397611153
+      RougeLikeIcon_4: 1036883036
+      RougeLikeIcon_40: 688312342
+      RougeLikeIcon_41: -812149453
+      RougeLikeIcon_42: -1707525271
+      RougeLikeIcon_43: -225194245
+      RougeLikeIcon_44: 972432115
+      RougeLikeIcon_45: -829769710
+      RougeLikeIcon_46: -1628122977
+      RougeLikeIcon_47: 544503375
+      RougeLikeIcon_48: -981290877
+      RougeLikeIcon_49: -856243026
+      RougeLikeIcon_5: 923434011
+      RougeLikeIcon_50: 684610836
+      RougeLikeIcon_51: 774253078
+      RougeLikeIcon_52: 856408480
+      RougeLikeIcon_53: 1371517008
+      RougeLikeIcon_54: -402934746
+      RougeLikeIcon_55: -2103373607
+      RougeLikeIcon_56: 822896145
+      RougeLikeIcon_57: -1322062456
+      RougeLikeIcon_58: -1603796319
+      RougeLikeIcon_59: 1977070975
+      RougeLikeIcon_6: -1369967831
+      RougeLikeIcon_60: 1678056572
+      RougeLikeIcon_61: -1471359589
+      RougeLikeIcon_62: 263705505
+      RougeLikeIcon_63: 2036946607
+      RougeLikeIcon_64: 1458068555
+      RougeLikeIcon_65: -2076984068
+      RougeLikeIcon_66: -1087882936
+      RougeLikeIcon_67: -667446256
+      RougeLikeIcon_68: 86452095
+      RougeLikeIcon_69: 537383507
+      RougeLikeIcon_7: 956973929
+      RougeLikeIcon_70: -609266642
+      RougeLikeIcon_71: -436667476
+      RougeLikeIcon_72: 940326973
+      RougeLikeIcon_73: -1559743531
+      RougeLikeIcon_74: 442891387
+      RougeLikeIcon_75: -1385105017
+      RougeLikeIcon_76: -826975066
+      RougeLikeIcon_77: -302006412
+      RougeLikeIcon_78: 160445081
+      RougeLikeIcon_79: -826184154
+      RougeLikeIcon_8: 13142511
+      RougeLikeIcon_80: 959308808
+      RougeLikeIcon_81: -2097450926
+      RougeLikeIcon_82: 1699360238
+      RougeLikeIcon_83: -457968691
+      RougeLikeIcon_84: 1189459155
+      RougeLikeIcon_85: 1583436926
+      RougeLikeIcon_86: 723624670
+      RougeLikeIcon_87: -1907815152
+      RougeLikeIcon_88: 292500699
+      RougeLikeIcon_89: -1075641495
+      RougeLikeIcon_9: 1739577089
+      RougeLikeIcon_90: -1122141801
+      RougeLikeIcon_91: -1777797631
+      RougeLikeIcon_92: -1854347328
+      RougeLikeIcon_93: 1611470630
+      RougeLikeIcon_94: -896534405
+      RougeLikeIcon_95: -2066619946
+      RougeLikeIcon_96: -408115567
+      RougeLikeIcon_97: 1139409678
+      RougeLikeIcon_98: -1504189020
+      RougeLikeIcon_99: 1002032203
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

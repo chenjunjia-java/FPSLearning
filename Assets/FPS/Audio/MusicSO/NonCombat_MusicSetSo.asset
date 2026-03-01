@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a45cae696c0fe44868794fbbee6c2e, type: 3}
+  m_Name: NonCombat_MusicSetSo
+  m_EditorClassIdentifier: 
+  Wind: {fileID: 8300000, guid: d8003de4be5900347a2c96ef75315675, type: 3}
+  Noise: {fileID: 8300000, guid: ad0ea7d6df0d01a41b02241d04526f30, type: 3}
+  Environment: {fileID: 8300000, guid: d4bf36d6ee59cf04e9ddb873980c7ac1, type: 3}
+  Main: {fileID: 8300000, guid: a9c6ea8c143984144bb055d57628c159, type: 3}
+  WindVolume: 0.802
+  NoiseVolume: 0.784
+  EnvironmentVolume: 0.802
+  MainVolume: 1
+  Loop: 1

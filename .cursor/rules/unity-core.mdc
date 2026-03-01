@@ -1,0 +1,14 @@
+---
+description: Unity 项目核心工程准则（性能、生命周期、架构优先级）
+alwaysApply: true
+---
+
+# Unity 核心准则（必遵守）
+
+- **优先级**：正确性 > 可维护性 > 性能；但在运行时热路径（每帧/高频）中，性能与分配零容忍。
+- **性能基线**：避免在 `Update/LateUpdate/FixedUpdate/OnGUI` 与频繁回调里产生 GC 分配；避免隐式装箱、LINQ、字符串拼接、闭包捕获。
+- **生命周期**：任何 `Subscribe/AddListener +=` 必须在对称生命周期 `OnEnable/OnDisable`（或 `Start/OnDestroy`）里成对解除；协程、异步任务需要可取消与可收敛。
+- **实例化策略**：优先对象池；禁止在战斗/高频场景中频繁 `Instantiate/Destroy`（除非已证明成本可接受并有上限）。
+- **资源管理**：运行时加载优先 Addressables/AssetBundle（或项目既定方案）；避免滥用 `Resources`；引用关系要可追踪、可释放。
+- **架构边界**：数据/配置用 `ScriptableObject`；逻辑与展示分离；禁止“万能 Manager”堆逻辑；依赖关系单向、可测试。
+- **验证方式**：所有“优化/重构”必须给出可验证点（Profiler 指标、GC Alloc、CPU ms、DrawCall、内存占用、加载耗时）并提供最小回归风险方案。
