@@ -26,7 +26,7 @@ namespace Unity.FPS.Game
         private readonly Dictionary<AudioUtility.AudioGroups, float> m_CustomCooldownByGroup =
             new Dictionary<AudioUtility.AudioGroups, float>();
 
-        private readonly Dictionary<int, float> m_LastPlayTimeByKeyHash = new Dictionary<int, float>(128);
+        private readonly Dictionary<SfxKey, float> m_LastPlayTimeByKey = new Dictionary<SfxKey, float>(128);
 
         private SfxEmitter m_RuntimeEmitterTemplate;
 
@@ -58,6 +58,16 @@ namespace Unity.FPS.Game
 
             s_Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            if (m_Catalog == null)
+            {
+                var audioManager = FindObjectOfType<AudioManager>();
+                if (audioManager != null)
+                {
+                    m_Catalog = audioManager.SfxCatalog;
+                }
+            }
+
             EnsureEmitterTemplate();
 
             // A conservative default for potential warning-like sounds.
@@ -74,24 +84,39 @@ namespace Unity.FPS.Game
             Instance.m_CustomCooldownByGroup[group] = Mathf.Max(0f, cooldownSeconds);
         }
 
-        public static bool Play(string key, Vector3 position)
+        public static bool Play(SfxKey key, Vector3 position)
         {
-            if (string.IsNullOrEmpty(key))
+            if (key == SfxKey.None)
             {
                 return false;
             }
 
-            return Instance.InternalPlayFromCatalog(SfxKey.Hash(key), position);
+            return Instance.InternalPlayFromCatalog(key, position);
         }
 
-        public static bool Play(string key, Vector3 position, float volumeMultiplier)
+        public static bool Play(SfxKey key, Vector3 position, float volumeMultiplier)
         {
-            if (string.IsNullOrEmpty(key))
+            if (key == SfxKey.None)
             {
                 return false;
             }
 
-            return Instance.InternalPlayFromCatalog(SfxKey.Hash(key), position, volumeMultiplier);
+            return Instance.InternalPlayFromCatalog(key, position, volumeMultiplier);
+        }
+
+        public static bool Play(string legacyKey, Vector3 position)
+        {
+            return SfxKeys.TryParse(legacyKey, out SfxKey key) && Play(key, position);
+        }
+
+        public static bool Play(string legacyKey, Vector3 position, float volumeMultiplier)
+        {
+            return SfxKeys.TryParse(legacyKey, out SfxKey key) && Play(key, position, volumeMultiplier);
+        }
+
+        public static bool TryGetCatalogEntry(SfxKey key, out SfxCatalogSO.Entry entry)
+        {
+            return Instance.TryGetCatalogEntryInternal(key, out entry);
         }
 
         public static void Play(AudioClip clip, Vector3 position, AudioUtility.AudioGroups audioGroup, float spatialBlend,
@@ -105,19 +130,19 @@ namespace Unity.FPS.Game
             Instance.InternalPlay(clip, position, audioGroup, spatialBlend, rolloffDistanceMin, volume, pitch);
         }
 
-        private bool InternalPlayFromCatalog(int keyHash, Vector3 position, float volumeMultiplier = 1f)
+        private bool InternalPlayFromCatalog(SfxKey key, Vector3 position, float volumeMultiplier = 1f)
         {
             if (m_Catalog == null)
             {
                 return false;
             }
 
-            if (!m_Catalog.TryGet(keyHash, out SfxCatalogSO.Entry entry))
+            if (!m_Catalog.TryGet(key, out SfxCatalogSO.Entry entry))
             {
                 return false;
             }
 
-            if (!PassCooldownByKey(keyHash, entry.CooldownSeconds))
+            if (!PassCooldownByKey(key, entry.CooldownSeconds))
             {
                 return true;
             }
@@ -129,6 +154,17 @@ namespace Unity.FPS.Game
             float volume = Mathf.Clamp01(entry.Volume * Mathf.Clamp01(volumeMultiplier));
             InternalPlay(entry.Clip, position, entry.Group, entry.SpatialBlend, entry.MinDistance, volume, pitch);
             return true;
+        }
+
+        private bool TryGetCatalogEntryInternal(SfxKey key, out SfxCatalogSO.Entry entry)
+        {
+            if (m_Catalog == null)
+            {
+                entry = default;
+                return false;
+            }
+
+            return m_Catalog.TryGet(key, out entry);
         }
 
         private void InternalPlay(AudioClip clip, Vector3 position, AudioUtility.AudioGroups audioGroup, float spatialBlend,
@@ -222,17 +258,17 @@ namespace Unity.FPS.Game
             return true;
         }
 
-        private bool PassCooldownByKey(int keyHash, float cooldownSeconds)
+        private bool PassCooldownByKey(SfxKey key, float cooldownSeconds)
         {
             float cooldown = Mathf.Max(0f, cooldownSeconds);
             if (cooldown <= 0f)
             {
-                m_LastPlayTimeByKeyHash[keyHash] = Time.unscaledTime;
+                m_LastPlayTimeByKey[key] = Time.unscaledTime;
                 return true;
             }
 
             float now = Time.unscaledTime;
-            if (m_LastPlayTimeByKeyHash.TryGetValue(keyHash, out float lastTime))
+            if (m_LastPlayTimeByKey.TryGetValue(key, out float lastTime))
             {
                 if (now - lastTime < cooldown)
                 {
@@ -240,7 +276,7 @@ namespace Unity.FPS.Game
                 }
             }
 
-            m_LastPlayTimeByKeyHash[keyHash] = now;
+            m_LastPlayTimeByKey[key] = now;
             return true;
         }
 

@@ -15,7 +15,8 @@ namespace Unity.FPS.Gameplay
 
         [Tooltip("Rotation angle per second")] public float RotatingSpeed = 360f;
 
-        [Tooltip("Sound played on pickup")] public AudioClip PickupSfx;
+        [Tooltip("SFX key in SfxCatalog.")]
+        [SerializeField] private SfxKey m_PickupSfxKey = SfxKey.Pickup;
         [Tooltip("VFX spawned on pickup")] public GameObject PickupVfxPrefab;
 
         public Rigidbody PickupRigidbody { get; private set; }
@@ -83,9 +84,9 @@ namespace Unity.FPS.Gameplay
             if (m_HasPlayedFeedback)
                 return;
 
-            if (PickupSfx)
+            if (m_PickupSfxKey != SfxKey.None)
             {
-                AudioUtility.CreateSFX(PickupSfx, transform.position, AudioUtility.AudioGroups.Pickup, 0f);
+                Unity.FPS.Game.AudioUtility.PlaySfx(m_PickupSfxKey, transform.position);
             }
 
             if (PickupVfxPrefab)

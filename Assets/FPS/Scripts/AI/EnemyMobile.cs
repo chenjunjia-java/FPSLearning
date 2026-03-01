@@ -24,7 +24,8 @@ namespace Unity.FPS.AI
         public ParticleSystem[] RandomHitSparks;
 
         public ParticleSystem[] OnDetectVfx;
-        public AudioClip OnDetectSfx;
+        [Tooltip("SFX key in SfxCatalog.")]
+        [SerializeField] private SfxKey m_OnDetectSfxKey = SfxKey.EnemyDetect;
 
         [Header("Sound")] public AudioClip MovementSound;
         public MinMaxFloat PitchDistortionMovementSpeed;
@@ -288,9 +289,9 @@ namespace Unity.FPS.AI
                 OnDetectVfx[i].Play();
             }
 
-            if (OnDetectSfx)
+            if (m_OnDetectSfxKey != SfxKey.None)
             {
-                AudioUtility.CreateSFX(OnDetectSfx, transform.position, AudioUtility.AudioGroups.EnemyDetection, 1f);
+                Unity.FPS.Game.AudioUtility.PlaySfx(m_OnDetectSfxKey, transform.position);
             }
 
             Animator.SetBool(k_AnimAlertedParameter, true);

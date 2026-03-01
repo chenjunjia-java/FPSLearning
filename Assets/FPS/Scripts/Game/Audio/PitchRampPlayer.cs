@@ -12,7 +12,8 @@ namespace Unity.FPS.Game
     public sealed class PitchRampPlayer : MonoBehaviour
     {
         [Header("Playback")]
-        [SerializeField] private AudioClip m_Clip;
+        [Tooltip("使用 Catalog 中该 key 对应的音效。")]
+        [SerializeField] private SfxKey m_SfxKey = SfxKey.EnemyDetect;
         [SerializeField] private AudioMixerGroup m_OutputGroup;
         [SerializeField] [Min(0.01f)] private float m_StartPitch = 1f;
         [SerializeField] [Min(0.01f)] private float m_EndPitch = 2f;
@@ -35,7 +36,18 @@ namespace Unity.FPS.Game
         /// </summary>
         public void Play()
         {
-            Play(m_Clip, m_OutputGroup);
+            if (m_SfxKey == SfxKey.None)
+            {
+                return;
+            }
+
+            if (!SfxService.TryGetCatalogEntry(m_SfxKey, out SfxCatalogSO.Entry entry) || entry.Clip == null)
+            {
+                return;
+            }
+
+            AudioMixerGroup group = m_OutputGroup != null ? m_OutputGroup : AudioUtility.GetAudioGroup(entry.Group);
+            Play(entry.Clip, group);
         }
 
         /// <summary>

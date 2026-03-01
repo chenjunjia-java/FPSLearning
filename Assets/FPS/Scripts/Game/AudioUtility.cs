@@ -34,29 +34,13 @@ namespace Unity.FPS.Game
             SfxService.Play(clip, position, audioGroup, spatialBlend, rolloffDistanceMin);
         }
 
-        /// <summary>
-        /// Key-first 播放：优先从 SfxCatalog 取配置；若 key 未配置/未命中则回退到 clip 播放。
-        /// </summary>
-        public static void PlaySfx(string key, AudioClip fallbackClip, Vector3 position, AudioGroups fallbackGroup,
-            float spatialBlend, float rolloffDistanceMin = 1f)
+        public static void PlaySfx(SfxKey key, Vector3 position)
         {
             _ = SfxService.Instance;
-
-            if (!string.IsNullOrEmpty(key) && SfxService.Play(key, position))
+            if (key != SfxKey.None)
             {
-                return;
+                _ = SfxService.Play(key, position);
             }
-
-            if (fallbackClip != null)
-            {
-                SfxService.Play(fallbackClip, position, fallbackGroup, spatialBlend, rolloffDistanceMin);
-            }
-        }
-
-        public static void PlaySfx(string key, Vector3 position)
-        {
-            _ = SfxService.Instance;
-            _ = SfxService.Play(key, position);
         }
 
         public static AudioMixerGroup GetAudioGroup(AudioGroups group)

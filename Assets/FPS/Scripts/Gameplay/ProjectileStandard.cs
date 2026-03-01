@@ -29,8 +29,8 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Offset along the hit normal where the VFX will be spawned")]
         public float ImpactVfxSpawnOffset = 0.1f;
 
-        [Tooltip("Clip to play on impact")] 
-        public AudioClip ImpactSfxClip;
+        [Tooltip("SFX key in SfxCatalog.")]
+        [SerializeField] private SfxKey m_ImpactSfxKey = SfxKey.Impact;
 
         [Tooltip("Layers this projectile can collide with")]
         public LayerMask HittableLayers = -1;
@@ -468,9 +468,9 @@ namespace Unity.FPS.Gameplay
                 {
                     SpawnImpactVfx(point, normal);
                 }
-                if (ImpactSfxClip)
+                if (m_ImpactSfxKey != SfxKey.None)
                 {
-                    AudioUtility.CreateSFX(ImpactSfxClip, point, AudioUtility.AudioGroups.Impact, 1f, 3f);
+                    Unity.FPS.Game.AudioUtility.PlaySfx(m_ImpactSfxKey, point);
                 }
                 return;
             }
@@ -481,9 +481,9 @@ namespace Unity.FPS.Gameplay
                 SpawnImpactVfx(point, normal);
             }
 
-            if (ImpactSfxClip)
+            if (m_ImpactSfxKey != SfxKey.None)
             {
-                AudioUtility.CreateSFX(ImpactSfxClip, point, AudioUtility.AudioGroups.Impact, 1f, 3f);
+                Unity.FPS.Game.AudioUtility.PlaySfx(m_ImpactSfxKey, point);
             }
 
             DespawnProjectile();

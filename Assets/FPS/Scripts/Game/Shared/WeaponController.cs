@@ -126,16 +126,14 @@ namespace Unity.FPS.Game
         [Tooltip("Unparent the muzzle flash instance on spawn")]
         public bool UnparentMuzzleFlash;
 
-        [Tooltip("sound played when shooting")]
-        public AudioClip ShootSfx;
+        [SerializeField] private SfxKey m_ShootSfxKey = SfxKey.WeaponShoot;
 
-        [Tooltip("Sound played when changing to this weapon")]
-        public AudioClip ChangeWeaponSfx;
+        [SerializeField] private SfxKey m_ChangeWeaponSfxKey = SfxKey.WeaponChange;
 
         [Tooltip("Continuous Shooting Sound")] public bool UseContinuousShootSound = false;
-        public AudioClip ContinuousShootStartSfx;
-        public AudioClip ContinuousShootLoopSfx;
-        public AudioClip ContinuousShootEndSfx;
+        [SerializeField] private SfxKey m_ContinuousShootStartSfxKey = SfxKey.WeaponContinuousStart;
+        [SerializeField] private SfxKey m_ContinuousShootLoopSfxKey = SfxKey.WeaponContinuousLoop;
+        [SerializeField] private SfxKey m_ContinuousShootEndSfxKey = SfxKey.WeaponContinuousEnd;
 
         AudioSource m_ContinuousShootAudioSource = null;
         bool m_WantsToShoot = false;
@@ -191,7 +189,6 @@ namespace Unity.FPS.Game
         public int GetCarriedPhysicalBullets() => m_CarriedPhysicalBullets;
         public int GetCurrentAmmo() => Mathf.FloorToInt(m_CurrentAmmo);
 
-        AudioSource m_ShootAudioSource;
         RoguelikeWeaponStatsRuntime m_WeaponStatsRuntime;
 
         public bool IsReloading { get; private set; }
@@ -205,16 +202,15 @@ namespace Unity.FPS.Game
             m_CarriedPhysicalBullets = HasPhysicalBullets ? ClipSize : 0;
             m_LastMuzzlePosition = WeaponMuzzle.position;
 
-            m_ShootAudioSource = GetComponent<AudioSource>();
-            DebugUtility.HandleErrorIfNullGetComponent<AudioSource, WeaponController>(m_ShootAudioSource, this,
-                gameObject);
+            AudioSource source = GetComponent<AudioSource>();
+            DebugUtility.HandleErrorIfNullGetComponent<AudioSource, WeaponController>(source, this, gameObject);
             m_WeaponStatsRuntime = GetComponent<RoguelikeWeaponStatsRuntime>();
 
             if (UseContinuousShootSound)
             {
                 m_ContinuousShootAudioSource = gameObject.AddComponent<AudioSource>();
                 m_ContinuousShootAudioSource.playOnAwake = false;
-                m_ContinuousShootAudioSource.clip = ContinuousShootLoopSfx;
+                m_ContinuousShootAudioSource.clip = ResolveSfxClip(m_ContinuousShootLoopSfxKey);
                 m_ContinuousShootAudioSource.outputAudioMixerGroup =
                     AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.WeaponShoot);
                 m_ContinuousShootAudioSource.loop = true;
@@ -249,7 +245,24 @@ namespace Unity.FPS.Game
             m_PhysicalAmmoPool.Enqueue(nextShell);
         }
 
-        void PlaySFX(AudioClip sfx) => AudioUtility.CreateSFX(sfx, transform.position, AudioUtility.AudioGroups.WeaponShoot, 0.0f);
+        void PlaySfxByKey(SfxKey key)
+        {
+            if (key != SfxKey.None)
+            {
+                Unity.FPS.Game.AudioUtility.PlaySfx(key, transform.position);
+            }
+        }
+
+        AudioClip ResolveSfxClip(SfxKey key)
+        {
+            if (key != SfxKey.None && SfxService.TryGetCatalogEntry(key, out SfxCatalogSO.Entry entry) &&
+                entry.Clip != null)
+            {
+                return entry.Clip;
+            }
+
+            return null;
+        }
 
 
         void Reload()
@@ -360,14 +373,22 @@ namespace Unity.FPS.Game
                 {
                     if (!m_ContinuousShootAudioSource.isPlaying)
                     {
-                        m_ShootAudioSource.PlayOneShot(ShootSfx);
-                        m_ShootAudioSource.PlayOneShot(ContinuousShootStartSfx);
-                        m_ContinuousShootAudioSource.Play();
+                        PlaySfxByKey(m_ShootSfxKey);
+                        PlaySfxByKey(m_ContinuousShootStartSfxKey);
+                        AudioClip loopClip = ResolveSfxClip(m_ContinuousShootLoopSfxKey);
+                        if (loopClip != null && m_ContinuousShootAudioSource.clip != loopClip)
+                        {
+                            m_ContinuousShootAudioSource.clip = loopClip;
+                        }
+                        if (m_ContinuousShootAudioSource.clip != null)
+                        {
+                            m_ContinuousShootAudioSource.Play();
+                        }
                     }
                 }
                 else if (m_ContinuousShootAudioSource.isPlaying)
                 {
-                    m_ShootAudioSource.PlayOneShot(ContinuousShootEndSfx);
+                    PlaySfxByKey(m_ContinuousShootEndSfxKey);
                     m_ContinuousShootAudioSource.Stop();
                 }
             }
@@ -377,9 +398,9 @@ namespace Unity.FPS.Game
         {
             WeaponRoot.SetActive(show);
 
-            if (show && ChangeWeaponSfx)
+            if (show && m_ChangeWeaponSfxKey != SfxKey.None)
             {
-                m_ShootAudioSource.PlayOneShot(ChangeWeaponSfx);
+                PlaySfxByKey(m_ChangeWeaponSfxKey);
             }
 
             IsWeaponActive = show;
@@ -567,9 +588,9 @@ namespace Unity.FPS.Game
             m_LastTimeShot = Time.time;
 
             // play shoot SFX
-            if (ShootSfx && !UseContinuousShootSound)
+            if (!UseContinuousShootSound && m_ShootSfxKey != SfxKey.None)
             {
-                m_ShootAudioSource.PlayOneShot(ShootSfx);
+                PlaySfxByKey(m_ShootSfxKey);
             }
 
             // Trigger attack animation if there is any

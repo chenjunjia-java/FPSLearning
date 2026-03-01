@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Unity.FPS.Game
 {
@@ -10,7 +11,8 @@ namespace Unity.FPS.Game
         [Serializable]
         public struct Entry
         {
-            public string Key;
+            public SfxKey Key;
+            [HideInInspector] [FormerlySerializedAs("Key")] public string LegacyKey;
             public AudioClip Clip;
             public AudioUtility.AudioGroups Group;
 
@@ -26,23 +28,18 @@ namespace Unity.FPS.Game
 
         [SerializeField] private Entry[] m_Entries;
 
-        private readonly Dictionary<int, int> m_IndexByKeyHash = new Dictionary<int, int>(128);
+        private readonly Dictionary<SfxKey, int> m_IndexByKey = new Dictionary<SfxKey, int>(128);
 
-        public bool TryGet(string key, out Entry entry)
+        public bool TryGet(SfxKey key, out Entry entry)
         {
-            if (string.IsNullOrEmpty(key))
+            if (key == SfxKey.None)
             {
                 entry = default;
                 return false;
             }
 
-            return TryGet(SfxKey.Hash(key), out entry);
-        }
-
-        public bool TryGet(int keyHash, out Entry entry)
-        {
             BuildIndexIfNeeded();
-            if (m_Entries != null && m_IndexByKeyHash.TryGetValue(keyHash, out int idx) && idx >= 0 &&
+            if (m_Entries != null && m_IndexByKey.TryGetValue(key, out int idx) && idx >= 0 &&
                 idx < m_Entries.Length)
             {
                 entry = m_Entries[idx];
@@ -74,6 +71,7 @@ namespace Unity.FPS.Game
             for (int i = 0; i < m_Entries.Length; i++)
             {
                 Entry e = m_Entries[i];
+                MigrateLegacyKey(ref e);
                 if (e.Volume <= 0f)
                 {
                     e.Volume = 1f;
@@ -95,7 +93,7 @@ namespace Unity.FPS.Game
 
         private void BuildIndexIfNeeded()
         {
-            if (m_IndexByKeyHash.Count == 0 && m_Entries != null && m_Entries.Length > 0)
+            if (m_IndexByKey.Count == 0 && m_Entries != null && m_Entries.Length > 0)
             {
                 RebuildIndex();
             }
@@ -103,7 +101,7 @@ namespace Unity.FPS.Game
 
         private void RebuildIndex()
         {
-            m_IndexByKeyHash.Clear();
+            m_IndexByKey.Clear();
             if (m_Entries == null)
             {
                 return;
@@ -111,15 +109,31 @@ namespace Unity.FPS.Game
 
             for (int i = 0; i < m_Entries.Length; i++)
             {
-                string key = m_Entries[i].Key;
-                if (string.IsNullOrEmpty(key))
+                Entry entry = m_Entries[i];
+                MigrateLegacyKey(ref entry);
+                m_Entries[i] = entry;
+
+                SfxKey key = entry.Key;
+                if (key == SfxKey.None)
                 {
                     continue;
                 }
 
-                int hash = SfxKey.Hash(key);
                 // Later entries override earlier ones.
-                m_IndexByKeyHash[hash] = i;
+                m_IndexByKey[key] = i;
+            }
+        }
+
+        private static void MigrateLegacyKey(ref Entry entry)
+        {
+            if (entry.Key != SfxKey.None || string.IsNullOrEmpty(entry.LegacyKey))
+            {
+                return;
+            }
+
+            if (SfxKeys.TryParse(entry.LegacyKey, out SfxKey parsedKey))
+            {
+                entry.Key = parsedKey;
             }
         }
     }

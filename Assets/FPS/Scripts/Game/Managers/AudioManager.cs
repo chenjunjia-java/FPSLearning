@@ -6,6 +6,10 @@ namespace Unity.FPS.Game
     public class AudioManager : MonoBehaviour
     {
         public AudioMixer[] AudioMixers;
+        [Header("Catalogs")]
+        [SerializeField] private SfxCatalogSO m_SfxCatalog;
+
+        public SfxCatalogSO SfxCatalog => m_SfxCatalog;
 
         public AudioMixer GetPrimaryMixer()
         {
