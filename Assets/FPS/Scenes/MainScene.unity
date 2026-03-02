@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FixedFirstSegmentInScene: {fileID: 5785597709266656412}
   m_NormalSegmentPrefabs:
-  - {fileID: 7324643446192064167, guid: 4d45252a4c970af478c93f335c504c4f, type: 3}
+  - {fileID: 7324643446192064167, guid: 43fd309f04051e44a92d975f59212208, type: 3}
   m_BossSegmentPrefab: {fileID: 6472118144035869046, guid: cbf962a2e73adc8468f3c8d14c06c883,
     type: 3}
   m_NormalSegmentCount: 1
@@ -1550,6 +1550,7 @@ MonoBehaviour:
   m_ChainRoot: {fileID: 2729281214382627287}
   m_NavMeshSurface: {fileID: 1402848968}
   m_AutoStartOnEnable: 1
+  m_RebuildNavMeshOnStart: 1
   m_RebuildNavMeshOnAppend: 1
   m_RebuildNavMeshAsyncWhenPossible: 1
   m_RebuildNavMeshDebounceSeconds: 0.1
@@ -3060,6 +3061,16 @@ PrefabInstance:
       propertyPath: JumpAnticipationDuration
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2766772472419430181, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: m_BaseMaxHealth
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 4205022973215787166, guid: 761cdc9e4e883334cbdcea062d0befa7,
+        type: 3}
+      propertyPath: DamageMultiplier
+      value: 0.82
+      objectReference: {fileID: 0}
     - target: {fileID: 7253983127304857660, guid: 761cdc9e4e883334cbdcea062d0befa7,
         type: 3}
       propertyPath: m_Name
@@ -4278,6 +4289,11 @@ PrefabInstance:
       propertyPath: m_SelectedScale
       value: 1.18
       objectReference: {fileID: 0}
+    - target: {fileID: 3841555260928171753, guid: c996b53e9f849234393d1e90f68d1679,
+        type: 3}
+      propertyPath: m_SelectedHoldDuration
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 8041970915285772882, guid: c996b53e9f849234393d1e90f68d1679,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -5001,6 +5017,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EnemyPrefabs:
   - {fileID: 9087143436424816424, guid: c090580a852000749a24e6c5b7e755de, type: 3}
+  - {fileID: 9087143436424816424, guid: 25a1b0efadb966e44889fce712c8ff8d, type: 3}
+  m_ExploderSpawnChance: 0.1
   m_PoolMaxSize: 64
   m_PrewarmCount: 6
   m_BossPrefab: {fileID: 0}

@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 5792418484355289522}
   - component: {fileID: 3306413803721793640}
   - component: {fileID: 6738092307181253507}
+  - component: {fileID: 1225369994488876056}
   m_Layer: 0
   m_Name: Segment_Boss
   m_TagString: Untagged
@@ -536,6 +537,7 @@ MonoBehaviour:
   - {fileID: 7159624545459226833}
   - {fileID: 7664827704858470467}
   - {fileID: 9151542868665972936}
+  m_UsePlayerAttachedSpawnPointsOnly: 1
   m_SpawnJitterRadius: 1.5
   m_SpawnHeightOffset: 0.5
   m_MaxTriesPerEnemy: 6
@@ -597,6 +599,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Root: {fileID: 4803535380792340103}
+  m_DebrisHoldDuration: 3
+  m_DebrisFadeDuration: 1.5
+--- !u!114 &1225369994488876056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6472118144035869046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 775d80430dd155b48997991eb88ec552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Segment: {fileID: 0}
+  m_NonCombatMusicSet: {fileID: 11400000, guid: 56bc5094499e4a94188eeb54edd99717,
+    type: 2}
+  m_CombatMusicSet: {fileID: 11400000, guid: ee9efd73dfefff24caeb5daf0726641b, type: 2}
+  m_BossMusicSet: {fileID: 11400000, guid: 99d968ca7242d664a9acc7292b269437, type: 2}
+  m_DefaultCrossfadeSeconds: 1.2
+  m_PlayNonCombatOnEnable: 1
 --- !u!1 &6476368069009116998
 GameObject:
   m_ObjectHideFlags: 0
@@ -2069,7 +2092,7 @@ PrefabInstance:
     - target: {fileID: 5907461350448740197, guid: d5b9176e759f87c469c3f220ab7f60cc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.933508
+      value: -7.82
       objectReference: {fileID: 0}
     - target: {fileID: 5907461350448740197, guid: d5b9176e759f87c469c3f220ab7f60cc,
         type: 3}

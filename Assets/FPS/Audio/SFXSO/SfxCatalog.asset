@@ -61,7 +61,7 @@ MonoBehaviour:
   - Key: 6
     LegacyKey: 
     Clip: {fileID: 8300000, guid: d4bf36d6ee59cf04e9ddb873980c7ac1, type: 3}
-    Group: 2
+    Group: 11
     Volume: 0.552
     PitchRange: {x: 0.9, y: 1.1}
     SpatialBlend: 0
@@ -252,7 +252,7 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: c63c4ee0ef1cd394889a1d22a1dda349, type: 3}
     Group: 4
     Volume: 1
-    PitchRange: {x: 0.9, y: 1.1}
+    PitchRange: {x: 1, y: 1.5}
     SpatialBlend: 1
     MinDistance: 1
     CooldownSeconds: 0

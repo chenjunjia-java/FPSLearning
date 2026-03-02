@@ -16,6 +16,8 @@ namespace Unity.FPS.Roguelike.Level
     {
         [Header("Enemy")]
         [SerializeField] private List<EnemyController> m_EnemyPrefabs = new List<EnemyController>();
+        [Tooltip("当敌人列表同时包含爆炸怪与非爆炸怪时，爆炸怪被选中的目标概率。")]
+        [SerializeField] [Range(0f, 1f)] private float m_ExploderSpawnChance = 0.2f;
         [SerializeField] [Min(1)] private int m_PoolMaxSize = 64;
         [SerializeField] [Min(0)] private int m_PrewarmCount = 0;
 
@@ -97,7 +99,7 @@ namespace Unity.FPS.Roguelike.Level
                 }
 
                 if (!TryGetRandomEnemyPrefab(out EnemyController prefab))
-            {
+                {
                     // 列表存在但没有可用 Prefab（例如全是 null）
                     break;
                 }
@@ -573,29 +575,74 @@ namespace Unity.FPS.Roguelike.Level
                 return false;
             }
 
-            // 为避免在含 null 的列表里出现偏差，这里做有限次随机尝试；失败则回退线性查找第一个非空。
-            int tries = Mathf.Min(m_EnemyPrefabs.Count, 8);
-            for (int i = 0; i < tries; i++)
-            {
-                var candidate = m_EnemyPrefabs[Random.Range(0, m_EnemyPrefabs.Count)];
-                if (candidate != null)
-                {
-                    prefab = candidate;
-                    return true;
-                }
-            }
-
+            int exploderCount = 0;
+            int nonExploderCount = 0;
             for (int i = 0; i < m_EnemyPrefabs.Count; i++)
             {
                 var candidate = m_EnemyPrefabs[i];
                 if (candidate != null)
                 {
-                    prefab = candidate;
-                    return true;
+                    if (IsExploderPrefab(candidate))
+                    {
+                        exploderCount++;
+                    }
+                    else
+                    {
+                        nonExploderCount++;
+                    }
                 }
             }
 
+            if (exploderCount == 0 && nonExploderCount == 0)
+            {
+                return false;
+            }
+
+            bool pickExploder;
+            if (exploderCount == 0)
+            {
+                pickExploder = false;
+            }
+            else if (nonExploderCount == 0)
+            {
+                pickExploder = true;
+            }
+            else
+            {
+                pickExploder = Random.value < m_ExploderSpawnChance;
+            }
+
+            int targetIndexInBucket = Random.Range(0, pickExploder ? exploderCount : nonExploderCount);
+            int currentIndexInBucket = 0;
+            for (int i = 0; i < m_EnemyPrefabs.Count; i++)
+            {
+                var candidate = m_EnemyPrefabs[i];
+                if (candidate == null)
+                {
+                    continue;
+                }
+
+                bool isExploder = IsExploderPrefab(candidate);
+                if (isExploder != pickExploder)
+                {
+                    continue;
+                }
+
+                if (currentIndexInBucket == targetIndexInBucket)
+                {
+                    prefab = candidate;
+                    return true;
+                }
+
+                currentIndexInBucket++;
+            }
+
             return false;
+        }
+
+        private static bool IsExploderPrefab(EnemyController prefab)
+        {
+            return prefab != null && prefab.GetComponent<ExploderDeathSequence>() != null;
         }
     }
 }

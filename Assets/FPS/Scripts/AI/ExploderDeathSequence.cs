@@ -47,8 +47,12 @@ namespace Unity.FPS.AI
         [SerializeField] SfxKey m_ExplosionSfxKey = SfxKey.ExplosionSmall;
 
         [Header("Post Explosion")]
-        [Tooltip("Optional smoke VFX spawned after explosion. It follows debris lifetime and is cleared on next segment.")]
+        [Tooltip("Optional smoke VFX spawned after explosion. It will auto fade out then recycle.")]
         [SerializeField] private GameObject m_PostExplosionSmokeVfx;
+        [Tooltip("How long smoke stays fully visible before fading.")]
+        [SerializeField] [Min(0f)] private float m_SmokeHoldDuration = DebrisAutoRecycle.DefaultHoldDuration;
+        [Tooltip("How long smoke takes to fade out before recycle.")]
+        [SerializeField] [Min(0.01f)] private float m_SmokeFadeDuration = DebrisAutoRecycle.DefaultFadeDuration;
 
         [Header("Camera Feedback")]
         [Tooltip("相机震动强度，0 表示不震动")]
@@ -77,6 +81,7 @@ namespace Unity.FPS.AI
         NavMeshAgent m_NavMeshAgent;
 
         readonly List<RendererIndexData> m_TargetRenderers = new List<RendererIndexData>(32);
+        readonly List<Collider> m_SelfCollidersCache = new List<Collider>(16);
         MaterialPropertyBlock m_Mpb;
 
         Collider[] m_Overlap;
@@ -139,6 +144,9 @@ namespace Unity.FPS.AI
             m_PhaseStartTime = m_StartTime;
             m_InitialLocalScale = transform.localScale;
             m_NextAlertSfxTime = m_StartTime;
+
+            // 爆炸期间禁用碰撞体，避免阻挡子弹穿透
+            DisableSelfColliders();
 
             if (m_Controller != null)
             {
@@ -346,7 +354,7 @@ namespace Unity.FPS.AI
                 }
 
                 SpawnExplosionVfx(m_Controller, center);
-                SpawnPersistentSmokeVfx(m_Controller, center, m_PostExplosionSmokeVfx);
+                SpawnPersistentSmokeVfx(m_Controller, center, m_PostExplosionSmokeVfx, m_SmokeHoldDuration, m_SmokeFadeDuration);
             }
 
             DespawnOrDestroySelf();
@@ -394,6 +402,20 @@ namespace Unity.FPS.AI
             else
             {
                 Destroy(gameObject);
+            }
+        }
+
+        void DisableSelfColliders()
+        {
+            m_SelfCollidersCache.Clear();
+            GetComponentsInChildren<Collider>(true, m_SelfCollidersCache);
+            for (int i = 0; i < m_SelfCollidersCache.Count; i++)
+            {
+                Collider c = m_SelfCollidersCache[i];
+                if (c != null)
+                {
+                    c.enabled = false;
+                }
             }
         }
 
@@ -536,11 +558,10 @@ namespace Unity.FPS.AI
                 }
 
                 source.Stop();
-                source.enabled = false;
             }
         }
 
-        static void SpawnPersistentSmokeVfx(EnemyController controller, Vector3 center, GameObject smokePrefab)
+        static void SpawnPersistentSmokeVfx(EnemyController controller, Vector3 center, GameObject smokePrefab, float holdDuration, float fadeDuration)
         {
             if (controller == null || smokePrefab == null)
             {
@@ -550,13 +571,21 @@ namespace Unity.FPS.AI
             Vector3 pos = controller.DeathVfxSpawnPoint != null ? controller.DeathVfxSpawnPoint.position : center;
             Transform parent = DebrisRoot.ResolveParentFor(controller.transform);
 
+            GameObject smokeInstance = null;
             if (ObjPrefabManager.Instance != null)
             {
-                ObjPrefabManager.Instance.Spawn(smokePrefab.transform, pos, Quaternion.identity, parent);
-                return;
+                Transform spawned = ObjPrefabManager.Instance.Spawn(smokePrefab.transform, pos, Quaternion.identity, parent);
+                smokeInstance = spawned != null ? spawned.gameObject : null;
+            }
+            else
+            {
+                smokeInstance = Object.Instantiate(smokePrefab, pos, Quaternion.identity, parent);
             }
 
-            Object.Instantiate(smokePrefab, pos, Quaternion.identity, parent);
+            if (smokeInstance != null)
+            {
+                DebrisAutoRecycle.ConfigureOn(smokeInstance, holdDuration, fadeDuration);
+            }
         }
 
         void TryPlayAlertSfx(float now, float normalizedProgress)

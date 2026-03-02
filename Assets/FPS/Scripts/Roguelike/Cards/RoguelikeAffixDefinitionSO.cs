@@ -5,6 +5,12 @@ using UnityEngine;
 
 namespace Unity.FPS.Roguelike.Cards
 {
+    public enum RoguelikeAffixEffectType
+    {
+        StatModifier = 0,
+        InstantHeal = 1,
+    }
+
     public enum RoguelikeAffixTarget
     {
         Player = 0,
@@ -65,6 +71,8 @@ namespace Unity.FPS.Roguelike.Cards
         [SerializeField] private CardRarity m_Rarity = CardRarity.Common;
 
         [Header("Effect")]
+        [Tooltip("StatModifier：常规属性词条；InstantHeal：选中时立刻回血（一次性效果）。")]
+        [SerializeField] private RoguelikeAffixEffectType m_EffectType = RoguelikeAffixEffectType.StatModifier;
         [SerializeField] private RoguelikeAffixTarget m_Target = RoguelikeAffixTarget.Player;
         [SerializeField] private StatId m_StatId = StatId.Player_Attack;
         [SerializeField] private ModifierKind m_ModifierKind = ModifierKind.Add;
@@ -83,6 +91,7 @@ namespace Unity.FPS.Roguelike.Cards
         public string DescriptionTemplate => m_DescriptionTemplate;
         public Sprite Icon => m_Icon;
         public CardRarity Rarity => m_Rarity;
+        public RoguelikeAffixEffectType EffectType => m_EffectType;
         public RoguelikeAffixTarget Target => m_Target;
         public StatId StatId => m_StatId;
         public ModifierKind ModifierKind => m_ModifierKind;

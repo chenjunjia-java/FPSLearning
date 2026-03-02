@@ -284,6 +284,11 @@ namespace Unity.FPS.Roguelike.Cards
                 m_PickedUniqueAffixIds.Add(sourceId);
             }
 
+            if (TryApplyInstantEffect(option))
+            {
+                return;
+            }
+
             Modifier modifier = new Modifier(option.Affix.StatId, option.Affix.ModifierKind, option.Value, sourceId);
 
             if (option.Affix.Target == RoguelikeAffixTarget.Player)
@@ -299,6 +304,29 @@ namespace Unity.FPS.Roguelike.Cards
             if (m_WeaponsManager != null && option.TargetWeapon != null)
             {
                 m_WeaponsManager.ApplyModifierToWeapon(option.TargetWeapon, modifier);
+            }
+        }
+
+        private bool TryApplyInstantEffect(RuntimeCardOption option)
+        {
+            if (option.Affix == null)
+            {
+                return false;
+            }
+
+            switch (option.Affix.EffectType)
+            {
+                case RoguelikeAffixEffectType.InstantHeal:
+                    if (m_PlayerStats != null && m_PlayerStats.TryGetComponent(out Health health))
+                    {
+                        float healRatio = Mathf.Max(0f, option.Value);
+                        float healAmount = healRatio * health.MaxHealth;
+                        health.Heal(healAmount);
+                    }
+
+                    return true;
+                default:
+                    return false;
             }
         }
 

@@ -63,7 +63,7 @@ MonoBehaviour:
   InheritWeaponVelocity: 0
   Damage: 15
   AreaOfDamage: {fileID: 0}
-  m_PlayerHitEnemyShakeIntensity: 1
+  m_PlayerHitEnemyShakeIntensity: 2
   m_PlayerHitEnemyShakeDuration: 0.1
   m_PlayerHitEnemyHitStopTimeScale: 0.1
   m_PlayerHitEnemyHitStopDuration: 0.1

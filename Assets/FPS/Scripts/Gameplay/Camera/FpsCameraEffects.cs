@@ -24,7 +24,7 @@ namespace Unity.FPS.Gameplay
 
         [Header("Shake")]
         [Tooltip("Noise frequency for shake")]
-        [SerializeField] float m_ShakeFrequency = 24f;
+        [SerializeField] float m_ShakeFrequency = 40f;
 
         [Tooltip("Shake position multiplier in meters")]
         [SerializeField] float m_PositionShakeMultiplier = 0.05f;
@@ -117,18 +117,10 @@ namespace Unity.FPS.Gameplay
             m_SetShakeIntensity = 0f;
         }
 
-        // Impulse-like shake with finite duration.
+        // Impulse-like shake with finite duration (defaults to BigToSmall envelope).
         public void AddShake(float intensity, float duration)
         {
-            if (intensity > m_ShakeIntensity)
-            {
-                m_ShakeIntensity = intensity;
-            }
-
-            if (duration > m_ShakeTimer)
-            {
-                m_ShakeTimer = duration;
-            }
+            PlayEnvelopeShake(null, peakIntensity: intensity, duration: duration, profile: ShakeEnvelopeProfile.BigToSmall);
         }
 
         public void ClearShake()

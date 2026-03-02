@@ -768,6 +768,11 @@ MonoBehaviour:
   - {fileID: 9087143436424816424, guid: c090580a852000749a24e6c5b7e755de, type: 3}
   m_PoolMaxSize: 64
   m_PrewarmCount: 0
+  m_BossPrefab: {fileID: 0}
+  m_BossSpawnPoints: []
+  m_BossUseDedicatedSpawnPoints: 1
+  m_BossSpawnJitterRadius: 0
+  m_BossSpawnOnce: 1
   m_EnableSpawnTween: 1
   m_SpawnTweenDuration: 0.35
   m_SpawnTweenStartScale: 0.2
@@ -785,6 +790,7 @@ MonoBehaviour:
   - {fileID: 7493418441449436326}
   - {fileID: 1987176173149309063}
   - {fileID: 7424023429756212321}
+  m_UsePlayerAttachedSpawnPointsOnly: 1
   m_SpawnJitterRadius: 1.5
   m_SpawnHeightOffset: 0.5
   m_MaxTriesPerEnemy: 6
@@ -846,6 +852,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Root: {fileID: 1136173715109463594}
+  m_DebrisHoldDuration: 3
+  m_DebrisFadeDuration: 1.5
 --- !u!114 &5978421694882114259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2580,6 +2588,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4952038673272777208}
     m_Modifications:
+    - target: {fileID: 4240235112201694463, guid: d5b9176e759f87c469c3f220ab7f60cc,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.7018709
+      objectReference: {fileID: 0}
+    - target: {fileID: 4240235112201694463, guid: d5b9176e759f87c469c3f220ab7f60cc,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.5411825
+      objectReference: {fileID: 0}
     - target: {fileID: 4641760140566489239, guid: d5b9176e759f87c469c3f220ab7f60cc,
         type: 3}
       propertyPath: m_PressDistance

@@ -20,6 +20,8 @@ namespace Unity.FPS.Roguelike.Level
         [SerializeField] private Transform m_ChainRoot;
         [SerializeField] private NavMeshSurface m_NavMeshSurface;
         [SerializeField] private bool m_AutoStartOnEnable = true;
+        [Tooltip("在 StartRun() 完成首段/预加载布置后立刻重建一次 NavMesh，避免玩家进入首段时才烘焙导致卡顿。")]
+        [SerializeField] private bool m_RebuildNavMeshOnStart = true;
         [SerializeField] private bool m_RebuildNavMeshOnAppend = true;
         [Tooltip("使用 NavMeshSurface.UpdateNavMesh(Async) 来减少主线程卡顿（需要已有 NavMeshData；首次仍可能同步 Build 一次）。")]
         [SerializeField] private bool m_RebuildNavMeshAsyncWhenPossible = true;
@@ -141,6 +143,7 @@ namespace Unity.FPS.Roguelike.Level
 
             m_RunStarted = true;
             m_CurrentSegmentIndex = 0;
+            m_NextSpawnIndex = 0;
 
             if (m_ChainRoot == null)
             {
@@ -164,6 +167,11 @@ namespace Unity.FPS.Roguelike.Level
 
             BuildRuntimeSequence();
             EnsurePreloadedAhead();
+
+            if (m_RebuildNavMeshOnStart)
+            {
+                RequestRebuildNavMesh();
+            }
         }
 
         public bool AppendNextSegment(bool requestNavMeshRebuild = true)

@@ -414,10 +414,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BaseMaxHealth: 80
-  m_BaseAttackDamage: 5
+  m_BaseAttackDamage: 10
   m_BaseAttackMultiplier: 1
   m_BaseAttackSpeedMultiplier: 1
-  m_BaseMoveSpeedMultiplier: 1
+  m_BaseMoveSpeedMultiplier: 2
 --- !u!114 &8918346091859772346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +458,9 @@ MonoBehaviour:
   m_ExplosionSfxKey: 26
   m_PostExplosionSmokeVfx: {fileID: 104829970813648393, guid: d3015b7eea383f64d8b81f965cc466e7,
     type: 3}
-  m_CameraShakeIntensity: 0.8
+  m_SmokeHoldDuration: 6
+  m_SmokeFadeDuration: 1.5
+  m_CameraShakeIntensity: 2
   m_CameraShakeDuration: 0.25
   m_CameraShakeProfile: 1
   m_CameraShakeMaxDistance: 20
@@ -589,6 +591,7 @@ MonoBehaviour:
   KnownTargetTimeout: 12
   MinDistanceFromTarget: 2
   Animator: {fileID: 0}
+  m_IgnoreObstaclesForDetection: 1
 --- !u!1 &6421371450313891992
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,6 +913,7 @@ MonoBehaviour:
   BulletSpreadAngle: 0
   BulletsPerShot: 1
   TripleShotAngleOffset: 20
+  TrajectoryRandomSpreadAngle: 0
   RecoilForce: 1
   AimZoomRatio: 1
   AimOffset: {x: 0, y: 0, z: 0}

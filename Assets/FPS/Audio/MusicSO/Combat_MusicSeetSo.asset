@@ -19,5 +19,5 @@ MonoBehaviour:
   WindVolume: 0.139
   NoiseVolume: 0.146
   EnvironmentVolume: 0.139
-  MainVolume: 0.748
+  MainVolume: 1
   Loop: 1

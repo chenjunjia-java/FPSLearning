@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65d10e31d55ccac4a83ec4acacae3162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BaseMaxHealth: 10
+  m_BaseMaxHealth: 100
   m_BaseAttackDamage: 5
   m_BaseAttackMultiplier: 1
   m_BaseAttackSpeedMultiplier: 1
@@ -544,6 +544,7 @@ MonoBehaviour:
   KnownTargetTimeout: 12
   MinDistanceFromTarget: 3
   Animator: {fileID: 0}
+  m_IgnoreObstaclesForDetection: 1
 --- !u!1 &6421371450313891992
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,6 +866,7 @@ MonoBehaviour:
   BulletSpreadAngle: 0
   BulletsPerShot: 1
   TripleShotAngleOffset: 20
+  TrajectoryRandomSpreadAngle: 0
   RecoilForce: 1
   AimZoomRatio: 1
   AimOffset: {x: 0, y: 0, z: 0}

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3421cdff3ac7e47b8e85e0b08ecd5c, type: 3}
+  m_Name: RoguelikeAffixDefinition_InstantHeal
+  m_EditorClassIdentifier: 
+  m_Id: heal_instant
+  m_DisplayName: Instant Heal
+  m_DescriptionTemplate: Instantly restore {value} health.
+  m_Icon: {fileID: 0}
+  m_Rarity: 0
+  m_EffectType: 1
+  m_Target: 0
+  m_StatId: 0
+  m_ModifierKind: 0
+  m_ValueRange:
+    Min: 0.3
+    Max: 0.3
+  m_ValueDisplayMode: 2
+  m_AllowedShootTypes: -1
+  m_AllowDuplicateInRun: 1
