@@ -22,6 +22,7 @@ namespace Unity.FPS.Roguelike.Level
         [SerializeField] [Min(0f)] private float m_ReleaseDuration = 0.15f;
         [SerializeField] private bool m_OneShot = true;
         [SerializeField] private string m_PlayerTag = "Player";
+        [SerializeField] private Unity.FPS.Game.SfxKey m_PlatePressSfxKey = Unity.FPS.Game.SfxKey.PlatePress;
 
         [Header("Breathing Color")]
         [SerializeField] [Tooltip("不填则从 Plate Visual 上取 Renderer")]
@@ -110,6 +111,10 @@ namespace Unity.FPS.Roguelike.Level
             m_BreathTween = null;
             ApplyPressedColor();
             TweenToPressed();
+            if (m_PlatePressSfxKey != Unity.FPS.Game.SfxKey.None)
+            {
+                Unity.FPS.Game.AudioUtility.PlaySfx(m_PlatePressSfxKey, transform.position);
+            }
             OnPressed?.Invoke(this);
 
             if (m_TargetEntranceDoor != null)

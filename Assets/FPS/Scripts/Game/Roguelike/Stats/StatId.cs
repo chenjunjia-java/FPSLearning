@@ -70,5 +70,6 @@ namespace Unity.FPS.Roguelike.Stats
         Weapon_ChargeDuration = 46,
         Weapon_BurstShotCount = 47,
         Enemy_AttackSpeed = 48,
+        Weapon_TrajectoryCount = 49,
     }
 }

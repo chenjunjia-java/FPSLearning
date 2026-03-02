@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.FPS.Game;
 using Unity.FPS.Roguelike.Cards;
 using Unity.FPS.Gameplay;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Unity.FPS.Roguelike.UI
 {
@@ -28,6 +30,9 @@ namespace Unity.FPS.Roguelike.UI
         [Header("Tween - Menu")]
         [SerializeField] [Min(0f)] private float m_MenuOpenDuration = 0.25f;
         [SerializeField] private Ease m_MenuOpenEase = Ease.OutBack;
+        [SerializeField] [Min(1f)] private float m_MenuClosePopScale = 1.08f;
+        [SerializeField] [Min(0f)] private float m_MenuClosePopDuration = 0.08f;
+        [SerializeField] private Ease m_MenuClosePopEase = Ease.OutQuad;
         [SerializeField] [Min(0f)] private float m_MenuCloseDuration = 0.18f;
         [SerializeField] private Ease m_MenuCloseEase = Ease.InBack;
         [Tooltip("当外部把 Time.timeScale 设为 0 时，是否仍然播放动效（建议开启）")]
@@ -45,9 +50,11 @@ namespace Unity.FPS.Roguelike.UI
         [SerializeField] [Min(0f)] private float m_OtherDisappearDuration = 0.12f;
         [SerializeField] private Ease m_OtherDisappearEase = Ease.InBack;
         [SerializeField] [Min(0f)] private float m_SelectedHoldDuration = 0.55f;
+        [SerializeField] private SfxKey m_UiClickSfxKey = SfxKey.UIClick;
 
         private readonly List<RoguelikeCardView> m_RuntimeCards = new List<RoguelikeCardView>(4);
         private readonly List<RoguelikeCardPresentationData> m_PendingOptions = new List<RoguelikeCardPresentationData>(4);
+        private readonly List<Behaviour> m_DisabledCardContainerLayouts = new List<Behaviour>(4);
         private Action<int> m_OnCardSelected;
         private bool m_IsOpen;
         private InputModeController m_InputModeController;
@@ -91,6 +98,7 @@ namespace Unity.FPS.Roguelike.UI
                 return;
             }
 
+            RestoreCardContainerLayout();
             ClearRuntimeCards();
 
             m_IsResolvingSelection = false;
@@ -121,8 +129,10 @@ namespace Unity.FPS.Roguelike.UI
                 m_IsOpen = false;
                 m_OnCardSelected = null;
                 ClearRuntimeCards();
+                CollapseMenuRootToZero();
                 SetMenuRootActive(false);
                 ReleaseInputBlock();
+                RestoreCardContainerLayout();
                 m_IsResolvingSelection = false;
             });
         }
@@ -139,6 +149,11 @@ namespace Unity.FPS.Roguelike.UI
                 return;
             }
 
+            if (m_UiClickSfxKey != SfxKey.None)
+            {
+                AudioUtility.PlaySfx(m_UiClickSfxKey, transform.position);
+            }
+
             if (index < 0 || index >= m_RuntimeCards.Count)
             {
                 CloseSelection();
@@ -149,9 +164,16 @@ namespace Unity.FPS.Roguelike.UI
             SetAllCardsInteractable(false);
 
             RoguelikeCardView selectedCard = m_RuntimeCards[index];
-            if (selectedCard != null)
+            PrepareCardContainerForSelectionAnimation();
+            RectTransform selectedRect = selectedCard != null ? selectedCard.transform as RectTransform : null;
+            if (selectedRect != null)
             {
-                selectedCard.transform.SetAsLastSibling();
+                // LayoutGroup 会把子物体 anchors 强制设为左/上；这里把选中卡改回“中心锚点”，
+                // 并保持当前屏幕位置不跳，确保 DOAnchorPos(Vector2.zero) 能移动到容器中心。
+                ReanchorToCenterKeepingWorldPosition(selectedRect);
+
+                // 布局冻结后置顶，保证层级正确且不会触发布局位移。
+                selectedRect.SetAsLastSibling();
             }
 
             KillTweens();
@@ -170,6 +192,11 @@ namespace Unity.FPS.Roguelike.UI
                 if (i == index)
                 {
                     m_SelectionSequence.Join(card.transform.DOScale(m_SelectedScale, m_SelectedScaleDuration).SetEase(m_SelectedScaleEase));
+                    RectTransform cardRect = card.transform as RectTransform;
+                    if (cardRect != null)
+                    {
+                        m_SelectionSequence.Join(cardRect.DOAnchorPos(Vector2.zero, m_SelectedScaleDuration).SetEase(m_SelectedScaleEase));
+                    }
                 }
                 else
                 {
@@ -195,7 +222,7 @@ namespace Unity.FPS.Roguelike.UI
                 }
             });
 
-            m_SelectionSequence.Append(m_MenuRoot.transform.DOScale(Vector3.zero, m_MenuCloseDuration).SetEase(m_MenuCloseEase));
+            AppendMenuJellyCloseTween(m_SelectionSequence);
             m_SelectionSequence.OnComplete(() =>
             {
                 int pickedIndex = index;
@@ -204,8 +231,10 @@ namespace Unity.FPS.Roguelike.UI
                 m_IsOpen = false;
                 m_OnCardSelected = null;
                 ClearRuntimeCards();
+                CollapseMenuRootToZero();
                 SetMenuRootActive(false);
                 ReleaseInputBlock();
+                RestoreCardContainerLayout();
                 m_IsResolvingSelection = false;
 
                 callback?.Invoke(pickedIndex);
@@ -246,6 +275,7 @@ namespace Unity.FPS.Roguelike.UI
         private void PlayMenuOpenThenSpawnCards()
         {
             KillTweens();
+            RestoreCardContainerLayout();
 
             if (m_MenuRoot == null)
             {
@@ -319,7 +349,7 @@ namespace Unity.FPS.Roguelike.UI
                 .SetUpdate(m_IgnoreTimeScale)
                 .SetTarget(this);
 
-            m_MenuSequence.Append(m_MenuRoot.transform.DOScale(Vector3.zero, m_MenuCloseDuration).SetEase(m_MenuCloseEase));
+            AppendMenuJellyCloseTween(m_MenuSequence);
             m_MenuSequence.OnComplete(() => onClosed?.Invoke());
         }
 
@@ -334,7 +364,9 @@ namespace Unity.FPS.Roguelike.UI
 
             ClearRuntimeCards();
             ReleaseInputBlock();
+            CollapseMenuRootToZero();
             SetMenuRootActive(false);
+            RestoreCardContainerLayout();
         }
 
         private void SetMenuRootActive(bool active)
@@ -348,6 +380,16 @@ namespace Unity.FPS.Roguelike.UI
             {
                 m_MenuRoot.SetActive(active);
             }
+        }
+
+        private void CollapseMenuRootToZero()
+        {
+            if (m_MenuRoot == null)
+            {
+                return;
+            }
+
+            m_MenuRoot.transform.localScale = Vector3.zero;
         }
 
         private void SetAllCardsInteractable(bool interactable)
@@ -383,6 +425,57 @@ namespace Unity.FPS.Roguelike.UI
             m_SelectionSequence = null;
         }
 
+        private void PrepareCardContainerForSelectionAnimation()
+        {
+            if (m_CardContainer == null)
+            {
+                return;
+            }
+
+            RestoreCardContainerLayout();
+            Canvas.ForceUpdateCanvases();
+
+            LayoutGroup[] layoutGroups = m_CardContainer.GetComponents<LayoutGroup>();
+            for (int i = 0; i < layoutGroups.Length; i++)
+            {
+                LayoutGroup group = layoutGroups[i];
+                if (group == null || !group.enabled)
+                {
+                    continue;
+                }
+
+                m_DisabledCardContainerLayouts.Add(group);
+                group.enabled = false;
+            }
+
+            ContentSizeFitter[] fitters = m_CardContainer.GetComponents<ContentSizeFitter>();
+            for (int i = 0; i < fitters.Length; i++)
+            {
+                ContentSizeFitter fitter = fitters[i];
+                if (fitter == null || !fitter.enabled)
+                {
+                    continue;
+                }
+
+                m_DisabledCardContainerLayouts.Add(fitter);
+                fitter.enabled = false;
+            }
+        }
+
+        private void RestoreCardContainerLayout()
+        {
+            for (int i = 0; i < m_DisabledCardContainerLayouts.Count; i++)
+            {
+                Behaviour behaviour = m_DisabledCardContainerLayouts[i];
+                if (behaviour != null)
+                {
+                    behaviour.enabled = true;
+                }
+            }
+
+            m_DisabledCardContainerLayouts.Clear();
+        }
+
         private void ReleaseInputBlock()
         {
             if (m_InputBlockToken < 0 || m_InputModeController == null)
@@ -392,6 +485,36 @@ namespace Unity.FPS.Roguelike.UI
 
             m_InputModeController.ReleaseUiInputBlock(m_InputBlockToken);
             m_InputBlockToken = -1;
+        }
+
+        private static void ReanchorToCenterKeepingWorldPosition(RectTransform rect)
+        {
+            if (rect == null)
+            {
+                return;
+            }
+
+            Vector3 worldPos = rect.position;
+            Quaternion worldRot = rect.rotation;
+
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+
+            rect.position = worldPos;
+            rect.rotation = worldRot;
+        }
+
+        private void AppendMenuJellyCloseTween(Sequence sequence)
+        {
+            if (sequence == null || m_MenuRoot == null)
+            {
+                return;
+            }
+
+            Transform menuTransform = m_MenuRoot.transform;
+            sequence.Append(menuTransform.DOScale(m_MenuRootOriginalScale * m_MenuClosePopScale, m_MenuClosePopDuration).SetEase(m_MenuClosePopEase));
+            sequence.Append(menuTransform.DOScale(Vector3.zero, m_MenuCloseDuration).SetEase(m_MenuCloseEase));
         }
     }
 }

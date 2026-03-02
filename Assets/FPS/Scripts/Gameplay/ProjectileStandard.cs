@@ -55,10 +55,10 @@ namespace Unity.FPS.Gameplay
         public DamageArea AreaOfDamage;
 
         [Header("Game Feel")]
-        [SerializeField] float m_PlayerHitEnemyShakeIntensity = 0.12f;
+        [SerializeField] float m_PlayerHitEnemyShakeIntensity = 0.3f;
         [SerializeField] float m_PlayerHitEnemyShakeDuration = 0.1f;
         [SerializeField] float m_PlayerHitEnemyHitStopTimeScale = 0.1f;
-        [SerializeField] float m_PlayerHitEnemyHitStopDuration = 0.07f;
+        [SerializeField] float m_PlayerHitEnemyHitStopDuration = 1f;
 
         [Header("Debug")] [Tooltip("Color of the projectile radius debug view")]
         public Color RadiusColor = Color.cyan * 0.2f;
@@ -416,7 +416,7 @@ namespace Unity.FPS.Gameplay
             }
 
             // ignore hits with triggers that don't have a Damageable component
-            if (hit.collider.isTrigger && hit.collider.GetComponent<Damageable>() == null)
+            if (hit.collider.isTrigger && hit.collider.GetComponentInParent<Damageable>() == null)
             {
                 return false;
             }
@@ -432,7 +432,8 @@ namespace Unity.FPS.Gameplay
 
         void OnHit(Vector3 point, Vector3 normal, Collider collider)
         {
-            Damageable damageable = collider.GetComponent<Damageable>();
+            // Allow colliders on child objects while Damageable lives on the root.
+            Damageable damageable = collider.GetComponentInParent<Damageable>();
 
             if (m_RemainingBounces > 0 && damageable == null)
             {

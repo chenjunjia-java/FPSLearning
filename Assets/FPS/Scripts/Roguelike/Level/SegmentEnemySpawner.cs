@@ -1,4 +1,5 @@
 using Unity.FPS.AI;
+using Unity.FPS.Game;
 using Unity.FPS.GameFramework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,16 @@ namespace Unity.FPS.Roguelike.Level
         [SerializeField] [Min(1)] private int m_PoolMaxSize = 64;
         [SerializeField] [Min(0)] private int m_PrewarmCount = 0;
 
+        [Header("Boss")]
+        [SerializeField] private EnemyController m_BossPrefab;
+        [Tooltip("Boss 的专用刷新点。为空时回退使用普通 Spawn Points。")]
+        [SerializeField] private Transform[] m_BossSpawnPoints;
+        [Tooltip("Boss 使用专用刷新点数组；若数组为空则自动回退到普通 Spawn Points。")]
+        [SerializeField] private bool m_BossUseDedicatedSpawnPoints = true;
+        [SerializeField] [Min(0f)] private float m_BossSpawnJitterRadius = 0f;
+        [Tooltip("开启后，同一个 SegmentEnemySpawner 生命周期内只会生成一次 Boss。")]
+        [SerializeField] private bool m_BossSpawnOnce = true;
+
         [Header("Spawn Tween (Jelly)")]
         [SerializeField] private bool m_EnableSpawnTween = true;
         [SerializeField] [Min(0.01f)] private float m_SpawnTweenDuration = 0.35f;
@@ -28,6 +39,8 @@ namespace Unity.FPS.Roguelike.Level
 
         [Header("Spawn Points")]
         [SerializeField] private Transform[] m_SpawnPoints;
+        [Tooltip("启用后，仅在离主角最近的 3 个 Spawn Point 中随机生成。")]
+        [SerializeField] private bool m_UsePlayerAttachedSpawnPointsOnly = true;
         [SerializeField] [Min(0f)] private float m_SpawnJitterRadius = 1.5f;
         [SerializeField] private float m_SpawnHeightOffset = 0.5f;
         [SerializeField] [Min(1)] private int m_MaxTriesPerEnemy = 6;
@@ -42,6 +55,12 @@ namespace Unity.FPS.Roguelike.Level
         private float m_PlacementCapsuleRadius;
         private float m_PlacementCapsuleHeight;
         private bool m_HasResolvedPlacementCapsule;
+        private ActorsManager m_ActorsManager;
+        private readonly List<Transform> m_ClosestSpawnPointsBuffer = new List<Transform>(16);
+        private readonly Transform[] m_ClosestSpawnPointCandidates = new Transform[3];
+        private readonly float[] m_ClosestSpawnPointDistances = new float[3];
+
+        private bool m_HasSpawnedBoss;
 
         public int Spawn(int count)
         {
@@ -56,7 +75,8 @@ namespace Unity.FPS.Roguelike.Level
             }
 
             CacheSpawnPointsIfNeeded();
-            if (m_SpawnPoints == null || m_SpawnPoints.Length == 0)
+            Transform[] spawnPoints = ResolveRegularSpawnPoints();
+            if (spawnPoints == null || spawnPoints.Length == 0)
             {
                 return 0;
             }
@@ -70,7 +90,8 @@ namespace Unity.FPS.Roguelike.Level
             int spawnedCount = 0;
             for (int i = 0; i < count; i++)
             {
-                if (!TryResolveSpawnPose(out Vector3 spawnPosition, out Quaternion spawnRotation))
+                if (!TryResolveSpawnPose(spawnPoints, m_SpawnJitterRadius, out Vector3 spawnPosition,
+                        out Quaternion spawnRotation))
                 {
                     continue;
                 }
@@ -86,6 +107,54 @@ namespace Unity.FPS.Roguelike.Level
             }
 
             return spawnedCount;
+        }
+
+        public EnemyController SpawnBoss()
+        {
+            return SpawnBoss(null);
+        }
+
+        public EnemyController SpawnBoss(IEnemySpawnedHandler handler)
+        {
+            if (m_BossPrefab == null)
+            {
+                return null;
+            }
+
+            if (m_BossSpawnOnce && m_HasSpawnedBoss)
+            {
+                return null;
+            }
+
+            CacheSpawnPointsIfNeeded();
+            Transform[] points = ResolveBossSpawnPoints();
+            if (points == null || points.Length == 0)
+            {
+                return null;
+            }
+
+            PreparePool();
+            if (!TryResolveSpawnPose(points, m_BossSpawnJitterRadius, out Vector3 spawnPosition,
+                    out Quaternion spawnRotation))
+            {
+                return null;
+            }
+
+            m_HasSpawnedBoss = true;
+
+            EnemyController enemy = SpawnSingleAndReturn(m_BossPrefab, spawnPosition, spawnRotation, handler);
+            if (enemy == null && m_BossSpawnOnce)
+            {
+                // 生成失败（池/Instantiate 返回 null）时允许重试
+                m_HasSpawnedBoss = false;
+            }
+
+            return enemy;
+        }
+
+        public void ResetRuntimeState()
+        {
+            m_HasSpawnedBoss = false;
         }
 
         private void Awake()
@@ -105,6 +174,13 @@ namespace Unity.FPS.Roguelike.Level
         {
             if (ObjPrefabManager.Instance == null || m_EnemyPrefabs == null || m_EnemyPrefabs.Count == 0)
             {
+                // 仍可能需要 Boss 的池
+                if (ObjPrefabManager.Instance == null || m_BossPrefab == null)
+                {
+                    return;
+                }
+
+                ObjPrefabManager.Instance.Load(m_BossPrefab, m_PrewarmCount, m_PoolMaxSize);
                 return;
             }
 
@@ -117,6 +193,11 @@ namespace Unity.FPS.Roguelike.Level
                 }
 
                 ObjPrefabManager.Instance.Load(prefab, m_PrewarmCount, m_PoolMaxSize);
+            }
+
+            if (m_BossPrefab != null)
+            {
+                ObjPrefabManager.Instance.Load(m_BossPrefab, m_PrewarmCount, m_PoolMaxSize);
             }
         }
 
@@ -149,6 +230,40 @@ namespace Unity.FPS.Roguelike.Level
                 PlaySpawnJellyTween(enemy);
                 handler?.OnEnemySpawned(enemy);
             }
+        }
+
+        private EnemyController SpawnSingleAndReturn(EnemyController prefab, Vector3 position, Quaternion rotation,
+            IEnemySpawnedHandler handler)
+        {
+            if (prefab == null)
+            {
+                return null;
+            }
+
+            EnemyController enemy;
+            if (ObjPrefabManager.Instance != null)
+            {
+                enemy = ObjPrefabManager.Instance.Spawn(prefab, position, rotation, null, m_PoolMaxSize);
+            }
+            else
+            {
+                if (!m_HasWarnedMissingPool)
+                {
+                    m_HasWarnedMissingPool = true;
+                    Debug.LogWarning("ObjPrefabManager not found. SegmentEnemySpawner falls back to Instantiate.", this);
+                }
+
+                enemy = Instantiate(prefab, position, rotation);
+            }
+
+            if (enemy != null)
+            {
+                enemy.SetRandomColors();
+                PlaySpawnJellyTween(enemy);
+                handler?.OnEnemySpawned(enemy);
+            }
+
+            return enemy;
         }
 
         private void PlaySpawnJellyTween(EnemyController enemy)
@@ -187,21 +302,32 @@ namespace Unity.FPS.Roguelike.Level
             });
         }
 
-        private bool TryResolveSpawnPose(out Vector3 spawnPosition, out Quaternion spawnRotation)
+        private bool TryResolveSpawnPose(Transform[] spawnPoints, float jitterRadius, out Vector3 spawnPosition,
+            out Quaternion spawnRotation)
         {
+            if (spawnPoints == null || spawnPoints.Length == 0)
+            {
+                spawnPosition = Vector3.zero;
+                spawnRotation = Quaternion.identity;
+                return false;
+            }
+
             int attempts = Mathf.Max(1, m_MaxTriesPerEnemy);
             for (int attempt = 0; attempt < attempts; attempt++)
             {
-                Transform spawnPoint = m_SpawnPoints[Random.Range(0, m_SpawnPoints.Length)];
+                Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
                 if (spawnPoint == null)
                 {
                     continue;
                 }
 
                 Vector3 candidate = spawnPoint.position;
-                Vector2 jitter = Random.insideUnitCircle * m_SpawnJitterRadius;
-                candidate.x += jitter.x;
-                candidate.z += jitter.y;
+                if (jitterRadius > 0f)
+                {
+                    Vector2 jitter = Random.insideUnitCircle * jitterRadius;
+                    candidate.x += jitter.x;
+                    candidate.z += jitter.y;
+                }
 
                 if (m_NavMeshSampleRadius > 0f)
                 {
@@ -279,6 +405,7 @@ namespace Unity.FPS.Roguelike.Level
 
             if (m_EnemyPrefabs == null || m_EnemyPrefabs.Count == 0)
             {
+                AccumulatePlacementCapsuleFromPrefab(m_BossPrefab);
                 return;
             }
 
@@ -291,26 +418,38 @@ namespace Unity.FPS.Roguelike.Level
                     continue;
                 }
 
-                // 优先取真实碰撞体/Agent 参数，让检测更贴合敌人体积。
-                if (prefab.TryGetComponent<CharacterController>(out var cc) && cc != null)
-                {
-                    m_PlacementCapsuleRadius = Mathf.Max(m_PlacementCapsuleRadius, cc.radius);
-                    m_PlacementCapsuleHeight = Mathf.Max(m_PlacementCapsuleHeight, cc.height);
-                    continue;
-                }
+                AccumulatePlacementCapsuleFromPrefab(prefab);
+            }
 
-                if (prefab.TryGetComponent<CapsuleCollider>(out var capsule) && capsule != null)
-                {
-                    m_PlacementCapsuleRadius = Mathf.Max(m_PlacementCapsuleRadius, capsule.radius);
-                    m_PlacementCapsuleHeight = Mathf.Max(m_PlacementCapsuleHeight, capsule.height);
-                    continue;
-                }
+            AccumulatePlacementCapsuleFromPrefab(m_BossPrefab);
+        }
 
-                if (prefab.TryGetComponent<NavMeshAgent>(out var agent) && agent != null)
-                {
-                    m_PlacementCapsuleRadius = Mathf.Max(m_PlacementCapsuleRadius, agent.radius);
-                    m_PlacementCapsuleHeight = Mathf.Max(m_PlacementCapsuleHeight, agent.height);
-                }
+        private void AccumulatePlacementCapsuleFromPrefab(EnemyController prefab)
+        {
+            if (prefab == null)
+            {
+                return;
+            }
+
+            // 优先取真实碰撞体/Agent 参数，让检测更贴合敌人体积。
+            if (prefab.TryGetComponent<CharacterController>(out var cc) && cc != null)
+            {
+                m_PlacementCapsuleRadius = Mathf.Max(m_PlacementCapsuleRadius, cc.radius);
+                m_PlacementCapsuleHeight = Mathf.Max(m_PlacementCapsuleHeight, cc.height);
+                return;
+            }
+
+            if (prefab.TryGetComponent<CapsuleCollider>(out var capsule) && capsule != null)
+            {
+                m_PlacementCapsuleRadius = Mathf.Max(m_PlacementCapsuleRadius, capsule.radius);
+                m_PlacementCapsuleHeight = Mathf.Max(m_PlacementCapsuleHeight, capsule.height);
+                return;
+            }
+
+            if (prefab.TryGetComponent<NavMeshAgent>(out var agent) && agent != null)
+            {
+                m_PlacementCapsuleRadius = Mathf.Max(m_PlacementCapsuleRadius, agent.radius);
+                m_PlacementCapsuleHeight = Mathf.Max(m_PlacementCapsuleHeight, agent.height);
             }
         }
 
@@ -322,6 +461,90 @@ namespace Unity.FPS.Roguelike.Level
             }
 
             m_SpawnPoints = new[] { transform };
+        }
+
+        private Transform[] ResolveBossSpawnPoints()
+        {
+            if (m_BossUseDedicatedSpawnPoints && m_BossSpawnPoints != null && m_BossSpawnPoints.Length > 0)
+            {
+                return m_BossSpawnPoints;
+            }
+
+            return m_SpawnPoints;
+        }
+
+        private Transform[] ResolveRegularSpawnPoints()
+        {
+            if (!m_UsePlayerAttachedSpawnPointsOnly)
+            {
+                return m_SpawnPoints;
+            }
+
+            if (m_SpawnPoints == null || m_SpawnPoints.Length == 0)
+            {
+                return null;
+            }
+
+            if (m_ActorsManager == null)
+            {
+                m_ActorsManager = FindObjectOfType<ActorsManager>();
+            }
+
+            Transform playerTransform = m_ActorsManager != null && m_ActorsManager.Player != null
+                ? m_ActorsManager.Player.transform
+                : null;
+            if (playerTransform == null)
+            {
+                return m_SpawnPoints;
+            }
+
+            m_ClosestSpawnPointsBuffer.Clear();
+            for (int i = 0; i < m_ClosestSpawnPointCandidates.Length; i++)
+            {
+                m_ClosestSpawnPointCandidates[i] = null;
+                m_ClosestSpawnPointDistances[i] = Mathf.Infinity;
+            }
+
+            for (int i = 0; i < m_SpawnPoints.Length; i++)
+            {
+                Transform spawnPoint = m_SpawnPoints[i];
+                if (spawnPoint == null)
+                {
+                    continue;
+                }
+
+                float sqrDistance = (spawnPoint.position - playerTransform.position).sqrMagnitude;
+                for (int slot = 0; slot < m_ClosestSpawnPointCandidates.Length; slot++)
+                {
+                    if (sqrDistance >= m_ClosestSpawnPointDistances[slot])
+                    {
+                        continue;
+                    }
+
+                    for (int shift = m_ClosestSpawnPointCandidates.Length - 1; shift > slot; shift--)
+                    {
+                        m_ClosestSpawnPointCandidates[shift] = m_ClosestSpawnPointCandidates[shift - 1];
+                        m_ClosestSpawnPointDistances[shift] = m_ClosestSpawnPointDistances[shift - 1];
+                    }
+
+                    m_ClosestSpawnPointCandidates[slot] = spawnPoint;
+                    m_ClosestSpawnPointDistances[slot] = sqrDistance;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < m_ClosestSpawnPointCandidates.Length; i++)
+            {
+                Transform spawnPoint = m_ClosestSpawnPointCandidates[i];
+                if (spawnPoint != null)
+                {
+                    m_ClosestSpawnPointsBuffer.Add(spawnPoint);
+                }
+            }
+
+            return m_ClosestSpawnPointsBuffer.Count > 0
+                ? m_ClosestSpawnPointsBuffer.ToArray()
+                : null;
         }
 
         private bool HasAnyEnemyPrefab()

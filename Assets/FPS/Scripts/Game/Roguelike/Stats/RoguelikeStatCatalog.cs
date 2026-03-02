@@ -31,6 +31,7 @@ namespace Unity.FPS.Roguelike.Stats
             StatId.Weapon_ChainHitCount,
             StatId.Weapon_ChargeDuration,
             StatId.Weapon_BurstShotCount,
+            StatId.Weapon_TrajectoryCount,
         };
 
         private static readonly StatId[] s_SurvivalStats =

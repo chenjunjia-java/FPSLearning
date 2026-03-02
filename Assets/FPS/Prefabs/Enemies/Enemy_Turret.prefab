@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 3444686158330356048}
   - component: {fileID: 3637339673505193013}
   - component: {fileID: 8362898806478723806}
+  - component: {fileID: 3765053436609140578}
   m_Layer: 0
   m_Name: Enemy_Turret
   m_TagString: Untagged
@@ -286,8 +287,11 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   FlashOnHitDuration: 0.125
-  DamageTick: {fileID: 8300000, guid: a7fae22399a6e1d448dc0dd2210f1dac, type: 3}
-  DeathVfx: {fileID: 8950624839484268180, guid: 45ce85b82008be84287f2c7e5bf07647,
+  m_CanBeKnockedBack: 0
+  m_KnockbackDuration: 0.1
+  m_KnockbackMomentum: 6
+  m_DamageTickSfxKey: 3
+  DeathVfx: {fileID: 1998830269065593993, guid: b70fbea4bc8994749ba52e4f560f9f28,
     type: 3}
   DeathVfxSpawnPoint: {fileID: 7886326314632062837}
   m_DeathGibsPrefab: {fileID: 3711234772310911284, guid: a623b5f399e92634e82b331a4fcfecb1,
@@ -300,7 +304,7 @@ MonoBehaviour:
   m_GibLinearDrag: 0.1
   m_GibAngularDrag: 0.05
   LootPrefab: {fileID: 0}
-  DropRate: 1
+  DropRate: 0
   PathReachingRangeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   AttackRangeColor: {r: 1, g: 0, b: 0, a: 1}
   DetectionRangeColor: {r: 0, g: 0, b: 1, a: 1}
@@ -364,7 +368,7 @@ MonoBehaviour:
   OnDetectVfx:
   - {fileID: 7957976818100458430}
   - {fileID: 4008264615443136680}
-  OnDetectSfx: {fileID: 8300000, guid: 7fac2ef5c59df1a45985d3eb894e8d47, type: 3}
+  m_OnDetectSfxKey: 1
 --- !u!114 &8502097699347725703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,11 +444,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65d10e31d55ccac4a83ec4acacae3162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BaseMaxHealth: 100
-  m_BaseAttackDamage: 5
-  m_BaseAttackMultiplier: 10
+  m_BaseMaxHealth: 1000
+  m_BaseAttackDamage: 10
+  m_BaseAttackMultiplier: 1
   m_BaseAttackSpeedMultiplier: 1
   m_BaseMoveSpeedMultiplier: 1
+--- !u!114 &3765053436609140578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015434656898269652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9b0ce1bb69c96b49a7ac1098a7f5796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageMultiplier: 0.7
+  SensibilityToSelfdamage: 0.5
 --- !u!1 &2201913640410082181
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,12 +810,13 @@ MonoBehaviour:
   WeaponAnimator: {fileID: 0}
   MuzzleFlashPrefab: {fileID: 638502610521960261}
   UnparentMuzzleFlash: 0
-  ShootSfx: {fileID: 8300000, guid: 0d44f0cb2e91f5f4ca09aded9a1bd9ab, type: 3}
-  ChangeWeaponSfx: {fileID: 0}
+  m_ShootSfxKey: 5
+  m_ShotAfterSfxKey: 25
+  m_ChangeWeaponSfxKey: 6
   UseContinuousShootSound: 0
-  ContinuousShootStartSfx: {fileID: 0}
-  ContinuousShootLoopSfx: {fileID: 0}
-  ContinuousShootEndSfx: {fileID: 0}
+  m_ContinuousShootStartSfxKey: 7
+  m_ContinuousShootLoopSfxKey: 8
+  m_ContinuousShootEndSfxKey: 9
 --- !u!82 &2231955200838058728
 AudioSource:
   m_ObjectHideFlags: 0

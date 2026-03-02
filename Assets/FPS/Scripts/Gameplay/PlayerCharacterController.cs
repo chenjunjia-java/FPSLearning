@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace Unity.FPS.Gameplay
 {
-    [RequireComponent(typeof(CharacterController), typeof(PlayerInputHandler), typeof(AudioSource))]
+    [RequireComponent(typeof(CharacterController), typeof(PlayerInputHandler))]
     public class PlayerCharacterController : MonoBehaviour
     {
         [Header("References")] [Tooltip("Reference to the main camera used for the player")]
@@ -16,9 +16,6 @@ namespace Unity.FPS.Gameplay
 
         [Tooltip("Runtime pitch pivot used by camera rig")]
         public Transform CameraPitchPivot;
-
-        [Tooltip("Audio source for footsteps, jump, etc...")]
-        public AudioSource AudioSource;
 
         [Header("General")] [Tooltip("Force applied downward when in the air")]
         public float GravityDownForce = 20f;
@@ -89,19 +86,22 @@ namespace Unity.FPS.Gameplay
         public float CrouchingSharpness = 10f;
 
         [Header("Audio")] [Tooltip("Amount of footstep sounds played when moving one meter")]
-        public float FootstepSfxFrequency = 1f;
+        public float FootstepSfxFrequency = 2.2f;
 
         [Tooltip("Amount of footstep sounds played when moving one meter while sprinting")]
-        public float FootstepSfxFrequencyWhileSprinting = 1f;
+        public float FootstepSfxFrequencyWhileSprinting = 2.5f;
 
-        [Tooltip("Sound played for footsteps")]
-        public AudioClip FootstepSfx;
+        [Tooltip("SFX key for footsteps (SfxCatalog).")]
+        [SerializeField] private SfxKey m_FootstepSfxKey = SfxKey.Footstep;
 
-        [Tooltip("Sound played when jumping")] public AudioClip JumpSfx;
-        [Tooltip("Sound played when landing")] public AudioClip LandSfx;
+        [Tooltip("SFX key when jumping.")]
+        [SerializeField] private SfxKey m_JumpSfxKey = SfxKey.Jump;
 
-        [Tooltip("Sound played when taking damage froma fall")]
-        public AudioClip FallDamageSfx;
+        [Tooltip("SFX key when landing.")]
+        [SerializeField] private SfxKey m_LandSfxKey = SfxKey.Land;
+
+        [Tooltip("SFX key when taking damage from a fall.")]
+        [SerializeField] private SfxKey m_FallDamageSfxKey = SfxKey.FallDamage;
 
         [Header("Fall Damage")]
         [Tooltip("Whether the player will recieve damage when hitting the ground at high speed")]
@@ -253,12 +253,14 @@ namespace Unity.FPS.Gameplay
                     m_Health.TakeDamage(dmgFromFall, null);
 
                     // fall damage SFX
-                    AudioSource.PlayOneShot(FallDamageSfx);
+                    if (m_FallDamageSfxKey != SfxKey.None)
+                        AudioUtility.PlaySfx(m_FallDamageSfxKey, transform.position);
                 }
                 else
                 {
                     // land SFX
-                    AudioSource.PlayOneShot(LandSfx);
+                    if (m_LandSfxKey != SfxKey.None)
+                        AudioUtility.PlaySfx(m_LandSfxKey, transform.position);
                 }
             }
 
@@ -407,7 +409,8 @@ namespace Unity.FPS.Gameplay
                     if (m_FootstepDistanceCounter >= 1f / chosenFootstepSfxFrequency)
                     {
                         m_FootstepDistanceCounter = 0f;
-                        AudioSource.PlayOneShot(FootstepSfx);
+                        if (m_FootstepSfxKey != SfxKey.None)
+                            AudioUtility.PlaySfx(m_FootstepSfxKey, transform.position, transform);
                     }
 
                     // keep track of distance traveled for footsteps sound
@@ -495,19 +498,27 @@ namespace Unity.FPS.Gameplay
                 }
                 m_Actor.AimPoint.transform.localPosition = m_Controller.center;
             }
-            // Update smooth height
-            else if (m_Controller.height != m_TargetCharacterHeight)
+            // Update smooth height and always update camera follow point
+            else
             {
-                // resize the capsule and adjust camera position
-                m_Controller.height = Mathf.Lerp(m_Controller.height, m_TargetCharacterHeight,
-                    CrouchingSharpness * Time.deltaTime);
-                m_Controller.center = Vector3.up * m_Controller.height * 0.5f;
+                bool heightChanged = m_Controller.height != m_TargetCharacterHeight;
+                if (heightChanged)
+                {
+                    // resize the capsule
+                    m_Controller.height = Mathf.Lerp(m_Controller.height, m_TargetCharacterHeight,
+                        CrouchingSharpness * Time.deltaTime);
+                    m_Controller.center = Vector3.up * m_Controller.height * 0.5f;
+                    m_Actor.AimPoint.transform.localPosition = m_Controller.center;
+                }
+
+                // even when height doesn't change (e.g. standing), jump anticipation still needs to drive follow point
                 if (CameraFollowPoint != null)
                 {
-                    CameraFollowPoint.localPosition = Vector3.Lerp(CameraFollowPoint.localPosition,
-                        targetCameraLocalPosition, CrouchingSharpness * Time.deltaTime);
+                    CameraFollowPoint.localPosition = Vector3.Lerp(
+                        CameraFollowPoint.localPosition,
+                        targetCameraLocalPosition,
+                        CrouchingSharpness * Time.deltaTime);
                 }
-                m_Actor.AimPoint.transform.localPosition = m_Controller.center;
             }
         }
 
@@ -584,7 +595,8 @@ namespace Unity.FPS.Gameplay
             CharacterVelocity += Vector3.up * JumpForce;
 
             // play sound
-            AudioSource.PlayOneShot(JumpSfx);
+            if (m_JumpSfxKey != SfxKey.None)
+                AudioUtility.PlaySfx(m_JumpSfxKey, transform.position, transform);
 
             // remember last time we jumped because we need to prevent snapping to ground for a short time
             m_LastTimeJumped = Time.time;

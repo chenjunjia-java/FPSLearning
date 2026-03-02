@@ -75,13 +75,43 @@ namespace Unity.FPS.Gameplay
                 m_MainCamera = m_Controller != null ? m_Controller.PlayerCamera : null;
             }
 
-            if (m_CameraFollowPoint == null && m_Controller != null)
-            {
-                m_CameraFollowPoint = m_Controller.CameraFollowPoint;
-            }
+            EnsureCameraFollowPointReference();
 
             BuildRigIfNeeded();
             InitializeState();
+        }
+
+        void EnsureCameraFollowPointReference()
+        {
+            if (m_Controller == null)
+            {
+                return;
+            }
+
+            // If this component is already on the prefab, Awake can run before PlayerCharacterController.Start()
+            // (which normally creates the follow point). Ensure it exists so the rig initializes deterministically.
+            if (m_Controller.CameraFollowPoint == null)
+            {
+                var followPointGo = new GameObject("CameraFollowPoint");
+                Transform follow = followPointGo.transform;
+                follow.SetParent(m_PlayerTransform, false);
+
+                float height = 1.8f;
+                var characterController = GetComponent<CharacterController>();
+                if (characterController != null && characterController.height > 0.01f)
+                {
+                    height = characterController.height;
+                }
+
+                float ratio = Mathf.Clamp01(m_Controller.CameraHeightRatio);
+                follow.localPosition = Vector3.up * height * ratio;
+                m_Controller.CameraFollowPoint = follow;
+            }
+
+            if (m_CameraFollowPoint == null)
+            {
+                m_CameraFollowPoint = m_Controller.CameraFollowPoint;
+            }
         }
 
         void LateUpdate()

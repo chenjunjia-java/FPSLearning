@@ -18,6 +18,6 @@ MonoBehaviour:
   Main: {fileID: 8300000, guid: ff0929f90c749eb4d8048e8c87967f5b, type: 3}
   WindVolume: 0.216
   NoiseVolume: 0.234
-  EnvironmentVolume: 0.622
+  EnvironmentVolume: 0.341
   MainVolume: 0.802
   Loop: 1

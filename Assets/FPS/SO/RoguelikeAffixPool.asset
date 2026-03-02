@@ -13,18 +13,13 @@ MonoBehaviour:
   m_Name: RoguelikeAffixPool
   m_EditorClassIdentifier: 
   m_AllAffixes:
-  - {fileID: 11400000, guid: e582807b8cf2e0142b34bd899d567a5e, type: 2}
-  - {fileID: 11400000, guid: 23c4b1e63dd7a264180377cca45b9eaf, type: 2}
-  - {fileID: 11400000, guid: 816bebc6f386ee74e869ef46657b2870, type: 2}
-  - {fileID: 11400000, guid: e3253b843c3bad84ea4173a2f5c76543, type: 2}
-  - {fileID: 11400000, guid: c1000000000000000000000000000001, type: 2}
-  - {fileID: 11400000, guid: c2000000000000000000000000000002, type: 2}
-  - {fileID: 11400000, guid: c3000000000000000000000000000003, type: 2}
-  - {fileID: 11400000, guid: c4000000000000000000000000000004, type: 2}
-  - {fileID: 11400000, guid: c5000000000000000000000000000005, type: 2}
-  - {fileID: 11400000, guid: c6000000000000000000000000000006, type: 2}
-  - {fileID: 11400000, guid: c7000000000000000000000000000007, type: 2}
-  - {fileID: 11400000, guid: c8000000000000000000000000000008, type: 2}
-  - {fileID: 11400000, guid: c9000000000000000000000000000009, type: 2}
-  - {fileID: 11400000, guid: ca00000000000000000000000000000a, type: 2}
   - {fileID: 11400000, guid: cb00000000000000000000000000000b, type: 2}
+  - {fileID: 11400000, guid: e3253b843c3bad84ea4173a2f5c76543, type: 2}
+  - {fileID: 11400000, guid: 97d9eb585f9a2814ca8f526eeffa13e5, type: 2}
+  m_RarityWeights:
+  - Rarity: 0
+    Weight: 10
+  - Rarity: 1
+    Weight: 4
+  - Rarity: 2
+    Weight: 1.5

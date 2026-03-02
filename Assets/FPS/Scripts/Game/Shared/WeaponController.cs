@@ -64,11 +64,11 @@ namespace Unity.FPS.Game
         [Tooltip("Amount of bullets per shot")]
         public int BulletsPerShot = 1;
 
-        [Tooltip("Enable triple trajectory mode for rifles (center, left, right)")]
-        public bool UseTripleShot = false;
-
-        [Tooltip("Left and right trajectory angle offset when triple trajectory is enabled")]
+        [Tooltip("Angular step between adjacent trajectories (degrees)")]
         public float TripleShotAngleOffset = 20f;
+
+        [Tooltip("Random angular offset range for each trajectory (degrees)")]
+        public float TrajectoryRandomSpreadAngle = 0f;
 
         [Tooltip("Force that will push back the weapon after each shot")] [Range(0f, 2f)]
         public float RecoilForce = 1;
@@ -127,6 +127,7 @@ namespace Unity.FPS.Game
         public bool UnparentMuzzleFlash;
 
         [SerializeField] private SfxKey m_ShootSfxKey = SfxKey.WeaponShoot;
+        [SerializeField] private SfxKey m_ShotAfterSfxKey = SfxKey.WeaponShotAfter;
 
         [SerializeField] private SfxKey m_ChangeWeaponSfxKey = SfxKey.WeaponChange;
 
@@ -196,6 +197,15 @@ namespace Unity.FPS.Game
         const string k_AnimAttackParameter = "Attack";
 
         private Queue<Rigidbody> m_PhysicalAmmoPool;
+
+        RoguelikeWeaponStatsRuntime GetWeaponStatsRuntimeIfAny()
+        {
+            if (m_WeaponStatsRuntime == null)
+            {
+                m_WeaponStatsRuntime = GetComponent<RoguelikeWeaponStatsRuntime>();
+            }
+            return m_WeaponStatsRuntime;
+        }
         void Awake()
         {
             m_CurrentAmmo = MaxAmmo;
@@ -333,9 +343,10 @@ namespace Unity.FPS.Game
                 {
                     float chargeLeft = 1f - CurrentCharge;
                     float effectiveMaxChargeDuration = MaxChargeDuration;
-                    if (ShootType == WeaponShootType.Charge && m_WeaponStatsRuntime != null)
+                    RoguelikeWeaponStatsRuntime weaponStats = GetWeaponStatsRuntimeIfAny();
+                    if (ShootType == WeaponShootType.Charge && weaponStats != null)
                     {
-                        effectiveMaxChargeDuration *= m_WeaponStatsRuntime.ChargeDurationMulFinal;
+                        effectiveMaxChargeDuration *= weaponStats.ChargeDurationMulFinal;
                     }
 
                     // Calculate how much charge ratio to add this frame
@@ -516,9 +527,12 @@ namespace Unity.FPS.Game
         void HandleShoot(float chargeRatio)
         {
             int additionalProjectiles = 0;
-            if (ShootType == WeaponShootType.Automatic && m_WeaponStatsRuntime != null)
+            int trajectoryCount = 1;
+            RoguelikeWeaponStatsRuntime weaponStats = GetWeaponStatsRuntimeIfAny();
+            if (ShootType == WeaponShootType.Automatic && weaponStats != null)
             {
-                additionalProjectiles = m_WeaponStatsRuntime.AdditionalProjectilesFinal;
+                additionalProjectiles = weaponStats.AdditionalProjectilesFinal;
+                trajectoryCount = Mathf.Max(1, weaponStats.TrajectoryCountFinal);
             }
 
             int bulletsPerShotFinal = ShootType == WeaponShootType.Charge
@@ -526,24 +540,13 @@ namespace Unity.FPS.Game
                 : BulletsPerShot;
             bulletsPerShotFinal = Mathf.Max(1, bulletsPerShotFinal + additionalProjectiles);
 
-            bool useTripleShot = ShootType == WeaponShootType.Automatic && UseTripleShot;
-            float sideAngleOffset = Mathf.Abs(TripleShotAngleOffset);
+            float trajectoryAngleStep = Mathf.Abs(TripleShotAngleOffset);
 
             // spawn all bullets with random direction
             for (int i = 0; i < bulletsPerShotFinal; i++)
             {
                 Vector3 centerDirection = GetShotDirectionWithinSpread(WeaponMuzzle);
-                SpawnProjectile(centerDirection);
-
-                if (useTripleShot)
-                {
-                    Vector3 leftDirection =
-                        Quaternion.AngleAxis(-sideAngleOffset, WeaponMuzzle.up) * centerDirection;
-                    Vector3 rightDirection =
-                        Quaternion.AngleAxis(sideAngleOffset, WeaponMuzzle.up) * centerDirection;
-                    SpawnProjectile(leftDirection);
-                    SpawnProjectile(rightDirection);
-                }
+                SpawnTrajectoryProjectiles(centerDirection, trajectoryCount, trajectoryAngleStep);
             }
 
             // muzzle flash
@@ -592,6 +595,10 @@ namespace Unity.FPS.Game
             {
                 PlaySfxByKey(m_ShootSfxKey);
             }
+            if (m_ShotAfterSfxKey != SfxKey.None)
+            {
+                PlaySfxByKey(m_ShotAfterSfxKey);
+            }
 
             // Trigger attack animation if there is any
             if (WeaponAnimator)
@@ -620,12 +627,55 @@ namespace Unity.FPS.Game
             newProjectile.Shoot(this);
         }
 
+        void SpawnTrajectoryProjectiles(Vector3 centerDirection, int trajectoryCount, float trajectoryAngleStep)
+        {
+            if (trajectoryCount <= 1 || trajectoryAngleStep <= 0f)
+            {
+                SpawnProjectile(ApplyRandomSpreadToTrajectory(centerDirection));
+                return;
+            }
+
+            float middle = (trajectoryCount - 1) * 0.5f;
+            for (int i = 0; i < trajectoryCount; i++)
+            {
+                float angle = (i - middle) * trajectoryAngleStep;
+                if (Mathf.Abs(angle) < 0.001f)
+                {
+                    SpawnProjectile(ApplyRandomSpreadToTrajectory(centerDirection));
+                }
+                else
+                {
+                    Vector3 trajectoryDirection = Quaternion.AngleAxis(angle, WeaponMuzzle.up) * centerDirection;
+                    SpawnProjectile(ApplyRandomSpreadToTrajectory(trajectoryDirection));
+                }
+            }
+        }
+
+        Vector3 ApplyRandomSpreadToTrajectory(Vector3 trajectoryDirection)
+        {
+            float spreadAngle = Mathf.Max(0f, TrajectoryRandomSpreadAngle);
+            if (spreadAngle <= 0f)
+            {
+                return trajectoryDirection.normalized;
+            }
+
+            Vector3 forward = trajectoryDirection.normalized;
+            Vector3 referenceUp = Mathf.Abs(Vector3.Dot(forward, Vector3.up)) > 0.99f ? Vector3.right : Vector3.up;
+            Vector3 right = Vector3.Cross(referenceUp, forward).normalized;
+            Vector3 up = Vector3.Cross(forward, right);
+            Vector2 randomAngles = UnityEngine.Random.insideUnitCircle * spreadAngle;
+            Quaternion randomSpreadRotation = Quaternion.AngleAxis(randomAngles.x, up) *
+                                              Quaternion.AngleAxis(randomAngles.y, right);
+
+            return (randomSpreadRotation * forward).normalized;
+        }
+
         int GetBurstShotCount()
         {
-            if ((ShootType == WeaponShootType.Charge || ShootType == WeaponShootType.Manual) &&
-                m_WeaponStatsRuntime != null)
+            RoguelikeWeaponStatsRuntime weaponStats = GetWeaponStatsRuntimeIfAny();
+            if ((ShootType == WeaponShootType.Charge || ShootType == WeaponShootType.Manual) && weaponStats != null)
             {
-                return Mathf.Max(1, m_WeaponStatsRuntime.BurstShotCountFinal);
+                return Mathf.Max(1, weaponStats.BurstShotCountFinal);
             }
 
             return 1;

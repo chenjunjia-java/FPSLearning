@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 1614318205656627459}
   - component: {fileID: 3841152166893026970}
   - component: {fileID: 3574392401844192688}
+  - component: {fileID: 6057664913120083814}
   m_Layer: 0
   m_Name: Enemy_HoverBot
   m_TagString: Untagged
@@ -151,7 +152,10 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   FlashOnHitDuration: 0.2
-  DamageTick: {fileID: 8300000, guid: a7fae22399a6e1d448dc0dd2210f1dac, type: 3}
+  m_CanBeKnockedBack: 1
+  m_KnockbackDuration: 0.1
+  m_KnockbackMomentum: 5
+  m_DamageTickSfxKey: 3
   DeathVfx: {fileID: 8950624839484268180, guid: 2a8f5052fe50f7b41b17149abb0f7414,
     type: 3}
   DeathVfxSpawnPoint: {fileID: 381893446485871685}
@@ -193,8 +197,9 @@ MonoBehaviour:
   - {fileID: 6104096765092005263}
   - {fileID: 1407167163009738010}
   - {fileID: 8934028655093144013}
-  OnDetectSfx: {fileID: 8300000, guid: 25722734eeccba042a18e26e376ca542, type: 3}
-  MovementSound: {fileID: 8300000, guid: 44c5f76f80602024e82d3e5f3af4ee97, type: 3}
+  m_OnDetectSfxKey: 1
+  m_MovementSfxKey: 15
+  m_MovementSfxMinSpeedToPlay: 0.2
   PitchDistortionMovementSpeed:
     Min: 1
     Max: 1.5
@@ -285,7 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CompassMarkerPrefab: {fileID: 4125838790012652590, guid: 513785daf84f2a243b0cda079e6835cd,
     type: 3}
-  TextDirection: 
+  TextDirection: HoverBot
 --- !u!82 &1614318205656627459
 AudioSource:
   m_ObjectHideFlags: 0
@@ -298,7 +303,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 243469522734499658, guid: fcc71635aab95ff4fbdf1880bf2afa2f,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 44c5f76f80602024e82d3e5f3af4ee97, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.75
   m_Pitch: 1
   Loop: 1
@@ -412,6 +417,20 @@ MonoBehaviour:
   m_BaseAttackMultiplier: 1
   m_BaseAttackSpeedMultiplier: 1
   m_BaseMoveSpeedMultiplier: 1
+--- !u!114 &6057664913120083814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015434656898269652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9b0ce1bb69c96b49a7ac1098a7f5796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageMultiplier: 1
+  SensibilityToSelfdamage: 0.5
 --- !u!1 &2201913640410082181
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +864,6 @@ MonoBehaviour:
   DelayBetweenShots: 0.8
   BulletSpreadAngle: 0
   BulletsPerShot: 1
-  UseTripleShot: 0
   TripleShotAngleOffset: 20
   RecoilForce: 1
   AimZoomRatio: 1
@@ -867,12 +885,13 @@ MonoBehaviour:
   WeaponAnimator: {fileID: 0}
   MuzzleFlashPrefab: {fileID: 3930201484039205849}
   UnparentMuzzleFlash: 0
-  ShootSfx: {fileID: 8300000, guid: a56e3c9f90e17894eb1625f603eceb54, type: 3}
-  ChangeWeaponSfx: {fileID: 0}
+  m_ShootSfxKey: 5
+  m_ShotAfterSfxKey: 25
+  m_ChangeWeaponSfxKey: 6
   UseContinuousShootSound: 0
-  ContinuousShootStartSfx: {fileID: 0}
-  ContinuousShootLoopSfx: {fileID: 0}
-  ContinuousShootEndSfx: {fileID: 0}
+  m_ContinuousShootStartSfxKey: 7
+  m_ContinuousShootLoopSfxKey: 8
+  m_ContinuousShootEndSfxKey: 9
 --- !u!82 &2231955200838058728
 AudioSource:
   m_ObjectHideFlags: 0

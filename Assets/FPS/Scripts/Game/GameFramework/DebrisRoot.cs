@@ -6,6 +6,9 @@ namespace Unity.FPS.GameFramework
     public sealed class DebrisRoot : MonoBehaviour
     {
         [SerializeField] private Transform m_Root;
+        [Header("Debris Lifetime")]
+        [SerializeField] [Min(0f)] float m_DebrisHoldDuration = 3f;
+        [SerializeField] [Min(0.01f)] float m_DebrisFadeDuration = 1.5f;
 
         public Transform Root => EnsureRoot();
 
@@ -39,6 +42,27 @@ namespace Unity.FPS.GameFramework
             return null;
         }
 
+        public static void RegisterSpawnedDebris(Transform sourceTransform, GameObject debrisInstance)
+        {
+            if (debrisInstance == null)
+            {
+                return;
+            }
+
+            DebrisRoot inHierarchy = sourceTransform != null ? sourceTransform.GetComponentInParent<DebrisRoot>() : null;
+            DebrisRoot targetRoot = inHierarchy != null ? inHierarchy : Active;
+            if (targetRoot != null)
+            {
+                targetRoot.ConfigureDebris(debrisInstance);
+                return;
+            }
+
+            DebrisAutoRecycle.ConfigureOn(
+                debrisInstance,
+                DebrisAutoRecycle.DefaultHoldDuration,
+                DebrisAutoRecycle.DefaultFadeDuration);
+        }
+
         public void ClearAll()
         {
             Transform root = EnsureRoot();
@@ -60,6 +84,14 @@ namespace Unity.FPS.GameFramework
                     Destroy(child.gameObject);
                 }
             }
+        }
+
+        void ConfigureDebris(GameObject debrisInstance)
+        {
+            DebrisAutoRecycle.ConfigureOn(
+                debrisInstance,
+                Mathf.Max(0f, m_DebrisHoldDuration),
+                Mathf.Max(0.01f, m_DebrisFadeDuration));
         }
 
         Transform EnsureRoot()

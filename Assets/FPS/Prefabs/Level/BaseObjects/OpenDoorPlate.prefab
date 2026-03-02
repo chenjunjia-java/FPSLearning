@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3219477445072432276}
   - component: {fileID: 3491966127220653503}
   - component: {fileID: 5137995910275618943}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,6 +229,7 @@ MonoBehaviour:
   m_ReleaseDuration: 0.15
   m_OneShot: 1
   m_PlayerTag: Player
+  m_PlatePressSfxKey: 22
   m_PlateRenderer: {fileID: 4292309774755554946}
   m_ColorPropertyName: _BaseColor
   m_BreathColorMin: {r: 0.25845498, g: 0.4528302, b: 0.3064771, a: 1}

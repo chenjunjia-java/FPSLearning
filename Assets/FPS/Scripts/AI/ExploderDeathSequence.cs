@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.FPS.Game;
 using Unity.FPS.GameFramework;
+using Unity.FPS.Gameplay;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,6 +29,9 @@ namespace Unity.FPS.AI
         [SerializeField] Color m_BlinkOffEmissionColor = Color.black;
         [SerializeField] float m_StartBlinksPerSecond = 4f;
         [SerializeField] float m_EndBlinksPerSecond = 18f;
+        [SerializeField] SfxKey m_ExplosionAlertSfxKey = SfxKey.ExplosionAlert;
+        [SerializeField] [Min(0.01f)] float m_AlertStartInterval = 0.28f;
+        [SerializeField] [Min(0.01f)] float m_AlertEndInterval = 0.06f;
 
         [Header("Explosion (Damage + Force)")]
         [SerializeField] LayerMask m_AffectedLayers = ~0;
@@ -40,6 +44,21 @@ namespace Unity.FPS.AI
 
         [Header("Explosion Spawn Point (optional)")]
         [SerializeField] Transform m_ExplosionCenter;
+        [SerializeField] SfxKey m_ExplosionSfxKey = SfxKey.ExplosionSmall;
+
+        [Header("Post Explosion")]
+        [Tooltip("Optional smoke VFX spawned after explosion. It follows debris lifetime and is cleared on next segment.")]
+        [SerializeField] private GameObject m_PostExplosionSmokeVfx;
+
+        [Header("Camera Feedback")]
+        [Tooltip("相机震动强度，0 表示不震动")]
+        [SerializeField] [Min(0f)] float m_CameraShakeIntensity = 0.16f;
+        [Tooltip("相机震动持续时间")]
+        [SerializeField] [Min(0.01f)] float m_CameraShakeDuration = 0.25f;
+        [Tooltip("震动包络形态（Normal=钟形，BigToSmall=由强到弱）")]
+        [SerializeField] ShakeEnvelopeProfile m_CameraShakeProfile = ShakeEnvelopeProfile.BigToSmall;
+        [Tooltip("仅当玩家与爆炸中心距离小于此值时触发相机震动（0 表示不限制距离）")]
+        [SerializeField] [Min(0f)] float m_CameraShakeMaxDistance = 20f;
 
         struct RendererIndexData
         {
@@ -67,6 +86,7 @@ namespace Unity.FPS.AI
         bool m_Started;
         float m_StartTime;
         float m_ExplodeAt;
+        float m_NextAlertSfxTime;
 
         enum Phase : byte
         {
@@ -118,6 +138,7 @@ namespace Unity.FPS.AI
             m_Phase = Phase.PreBlink;
             m_PhaseStartTime = m_StartTime;
             m_InitialLocalScale = transform.localScale;
+            m_NextAlertSfxTime = m_StartTime;
 
             if (m_Controller != null)
             {
@@ -145,6 +166,9 @@ namespace Unity.FPS.AI
             }
 
             float now = Time.time;
+            float totalAlertDuration = Mathf.Max(0.0001f, m_PreExplosionDuration + Mathf.Max(0f, m_ShrinkDuration) + Mathf.Max(0f, m_GrowDuration));
+            float alertProgress = Mathf.Clamp01((now - m_StartTime) / totalAlertDuration);
+            TryPlayAlertSfx(now, alertProgress);
 
             if (m_Phase == Phase.PreBlink)
             {
@@ -239,8 +263,13 @@ namespace Unity.FPS.AI
             m_Started = false;
             m_Phase = Phase.None;
             ApplyEmission(m_BlinkOffEmissionColor);
+            if (m_ExplosionSfxKey != SfxKey.None)
+            {
+                AudioUtility.PlaySfx(m_ExplosionSfxKey, transform.position);
+            }
 
             Vector3 center = m_ExplosionCenter != null ? m_ExplosionCenter.position : transform.position;
+            TriggerCameraShake(center);
 
             int hitCount = Physics.OverlapSphereNonAlloc(center, Mathf.Max(0f, m_ExplosionRadius), m_Overlap,
                 m_AffectedLayers, m_TriggerInteraction);
@@ -308,12 +337,51 @@ namespace Unity.FPS.AI
                     {
                         d.InflictDamage(m_ExplosionDamage, true, m_Controller.gameObject);
                     }
+
+                    EnemyController targetEnemy = h.GetComponent<EnemyController>();
+                    if (targetEnemy != null && targetEnemy != m_Controller)
+                    {
+                        targetEnemy.TryApplyKnockbackFromPosition(center);
+                    }
                 }
 
                 SpawnExplosionVfx(m_Controller, center);
+                SpawnPersistentSmokeVfx(m_Controller, center, m_PostExplosionSmokeVfx);
             }
 
             DespawnOrDestroySelf();
+        }
+
+        void TriggerCameraShake(Vector3 explosionCenter)
+        {
+            if (m_CameraShakeIntensity <= 0f || m_CameraShakeDuration <= 0.01f)
+            {
+                return;
+            }
+
+            var actorsManager = FindObjectOfType<ActorsManager>();
+            var player = actorsManager != null ? actorsManager.Player : null;
+            if (player == null)
+            {
+                return;
+            }
+
+            if (m_CameraShakeMaxDistance > 0.001f)
+            {
+                float sqrDist = (player.transform.position - explosionCenter).sqrMagnitude;
+                if (sqrDist > m_CameraShakeMaxDistance * m_CameraShakeMaxDistance)
+                {
+                    return;
+                }
+            }
+
+            var cameraRig = player.GetComponent<FpsCameraRig>();
+            if (cameraRig == null || cameraRig.CameraEffects == null)
+            {
+                return;
+            }
+
+            cameraRig.CameraEffects.PlayEnvelopeShake(this, m_CameraShakeIntensity, m_CameraShakeDuration, m_CameraShakeProfile);
         }
 
         void DespawnOrDestroySelf()
@@ -457,6 +525,50 @@ namespace Unity.FPS.AI
             {
                 Object.Destroy(vfx, 5f);
             }
+
+            AudioSource[] audioSources = vfx.GetComponentsInChildren<AudioSource>(true);
+            for (int i = 0; i < audioSources.Length; i++)
+            {
+                AudioSource source = audioSources[i];
+                if (source == null)
+                {
+                    continue;
+                }
+
+                source.Stop();
+                source.enabled = false;
+            }
+        }
+
+        static void SpawnPersistentSmokeVfx(EnemyController controller, Vector3 center, GameObject smokePrefab)
+        {
+            if (controller == null || smokePrefab == null)
+            {
+                return;
+            }
+
+            Vector3 pos = controller.DeathVfxSpawnPoint != null ? controller.DeathVfxSpawnPoint.position : center;
+            Transform parent = DebrisRoot.ResolveParentFor(controller.transform);
+
+            if (ObjPrefabManager.Instance != null)
+            {
+                ObjPrefabManager.Instance.Spawn(smokePrefab.transform, pos, Quaternion.identity, parent);
+                return;
+            }
+
+            Object.Instantiate(smokePrefab, pos, Quaternion.identity, parent);
+        }
+
+        void TryPlayAlertSfx(float now, float normalizedProgress)
+        {
+            if (m_ExplosionAlertSfxKey == SfxKey.None || now < m_NextAlertSfxTime)
+            {
+                return;
+            }
+
+            AudioUtility.PlaySfx(m_ExplosionAlertSfxKey, transform.position);
+            float interval = Mathf.Lerp(m_AlertStartInterval, m_AlertEndInterval, Mathf.Clamp01(normalizedProgress));
+            m_NextAlertSfxTime = now + Mathf.Max(0.01f, interval);
         }
     }
 }

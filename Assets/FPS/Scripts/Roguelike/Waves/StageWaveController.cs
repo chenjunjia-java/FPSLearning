@@ -13,10 +13,6 @@ namespace Unity.FPS.Roguelike.Waves
         [SerializeField] private LevelSegment m_Segment;
         [SerializeField] private SegmentEnemySpawner m_Spawner;
 
-        [Header("Wave Input")]
-        [SerializeField] [Min(0f)] private float m_Difficulty = 0f;
-        [SerializeField] [Min(0)] private int m_StageIndex = 0;
-
         [Header("Wave Plan (Minimal)")]
         [SerializeField] [Min(1)] private int m_MinWaves = 1;
         [SerializeField] [Min(1)] private int m_MaxWaves = 3;
@@ -48,6 +44,11 @@ namespace Unity.FPS.Roguelike.Waves
         private float m_NextSpawnTime;
         private bool m_Running;
         private Coroutine m_AdvanceAfterKillRoutine;
+        private bool m_IsBossPhase;
+        
+        private float m_Difficulty;
+        private int m_StageIndex;
+        private bool m_HasDifficultyConfig;
 
         private void Awake()
         {
@@ -87,6 +88,7 @@ namespace Unity.FPS.Roguelike.Waves
         {
             m_Difficulty = Mathf.Max(0f, difficulty);
             m_StageIndex = Mathf.Max(0, stageIndex);
+            m_HasDifficultyConfig = true;
         }
 
         public void StartWaves()
@@ -97,11 +99,24 @@ namespace Unity.FPS.Roguelike.Waves
                 return;
             }
 
+            if (!m_HasDifficultyConfig)
+            {
+                Debug.LogError(
+                    "StageWaveController must be configured via ConfigureDifficulty(difficulty, stageIndex) before StartWaves().",
+                    this);
+                return;
+            }
+
             m_Plan = SimpleWaveDirector.BuildPlan(m_Difficulty, m_StageIndex, m_MinWaves, m_MaxWaves,
                 m_BaseEnemiesPerWave, m_EnemiesPerWavePerDifficulty, m_SpawnInterval);
 
+            m_Spawner.ResetRuntimeState();
             m_Running = true;
             m_CurrentWaveIndex = -1;
+            m_CurrentWaveId = -1;
+            m_AliveInCurrentWave = 0;
+            m_SpawnRemainingInWave = 0;
+            m_IsBossPhase = false;
             AdvanceToNextWave();
         }
 
@@ -141,9 +156,22 @@ namespace Unity.FPS.Roguelike.Waves
 
         private void AdvanceToNextWave()
         {
+            if (m_IsBossPhase)
+            {
+                m_IsBossPhase = false;
+                m_Running = false;
+                OnAllWavesCleared?.Invoke();
+                return;
+            }
+
             m_CurrentWaveIndex++;
             if (m_Plan.Waves == null || m_CurrentWaveIndex >= m_Plan.Waves.Length)
             {
+                if (TryStartBossPhase())
+                {
+                    return;
+                }
+
                 m_Running = false;
                 OnAllWavesCleared?.Invoke();
                 return;
@@ -155,6 +183,31 @@ namespace Unity.FPS.Roguelike.Waves
             m_SpawnRemainingInWave = Mathf.Max(0, wave.Count);
             m_NextSpawnTime = Time.time;
             OnWaveStarted?.Invoke(CurrentWaveNumber, TotalWaveCount);
+        }
+
+        private bool TryStartBossPhase()
+        {
+            if (m_Segment == null || !m_Segment.IsBossSegment || m_Spawner == null)
+            {
+                return false;
+            }
+
+            m_CurrentWaveId++;
+            m_AliveInCurrentWave = 0;
+            m_SpawnRemainingInWave = 0;
+
+            EnemyController boss = m_Spawner.SpawnBoss(this);
+            if (boss == null)
+            {
+                return false;
+            }
+
+            m_IsBossPhase = true;
+
+            // Boss 阶段作为额外“第 N+1 波”广播，方便目标/UI 复用现有波次事件。
+            int bossWaveNumber = TotalWaveCount + 1;
+            OnWaveStarted?.Invoke(bossWaveNumber, bossWaveNumber);
+            return true;
         }
 
         public void OnEnemySpawned(EnemyController enemy)

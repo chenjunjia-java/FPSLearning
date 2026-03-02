@@ -15,6 +15,7 @@ namespace Unity.FPS.Roguelike.Stats
         [SerializeField] [Min(0)] private int m_BasePierceCount = 0;
         [SerializeField] [Min(0.1f)] private float m_BaseChargeDurationMul = 1f;
         [SerializeField] [Min(1)] private int m_BaseBurstShotCount = 1;
+        [SerializeField] [Min(1)] private int m_BaseTrajectoryCount = 1;
 
         private readonly List<Modifier> m_Modifiers = new List<Modifier>(32);
         private StatCache m_StatCache;
@@ -29,6 +30,7 @@ namespace Unity.FPS.Roguelike.Stats
         public int PierceCountFinal { get; private set; }
         public float ChargeDurationMulFinal { get; private set; }
         public int BurstShotCountFinal { get; private set; }
+        public int TrajectoryCountFinal { get; private set; }
         public int MaxAmmoFinal { get; private set; }
         public int ClipSizeFinal { get; private set; }
 
@@ -117,6 +119,7 @@ namespace Unity.FPS.Roguelike.Stats
             m_StatCache.SetBaseValue(StatId.Weapon_PierceCount, m_BasePierceCount);
             m_StatCache.SetBaseValue(StatId.Weapon_ChargeDuration, m_BaseChargeDurationMul);
             m_StatCache.SetBaseValue(StatId.Weapon_BurstShotCount, m_BaseBurstShotCount);
+            m_StatCache.SetBaseValue(StatId.Weapon_TrajectoryCount, m_BaseTrajectoryCount);
             m_StatCache.SetBaseValue(StatId.Weapon_MaxAmmo, m_BaseMaxAmmoSnapshot);
             m_StatCache.SetBaseValue(StatId.Weapon_ClipSize, m_BaseClipSizeSnapshot);
             m_StatCache.Rebuild(m_Modifiers);
@@ -127,6 +130,7 @@ namespace Unity.FPS.Roguelike.Stats
             PierceCountFinal = Mathf.Max(0, Mathf.FloorToInt(m_StatCache.GetFinalValue(StatId.Weapon_PierceCount)));
             ChargeDurationMulFinal = Mathf.Max(0.1f, m_StatCache.GetFinalValue(StatId.Weapon_ChargeDuration));
             BurstShotCountFinal = Mathf.Max(1, Mathf.FloorToInt(m_StatCache.GetFinalValue(StatId.Weapon_BurstShotCount)));
+            TrajectoryCountFinal = Mathf.Max(1, Mathf.FloorToInt(m_StatCache.GetFinalValue(StatId.Weapon_TrajectoryCount)));
             MaxAmmoFinal = Mathf.Max(1, Mathf.RoundToInt(m_StatCache.GetFinalValue(StatId.Weapon_MaxAmmo)));
             ClipSizeFinal = Mathf.Max(1, Mathf.RoundToInt(m_StatCache.GetFinalValue(StatId.Weapon_ClipSize)));
 

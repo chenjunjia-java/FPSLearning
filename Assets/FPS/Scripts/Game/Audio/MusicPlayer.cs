@@ -79,6 +79,12 @@ namespace Unity.FPS.Game
 
             AudioSource[] activeBank = m_BankAIsActive ? m_BankA : m_BankB;
             AudioSource[] inactiveBank = m_BankAIsActive ? m_BankB : m_BankA;
+            bool hasActivePlayback = HasAnyPlayingSource(activeBank);
+
+            if (m_CurrentSet == set && hasActivePlayback)
+            {
+                return;
+            }
 
             AssignSetToBank(inactiveBank, set);
             ScheduleBankPlay(inactiveBank, set.Loop);
@@ -89,7 +95,6 @@ namespace Unity.FPS.Game
             }
 
             float duration = fadeSeconds >= 0f ? fadeSeconds : m_DefaultFadeSeconds;
-            bool hasActivePlayback = HasAnyPlayingSource(activeBank);
 
             if (!hasActivePlayback)
             {

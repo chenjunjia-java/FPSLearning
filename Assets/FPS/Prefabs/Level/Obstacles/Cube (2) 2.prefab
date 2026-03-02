@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6109645523938648450}
-  - {fileID: 5132405612065730054}
+  - {fileID: 4299999173311569423}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &441505213071405981
@@ -135,7 +135,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1 &5249866138719822849
+--- !u!1 &4962538581408473523
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,48 +143,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5132405612065730054}
-  - component: {fileID: 3784184221007784642}
-  - component: {fileID: 7584753412521287738}
-  - component: {fileID: 7649618411657680983}
-  - component: {fileID: 8252057002946745339}
+  - component: {fileID: 4299999173311569423}
+  - component: {fileID: 903123385729350068}
+  - component: {fileID: 7790966251333729516}
+  - component: {fileID: 3693679070625966350}
+  - component: {fileID: 6269760977001747638}
   m_Layer: 0
-  m_Name: Cube (2) 1 (1)
+  m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5132405612065730054
+--- !u!4 &4299999173311569423
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249866138719822849}
+  m_GameObject: {fileID: 4962538581408473523}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.44, y: -0.182, z: -0.68}
-  m_LocalScale: {x: 0.7493651, y: 0.53154, z: 0.94964933}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.89, y: 0.131, z: -1.07}
+  m_LocalScale: {x: 1, y: 0.60824406, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1788875941141990839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3784184221007784642
+--- !u!33 &903123385729350068
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249866138719822849}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7584753412521287738
+  m_GameObject: {fileID: 4962538581408473523}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &7790966251333729516
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249866138719822849}
+  m_GameObject: {fileID: 4962538581408473523}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -220,13 +220,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7649618411657680983
-BoxCollider:
+--- !u!136 &3693679070625966350
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249866138719822849}
+  m_GameObject: {fileID: 4962538581408473523}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -238,16 +238,18 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8252057002946745339
+  serializedVersion: 2
+  m_Radius: 0.49999997
+  m_Height: 1.9999999
+  m_Direction: 1
+  m_Center: {x: 0.00000023841858, y: 0, z: -0.00000047683713}
+--- !u!54 &6269760977001747638
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249866138719822849}
+  m_GameObject: {fileID: 4962538581408473523}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -297,7 +299,7 @@ Transform:
   m_GameObject: {fileID: 7243140193475901100}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.47, y: -0.182, z: 0.589}
+  m_LocalPosition: {x: 1.026, y: -0.182, z: 0.589}
   m_LocalScale: {x: 0.7493651, y: 0.53154, z: 0.94964933}
   m_ConstrainProportionsScale: 0
   m_Children: []

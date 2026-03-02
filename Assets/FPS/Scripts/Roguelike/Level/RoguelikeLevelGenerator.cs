@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NavMeshSurface = Unity.AI.Navigation.NavMeshSurface;
 using Unity.FPS.GameFramework;
+using UnityEngine.AI;
 
 namespace Unity.FPS.Roguelike.Level
 {
@@ -20,6 +21,10 @@ namespace Unity.FPS.Roguelike.Level
         [SerializeField] private NavMeshSurface m_NavMeshSurface;
         [SerializeField] private bool m_AutoStartOnEnable = true;
         [SerializeField] private bool m_RebuildNavMeshOnAppend = true;
+        [Tooltip("使用 NavMeshSurface.UpdateNavMesh(Async) 来减少主线程卡顿（需要已有 NavMeshData；首次仍可能同步 Build 一次）。")]
+        [SerializeField] private bool m_RebuildNavMeshAsyncWhenPossible = true;
+        [Tooltip("合并短时间内的多次重建请求，避免预加载/连续追加段时反复烘焙。")]
+        [SerializeField] [Min(0f)] private float m_RebuildNavMeshDebounceSeconds = 0.1f;
         [SerializeField] private bool m_LogNavMeshBuildCost = true;
         [Tooltip("排除这些层上的物体，不参与 NavMesh 收集（如 UI、TextMeshPro），可避免 invalid vertex data 警告。")]
         [SerializeField] private LayerMask m_ExcludeLayersFromNavMesh;
@@ -29,6 +34,9 @@ namespace Unity.FPS.Roguelike.Level
         private int m_NextSpawnIndex;
         private int m_CurrentSegmentIndex;
         private bool m_RunStarted;
+        private Coroutine m_NavMeshRebuildRoutine;
+        private bool m_NavMeshRebuildRequested;
+        private float m_LastNavMeshRebuildRequestTime;
 
         public IReadOnlyList<LevelSegment> SpawnedSegments => m_SpawnedSegments;
 
@@ -102,6 +110,16 @@ namespace Unity.FPS.Roguelike.Level
             }
         }
 
+        private void OnDisable()
+        {
+            if (m_NavMeshRebuildRoutine != null)
+            {
+                StopCoroutine(m_NavMeshRebuildRoutine);
+                m_NavMeshRebuildRoutine = null;
+            }
+            m_NavMeshRebuildRequested = false;
+        }
+
         public void StartRun()
         {
             if (m_RunStarted)
@@ -148,7 +166,7 @@ namespace Unity.FPS.Roguelike.Level
             EnsurePreloadedAhead();
         }
 
-        public bool AppendNextSegment()
+        public bool AppendNextSegment(bool requestNavMeshRebuild = true)
         {
             if (m_NextSpawnIndex >= m_RuntimeSequence.Count)
             {
@@ -192,9 +210,9 @@ namespace Unity.FPS.Roguelike.Level
 
             RegisterDoorCallbacks(nextSegment);
 
-            if (m_RebuildNavMeshOnAppend)
+            if (requestNavMeshRebuild && m_RebuildNavMeshOnAppend)
             {
-                ScheduleRebuildNavMesh();
+                RequestRebuildNavMesh();
             }
 
             return true;
@@ -226,42 +244,107 @@ namespace Unity.FPS.Roguelike.Level
             return true;
         }
 
-        public void ScheduleRebuildNavMesh()
+        public void RequestRebuildNavMesh()
         {
             if (m_NavMeshSurface == null)
             {
                 return;
             }
 
-            LayerMask originalMask = m_NavMeshSurface.layerMask;
-            if (m_ExcludeLayersFromNavMesh != 0)
+            m_NavMeshRebuildRequested = true;
+            m_LastNavMeshRebuildRequestTime = Time.realtimeSinceStartup;
+            if (m_NavMeshRebuildRoutine == null && isActiveAndEnabled)
             {
-                m_NavMeshSurface.layerMask = originalMask & ~m_ExcludeLayersFromNavMesh;
+                m_NavMeshRebuildRoutine = StartCoroutine(NavMeshRebuildRoutine());
+            }
+        }
+
+        private System.Collections.IEnumerator NavMeshRebuildRoutine()
+        {
+            // 帧末再做，避免和本帧的 Instantiate/对齐/生成障碍物叠加在同一帧顶峰。
+            yield return new WaitForEndOfFrame();
+
+            while (isActiveAndEnabled)
+            {
+                if (!m_NavMeshRebuildRequested)
+                {
+                    break;
+                }
+
+                float sinceLastRequest = Time.realtimeSinceStartup - m_LastNavMeshRebuildRequestTime;
+                if (sinceLastRequest < m_RebuildNavMeshDebounceSeconds)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                m_NavMeshRebuildRequested = false;
+
+                LayerMask originalMask = m_NavMeshSurface.layerMask;
+                if (m_ExcludeLayersFromNavMesh != 0)
+                {
+                    m_NavMeshSurface.layerMask = originalMask & ~m_ExcludeLayersFromNavMesh;
+                }
+
+                float start = Time.realtimeSinceStartup;
+                bool usedAsync = false;
+
+                if (m_RebuildNavMeshAsyncWhenPossible)
+                {
+                    NavMeshData data = m_NavMeshSurface.navMeshData;
+                    if (data != null)
+                    {
+                        var op = m_NavMeshSurface.UpdateNavMesh(data);
+                        if (op != null)
+                        {
+                            usedAsync = true;
+                            yield return op;
+                        }
+                    }
+                }
+
+                if (!usedAsync)
+                {
+                    m_NavMeshSurface.BuildNavMesh();
+                }
+
+                if (m_ExcludeLayersFromNavMesh != 0)
+                {
+                    m_NavMeshSurface.layerMask = originalMask;
+                }
+
+                if (m_LogNavMeshBuildCost)
+                {
+                    float elapsedMs = (Time.realtimeSinceStartup - start) * 1000f;
+                    Debug.Log($"[RoguelikeLevelGenerator] {(usedAsync ? "UpdateNavMesh" : "BuildNavMesh")} cost: {elapsedMs:F2} ms");
+                }
+
+                // 如果烘焙期间又来了新请求，就再跑一轮；否则退出协程。
+                if (!m_NavMeshRebuildRequested)
+                {
+                    break;
+                }
             }
 
-            float start = Time.realtimeSinceStartup;
-            m_NavMeshSurface.BuildNavMesh();
-            if (m_ExcludeLayersFromNavMesh != 0)
-            {
-                m_NavMeshSurface.layerMask = originalMask;
-            }
-
-            if (m_LogNavMeshBuildCost)
-            {
-                float elapsedMs = (Time.realtimeSinceStartup - start) * 1000f;
-                Debug.Log($"[RoguelikeLevelGenerator] BuildNavMesh cost: {elapsedMs:F2} ms");
-            }
+            m_NavMeshRebuildRoutine = null;
         }
 
         private void EnsurePreloadedAhead()
         {
             int targetSpawnedCount = m_CurrentSegmentIndex + Mathf.Max(1, m_PreloadAhead) + 1;
+            int startCount = m_SpawnedSegments.Count;
             while (m_SpawnedSegments.Count < targetSpawnedCount)
             {
-                if (!AppendNextSegment())
+                if (!AppendNextSegment(requestNavMeshRebuild: false))
                 {
                     break;
                 }
+            }
+
+            // 预加载可能一次追加多个段：合并成一次重建，避免反复 BuildNavMesh 造成明显卡顿尖峰。
+            if (m_RebuildNavMeshOnAppend && m_SpawnedSegments.Count != startCount)
+            {
+                RequestRebuildNavMesh();
             }
         }
 

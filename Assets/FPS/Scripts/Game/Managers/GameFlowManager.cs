@@ -22,7 +22,8 @@ namespace Unity.FPS.Game
         [Tooltip("Duration of delay before the win message")]
         public float DelayBeforeWinMessage = 2f;
 
-        [Tooltip("Sound played on win")] public AudioClip VictorySound;
+        [Tooltip("SFX key in SfxCatalog for victory")]
+        [SerializeField] private SfxKey m_VictorySfxKey = SfxKey.Victory;
 
         [Header("Lose")] [Tooltip("This string has to be the name of the scene you want to load when losing")]
         public string LoseSceneName = "LoseScene";
@@ -103,12 +104,14 @@ namespace Unity.FPS.Game
                 m_SceneToLoad = WinSceneName;
                 m_TimeLoadEndGameScene = Time.time + EndSceneLoadDelay + DelayBeforeFadeToBlack;
 
-                // play a sound on win
-                var audioSource = gameObject.AddComponent<AudioSource>();
-                audioSource.clip = VictorySound;
-                audioSource.playOnAwake = false;
-                audioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.HUDVictory);
-                audioSource.PlayScheduled(AudioSettings.dspTime + DelayBeforeWinMessage);
+                if (m_VictorySfxKey != SfxKey.None && SfxService.TryGetCatalogEntry(m_VictorySfxKey, out SfxCatalogSO.Entry victoryEntry) && victoryEntry.Clip != null)
+                {
+                    var audioSource = gameObject.AddComponent<AudioSource>();
+                    audioSource.clip = victoryEntry.Clip;
+                    audioSource.playOnAwake = false;
+                    audioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(victoryEntry.Group);
+                    audioSource.PlayScheduled(AudioSettings.dspTime + DelayBeforeWinMessage);
+                }
 
                 // create a game message
                 //var message = Instantiate(WinGameMessagePrefab).GetComponent<DisplayMessage>();

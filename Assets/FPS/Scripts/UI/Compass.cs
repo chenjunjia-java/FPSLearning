@@ -121,6 +121,9 @@ namespace Unity.FPS.UI
                 if (ec == null)
                     continue;
                 Transform t = ec.transform;
+                // Only show enemies that explicitly opt-in with a CompassElement on the root.
+                if (!t.TryGetComponent<CompassElement>(out _))
+                    continue;
                 if (m_EnemyTransforms.Contains(t))
                     continue;
                 if (m_ElementsDictionnary.ContainsKey(t))
@@ -141,15 +144,17 @@ namespace Unity.FPS.UI
                     continue;
                 }
                 bool stillEnemy = false;
+                bool stillHasCompassElement = false;
                 for (int j = 0; j < m_EnemyManager.Enemies.Count; j++)
                 {
                     if (m_EnemyManager.Enemies[j] != null && m_EnemyManager.Enemies[j].transform == tr)
                     {
                         stillEnemy = true;
+                        stillHasCompassElement = tr.TryGetComponent<CompassElement>(out _);
                         break;
                     }
                 }
-                if (!stillEnemy)
+                if (!stillEnemy || !stillHasCompassElement)
                     m_ToRemoveBuffer.Add(tr);
             }
 

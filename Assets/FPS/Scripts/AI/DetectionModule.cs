@@ -1,4 +1,3 @@
-using System.Linq;
 using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,6 +24,10 @@ namespace Unity.FPS.AI
 
         [Tooltip("Optional animator for OnShoot animations")]
         public Animator Animator;
+
+        [Header("Line Of Sight")]
+        [Tooltip("启用后忽略障碍物遮挡，只要在检测范围内即可看见目标。")]
+        [SerializeField] bool m_IgnoreObstaclesForDetection = true;
 
         public UnityAction onDetectedTarget;
         public UnityAction onLostTarget;
@@ -66,6 +69,15 @@ namespace Unity.FPS.AI
                     float sqrDistance = (otherActor.transform.position - DetectionSourcePoint.position).sqrMagnitude;
                     if (sqrDistance < sqrDetectionRange && sqrDistance < closestSqrDistance)
                     {
+                        if (m_IgnoreObstaclesForDetection)
+                        {
+                            IsSeeingTarget = true;
+                            closestSqrDistance = sqrDistance;
+                            TimeLastSeenTarget = Time.time;
+                            KnownDetectedTarget = otherActor.AimPoint.gameObject;
+                            continue;
+                        }
+
                         // Check for obstructions
                         RaycastHit[] hits = Physics.RaycastAll(DetectionSourcePoint.position,
                             (otherActor.AimPoint.position - DetectionSourcePoint.position).normalized, DetectionRange,
@@ -73,9 +85,10 @@ namespace Unity.FPS.AI
                         RaycastHit closestValidHit = new RaycastHit();
                         closestValidHit.distance = Mathf.Infinity;
                         bool foundValidHit = false;
-                        foreach (var hit in hits)
+                        for (int i = 0; i < hits.Length; i++)
                         {
-                            if (!selfColliders.Contains(hit.collider) && hit.distance < closestValidHit.distance)
+                            RaycastHit hit = hits[i];
+                            if (!ContainsCollider(selfColliders, hit.collider) && hit.distance < closestValidHit.distance)
                             {
                                 closestValidHit = hit;
                                 foundValidHit = true;
@@ -117,6 +130,24 @@ namespace Unity.FPS.AI
 
             // Remember if we already knew a target (for next frame)
             HadKnownTarget = KnownDetectedTarget != null;
+        }
+
+        bool ContainsCollider(Collider[] colliders, Collider target)
+        {
+            if (colliders == null || target == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i] == target)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public virtual void OnLostTarget() => onLostTarget?.Invoke();

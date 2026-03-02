@@ -24,7 +24,14 @@ namespace Unity.FPS.Game
             WeaponChargeLoop,
             HUDVictory,
             HUDObjective,
-            EnemyAttack
+            EnemyAttack,
+            // 与 MainAudioMixer 一致，以下为补充的混音组
+            EnemyDeath,
+            EnemyMovement,
+            Jetpack,
+            PlayerMovement,
+            General,
+            Misc
         }
 
         public static void CreateSFX(AudioClip clip, Vector3 position, AudioGroups audioGroup, float spatialBlend,
@@ -40,6 +47,18 @@ namespace Unity.FPS.Game
             if (key != SfxKey.None)
             {
                 _ = SfxService.Play(key, position);
+            }
+        }
+
+        /// <summary>
+        /// 播放音效，音源会挂载到 parent 下（传入父物体用于挂载），播放期间随父物体移动，播完后自动解挂并归还对象池；parent 为 null 则在世界坐标 position 处播放。
+        /// </summary>
+        public static void PlaySfx(SfxKey key, Vector3 position, Transform parent)
+        {
+            _ = SfxService.Instance;
+            if (key != SfxKey.None)
+            {
+                _ = SfxService.Play(key, position, parent);
             }
         }
 
@@ -73,16 +92,16 @@ namespace Unity.FPS.Game
             switch (group)
             {
                 case AudioGroups.Music:
-                    fallbackName = "Ambient";
+                    fallbackName = "Ambience";
                     return true;
                 case AudioGroups.Sfx:
-                    fallbackName = "General";
+                    fallbackName = "SFX";
                     return true;
                 case AudioGroups.UI:
                     fallbackName = "HUDObjective";
                     return true;
                 case AudioGroups.Ambience:
-                    fallbackName = "Ambient";
+                    fallbackName = "Ambience";
                     return true;
                 case AudioGroups.Ducker:
                     fallbackName = "EnemyDetection";

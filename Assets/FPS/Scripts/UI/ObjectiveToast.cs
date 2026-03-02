@@ -1,4 +1,4 @@
-﻿using Unity.FPS.Game;
+using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,11 +30,11 @@ namespace Unity.FPS.UI
         [Tooltip("Duration of the fade in")] public float FadeInDuration = 0.5f;
         [Tooltip("Duration of the fade out")] public float FadeOutDuration = 2f;
 
-        [Header("Sound")] [Tooltip("Sound that will be player on initialization")]
-        public AudioClip InitSound;
-
-        [Tooltip("Sound that will be player on completion")]
-        public AudioClip CompletedSound;
+        [Header("Sound")]
+        [Tooltip("SFX key on initialization")]
+        [SerializeField] private SfxKey m_InitSfxKey = SfxKey.HUDObjectiveInit;
+        [Tooltip("SFX key on completion")]
+        [SerializeField] private SfxKey m_CompletedSfxKey = SfxKey.HUDObjectiveCompleted;
 
         [Header("Movement")] [Tooltip("Time it takes to move in the screen")]
         public float MoveInDuration = 0.5f;
@@ -53,7 +53,6 @@ namespace Unity.FPS.UI
         bool m_IsFadingOut;
         bool m_IsMovingIn;
         bool m_IsMovingOut;
-        AudioSource m_AudioSource;
         RectTransform m_RectTransform;
 
         public void Initialize(string titleText, string descText, string counterText, bool isOptionnal, float delay)
@@ -82,8 +81,8 @@ namespace Unity.FPS.UI
             m_IsFadingIn = false;
             m_IsMovingIn = false;
 
-            // if a sound was set, play it
-            PlaySound(CompletedSound);
+            if (m_CompletedSfxKey != SfxKey.None)
+                AudioUtility.PlaySfx(m_CompletedSfxKey, transform.position);
 
             // start the fade out
             m_IsFadingOut = true;
@@ -110,7 +109,8 @@ namespace Unity.FPS.UI
                     // end the fade in
                     m_IsFadingIn = false;
 
-                    PlaySound(InitSound);
+                    if (m_InitSfxKey != SfxKey.None)
+                        AudioUtility.PlaySfx(m_InitSfxKey, transform.position);
                 }
             }
 
@@ -178,18 +178,5 @@ namespace Unity.FPS.UI
             }
         }
 
-        void PlaySound(AudioClip sound)
-        {
-            if (!sound)
-                return;
-
-            if (!m_AudioSource)
-            {
-                m_AudioSource = gameObject.AddComponent<AudioSource>();
-                m_AudioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.HUDObjective);
-            }
-
-            m_AudioSource.PlayOneShot(sound);
-        }
     }
 }

@@ -17,8 +17,9 @@ namespace Unity.FPS.Game
             CacheComponents();
         }
 
+        /// <param name="parent">挂载音源的父物体，音源会设为其子节点并随其移动；null 则在世界坐标 position 处播放。</param>
         public void Play(AudioClip clip, AudioMixerGroup outputGroup, Vector3 position, float spatialBlend, float minDistance,
-            float volume = 1f, float pitch = 1f, bool loop = false)
+            float volume = 1f, float pitch = 1f, bool loop = false, Transform parent = null)
         {
             if (clip == null)
             {
@@ -29,6 +30,15 @@ namespace Unity.FPS.Game
             CacheComponents();
 
             transform.position = position;
+            if (parent != null)
+            {
+                transform.SetParent(parent);
+                transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                transform.SetParent(null);
+            }
 
             m_AudioSource.Stop();
             m_AudioSource.outputAudioMixerGroup = outputGroup;
@@ -51,6 +61,7 @@ namespace Unity.FPS.Game
 
         public void OnDespawned()
         {
+            transform.SetParent(null);
             if (m_AudioSource != null)
             {
                 m_AudioSource.Stop();

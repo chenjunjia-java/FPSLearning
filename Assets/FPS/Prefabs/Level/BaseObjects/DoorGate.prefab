@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OpenJellyDuration: 0.45
   m_OpenJellyVibrato: 6
   m_OpenJellyElasticity: 0.4
-  m_OpenCameraShakeIntensity: 0.12
+  m_OpenCameraShakeIntensity: 0.3
   m_OpenCameraShakeDuration: 0.35
   m_OpenCameraShakeProfile: 1
   m_CloseDuration: 1

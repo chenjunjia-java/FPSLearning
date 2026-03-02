@@ -91,7 +91,18 @@ namespace Unity.FPS.Game
                 return false;
             }
 
-            return Instance.InternalPlayFromCatalog(key, position);
+            return Instance.InternalPlayFromCatalog(key, position, 1f, null);
+        }
+
+        /// <param name="parent">挂载音源的父物体，可为 null 表示在世界坐标播放。</param>
+        public static bool Play(SfxKey key, Vector3 position, Transform parent)
+        {
+            if (key == SfxKey.None)
+            {
+                return false;
+            }
+
+            return Instance.InternalPlayFromCatalog(key, position, 1f, parent);
         }
 
         public static bool Play(SfxKey key, Vector3 position, float volumeMultiplier)
@@ -101,7 +112,17 @@ namespace Unity.FPS.Game
                 return false;
             }
 
-            return Instance.InternalPlayFromCatalog(key, position, volumeMultiplier);
+            return Instance.InternalPlayFromCatalog(key, position, volumeMultiplier, null);
+        }
+
+        public static bool Play(SfxKey key, Vector3 position, float volumeMultiplier, Transform parent)
+        {
+            if (key == SfxKey.None)
+            {
+                return false;
+            }
+
+            return Instance.InternalPlayFromCatalog(key, position, volumeMultiplier, parent);
         }
 
         public static bool Play(string legacyKey, Vector3 position)
@@ -130,7 +151,7 @@ namespace Unity.FPS.Game
             Instance.InternalPlay(clip, position, audioGroup, spatialBlend, rolloffDistanceMin, volume, pitch);
         }
 
-        private bool InternalPlayFromCatalog(SfxKey key, Vector3 position, float volumeMultiplier = 1f)
+        private bool InternalPlayFromCatalog(SfxKey key, Vector3 position, float volumeMultiplier = 1f, Transform parent = null)
         {
             if (m_Catalog == null)
             {
@@ -152,7 +173,7 @@ namespace Unity.FPS.Game
                 : Random.Range(entry.PitchRange.x, entry.PitchRange.y);
 
             float volume = Mathf.Clamp01(entry.Volume * Mathf.Clamp01(volumeMultiplier));
-            InternalPlay(entry.Clip, position, entry.Group, entry.SpatialBlend, entry.MinDistance, volume, pitch);
+            InternalPlay(entry.Clip, position, entry.Group, entry.SpatialBlend, entry.MinDistance, volume, pitch, parent);
             return true;
         }
 
@@ -168,7 +189,7 @@ namespace Unity.FPS.Game
         }
 
         private void InternalPlay(AudioClip clip, Vector3 position, AudioUtility.AudioGroups audioGroup, float spatialBlend,
-            float rolloffDistanceMin, float volume, float pitch)
+            float rolloffDistanceMin, float volume, float pitch, Transform parent = null)
         {
             if (!PassCooldown(audioGroup))
             {
@@ -185,7 +206,7 @@ namespace Unity.FPS.Game
                     m_DefaultMaxPoolSize);
                 if (emitter != null)
                 {
-                    emitter.Play(clip, mixerGroup, position, spatialBlend, rolloffDistanceMin, volume, pitch, false);
+                    emitter.Play(clip, mixerGroup, position, spatialBlend, rolloffDistanceMin, volume, pitch, false, parent);
                     return;
                 }
             }

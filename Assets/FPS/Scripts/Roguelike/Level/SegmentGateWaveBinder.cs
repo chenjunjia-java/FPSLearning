@@ -10,7 +10,7 @@ namespace Unity.FPS.Roguelike.Level
     /// 关卡流程编排：
     /// 1) 踩入口机关 -> 打开入口门；
     /// 2) 玩家进入入口门 -> 关入口门并开始刷怪；
-    /// 3) 当前段清怪 -> 打开出口门与下一段入口门。
+    /// 3) 当前段清怪 -> 仅打开当前段出口门（下一段入口门必须由机关开启）。
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class SegmentGateWaveBinder : MonoBehaviour
@@ -175,7 +175,7 @@ namespace Unity.FPS.Roguelike.Level
                 }
 
                 DisplayMessageEvent displayMessage = Events.DisplayMessageEvent;
-                displayMessage.Message = "打败最终Boss，成功通关！";
+                displayMessage.Message = "Final boss defeated! Run complete!";
                 displayMessage.DelayBeforeDisplay = 0f;
                 EventManager.Broadcast(displayMessage);
 
@@ -209,50 +209,6 @@ namespace Unity.FPS.Roguelike.Level
             if (exitDoor != null)
             {
                 exitDoor.Open();
-            }
-
-            if (m_LevelGenerator == null)
-            {
-                return;
-            }
-
-            var segments = m_LevelGenerator.SpawnedSegments;
-            if (segments == null)
-            {
-                return;
-            }
-
-            int currentIndex = -1;
-            for (int i = 0; i < segments.Count; i++)
-            {
-                if (segments[i] == m_Segment)
-                {
-                    currentIndex = i;
-                    break;
-                }
-            }
-
-            if (currentIndex < 0)
-            {
-                return;
-            }
-
-            int nextIndex = currentIndex + 1;
-            if (nextIndex >= segments.Count)
-            {
-                return;
-            }
-
-            var nextSegment = segments[nextIndex];
-            if (nextSegment == null)
-            {
-                return;
-            }
-
-            var nextEntranceDoor = nextSegment.EntranceDoorGate;
-            if (nextEntranceDoor != null)
-            {
-                nextEntranceDoor.Open();
             }
         }
 

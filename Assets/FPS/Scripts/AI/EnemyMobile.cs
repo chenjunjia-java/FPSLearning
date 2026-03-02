@@ -27,7 +27,11 @@ namespace Unity.FPS.AI
         [Tooltip("SFX key in SfxCatalog.")]
         [SerializeField] private SfxKey m_OnDetectSfxKey = SfxKey.EnemyDetect;
 
-        [Header("Sound")] public AudioClip MovementSound;
+        [Header("Sound")]
+        [Tooltip("SFX key in SfxCatalog for movement loop")]
+        [SerializeField] private SfxKey m_MovementSfxKey = SfxKey.None;
+        [Tooltip("Movement loop starts playing only when navmesh velocity exceeds this threshold.")]
+        [SerializeField] [Min(0f)] private float m_MovementSfxMinSpeedToPlay = 0.2f;
         public MinMaxFloat PitchDistortionMovementSpeed;
         
         [Header("Idle Wander")]
@@ -44,6 +48,8 @@ namespace Unity.FPS.AI
         Vector3 m_IdleDestination;
         float m_NextIdleWanderTime;
         bool m_HasIdleDestination;
+        bool m_IsAlerted;
+        float m_StartupTime;
 
         const string k_AnimMoveSpeedParameter = "MoveSpeed";
         const string k_AnimAttackParameter = "Attack";
@@ -82,12 +88,28 @@ namespace Unity.FPS.AI
             AiState = AIState.Patrol;
             m_IdleAnchorPosition = transform.position;
             m_NextIdleWanderTime = Time.time;
+            m_StartupTime = Time.time;
 
-            // adding a audio source to play the movement sound on it
             m_AudioSource = GetComponent<AudioSource>();
             DebugUtility.HandleErrorIfNullGetComponent<AudioSource, EnemyMobile>(m_AudioSource, this, gameObject);
-            m_AudioSource.clip = MovementSound;
-            m_AudioSource.Play();
+            if (m_MovementSfxKey != SfxKey.None && SfxService.TryGetCatalogEntry(m_MovementSfxKey, out SfxCatalogSO.Entry entry) && entry.Clip != null)
+            {
+                m_AudioSource.clip = entry.Clip;
+                m_AudioSource.playOnAwake = false;
+                m_AudioSource.loop = true;
+                if (m_AudioSource.isPlaying)
+                {
+                    m_AudioSource.Stop();
+                }
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (m_AudioSource != null && m_AudioSource.isPlaying)
+            {
+                m_AudioSource.Stop();
+            }
         }
 
         void Update()
@@ -101,18 +123,44 @@ namespace Unity.FPS.AI
             Animator.SetFloat(k_AnimMoveSpeedParameter, moveSpeed);
 
             // changing the pitch of the movement sound depending on the movement speed
-            m_AudioSource.pitch = Mathf.Lerp(PitchDistortionMovementSpeed.Min, PitchDistortionMovementSpeed.Max,
-                moveSpeed / m_EnemyController.NavMeshAgent.speed);
+            if (m_AudioSource != null)
+            {
+                m_AudioSource.pitch = Mathf.Lerp(PitchDistortionMovementSpeed.Min, PitchDistortionMovementSpeed.Max,
+                    moveSpeed / m_EnemyController.NavMeshAgent.speed);
+
+                bool shouldPlayMovementLoop = m_IsAlerted && m_AudioSource.clip != null && moveSpeed > m_MovementSfxMinSpeedToPlay;
+                if (shouldPlayMovementLoop)
+                {
+                    if (!m_AudioSource.isPlaying)
+                    {
+                        m_AudioSource.Play();
+                    }
+                }
+                else
+                {
+                    if (m_AudioSource.isPlaying)
+                    {
+                        m_AudioSource.Stop();
+                    }
+                }
+            }
         }
 
         void UpdateAiStateTransitions()
         {
+            // 目标丢失时从 Follow/Attack 回到 Patrol，避免后续访问 KnownDetectedTarget 为 null
+            if ((AiState == AIState.Follow || AiState == AIState.Attack) && m_EnemyController.KnownDetectedTarget == null)
+            {
+                AiState = AIState.Patrol;
+            }
+
             // Handle transitions 
             switch (AiState)
             {
                 case AIState.Follow:
-                    // Transition to attack when there is a line of sight to the target
-                    if (m_EnemyController.IsSeeingTarget && m_EnemyController.IsTargetInAttackRange)
+                    // Obstacle LOS can be disabled in EnemyController/DetectionModule,
+                    // so entering attack relies on target range here.
+                    if (m_EnemyController.IsTargetInAttackRange)
                     {
                         AiState = AIState.Attack;
                         m_EnemyController.SetNavDestination(transform.position);
@@ -147,6 +195,7 @@ namespace Unity.FPS.AI
                     }
                     break;
                 case AIState.Follow:
+                    if (m_EnemyController.KnownDetectedTarget == null) break;
                     Vector3 followTargetPos = m_EnemyController.KnownDetectedTarget.transform.position;
                     var detectionModule = m_EnemyController.DetectionModule;
                     float followMinDistance = detectionModule != null
@@ -165,6 +214,7 @@ namespace Unity.FPS.AI
                     m_EnemyController.OrientWeaponsTowards(followTargetPos);
                     break;
                 case AIState.Attack:
+                    if (m_EnemyController.KnownDetectedTarget == null) break;
                     Vector3 attackTargetPos = m_EnemyController.KnownDetectedTarget.transform.position;
                     var detectionModuleAttack = m_EnemyController.DetectionModule;
                     if (detectionModuleAttack == null || detectionModuleAttack.DetectionSourcePoint == null)
@@ -289,7 +339,10 @@ namespace Unity.FPS.AI
                 OnDetectVfx[i].Play();
             }
 
-            if (m_OnDetectSfxKey != SfxKey.None)
+            m_IsAlerted = true;
+
+            // Avoid "instant" SFX when the scene just loaded and the player spawns inside detection range.
+            if (m_OnDetectSfxKey != SfxKey.None && Time.time - m_StartupTime > 0.75f)
             {
                 Unity.FPS.Game.AudioUtility.PlaySfx(m_OnDetectSfxKey, transform.position);
             }
@@ -309,6 +362,7 @@ namespace Unity.FPS.AI
                 OnDetectVfx[i].Stop();
             }
 
+            m_IsAlerted = false;
             Animator.SetBool(k_AnimAlertedParameter, false);
         }
 

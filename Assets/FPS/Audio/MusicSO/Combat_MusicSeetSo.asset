@@ -16,8 +16,8 @@ MonoBehaviour:
   Noise: {fileID: 8300000, guid: ad0ea7d6df0d01a41b02241d04526f30, type: 3}
   Environment: {fileID: 8300000, guid: d4bf36d6ee59cf04e9ddb873980c7ac1, type: 3}
   Main: {fileID: 8300000, guid: d93bd6eaa530c8440bdb70e0b9260e8e, type: 3}
-  WindVolume: 0.279
-  NoiseVolume: 0.27
-  EnvironmentVolume: 0.279
+  WindVolume: 0.139
+  NoiseVolume: 0.146
+  EnvironmentVolume: 0.139
   MainVolume: 0.748
   Loop: 1

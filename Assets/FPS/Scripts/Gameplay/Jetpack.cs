@@ -7,8 +7,9 @@ namespace Unity.FPS.Gameplay
     [RequireComponent(typeof(AudioSource))]
     public class Jetpack : MonoBehaviour
     {
-        [Header("References")] [Tooltip("Audio source for jetpack sfx")]
-        public AudioSource AudioSource;
+        [Header("References")]
+        [Tooltip("Audio source for jetpack loop (clip/group from SfxCatalog). Leave empty to use GetComponent.")]
+        [SerializeField] private AudioSource m_JetpackAudioSource;
 
         [Tooltip("Particles for jetpack vfx")] public ParticleSystem[] JetpackVfx;
 
@@ -35,8 +36,9 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Delay after last use before starting to refill")]
         public float RefillDelay = 1f;
 
-        [Header("Audio")] [Tooltip("Sound played when using the jetpack")]
-        public AudioClip JetpackSfx;
+        [Header("Audio")]
+        [Tooltip("SFX key in SfxCatalog for jetpack loop")]
+        [SerializeField] private SfxKey m_JetpackSfxKey = SfxKey.Jetpack;
 
         bool m_CanUseJetpack;
         PlayerCharacterController m_PlayerCharacterController;
@@ -64,8 +66,15 @@ namespace Unity.FPS.Gameplay
 
             CurrentFillRatio = 1f;
 
-            AudioSource.clip = JetpackSfx;
-            AudioSource.loop = true;
+            if (m_JetpackAudioSource == null)
+                m_JetpackAudioSource = GetComponent<AudioSource>();
+
+            if (m_JetpackAudioSource != null && m_JetpackSfxKey != SfxKey.None && SfxService.TryGetCatalogEntry(m_JetpackSfxKey, out SfxCatalogSO.Entry entry) && entry.Clip != null)
+            {
+                m_JetpackAudioSource.clip = entry.Clip;
+                m_JetpackAudioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(entry.Group);
+                m_JetpackAudioSource.loop = true;
+            }
         }
 
         void Update()
@@ -113,8 +122,8 @@ namespace Unity.FPS.Gameplay
                     emissionModulesVfx.enabled = true;
                 }
 
-                if (!AudioSource.isPlaying)
-                    AudioSource.Play();
+                if (m_JetpackAudioSource != null && !m_JetpackAudioSource.isPlaying)
+                    m_JetpackAudioSource.Play();
             }
             else
             {
@@ -137,8 +146,8 @@ namespace Unity.FPS.Gameplay
                 // keeps the ratio between 0 and 1
                 CurrentFillRatio = Mathf.Clamp01(CurrentFillRatio);
 
-                if (AudioSource.isPlaying)
-                    AudioSource.Stop();
+                if (m_JetpackAudioSource != null && m_JetpackAudioSource.isPlaying)
+                    m_JetpackAudioSource.Stop();
             }
         }
 

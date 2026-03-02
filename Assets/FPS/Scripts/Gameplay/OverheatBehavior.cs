@@ -32,8 +32,9 @@ namespace Unity.FPS.Gameplay
         [Tooltip("The material for overheating color animation")]
         public Material OverheatingMaterial;
 
-        [Header("Sound")] [Tooltip("Sound played when a cell are cooling")]
-        public AudioClip CoolingCellsSound;
+        [Header("Sound")]
+        [Tooltip("SFX key in SfxCatalog for cooling cells")]
+        [SerializeField] private SfxKey m_CoolingCellsSfxKey = SfxKey.CoolingCells;
 
         [Tooltip("Curve for ammo to volume ratio")]
         public AnimationCurve AmmoToVolumeRatioCurve;
@@ -66,8 +67,18 @@ namespace Unity.FPS.Gameplay
             DebugUtility.HandleErrorIfNullGetComponent<WeaponController, OverheatBehavior>(m_Weapon, this, gameObject);
 
             m_AudioSource = gameObject.AddComponent<AudioSource>();
-            m_AudioSource.clip = CoolingCellsSound;
-            m_AudioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.WeaponOverheat);
+            // 运行时新增的 AudioSource 默认 playOnAwake=true，且一旦设置 clip 可能导致进场自动播放
+            m_AudioSource.playOnAwake = false;
+            m_AudioSource.loop = true;
+            if (m_AudioSource.isPlaying)
+            {
+                m_AudioSource.Stop();
+            }
+            if (m_CoolingCellsSfxKey != SfxKey.None && SfxService.TryGetCatalogEntry(m_CoolingCellsSfxKey, out SfxCatalogSO.Entry entry) && entry.Clip != null)
+            {
+                m_AudioSource.clip = entry.Clip;
+                m_AudioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(entry.Group);
+            }
         }
 
         void OnEnable()
@@ -124,7 +135,7 @@ namespace Unity.FPS.Gameplay
             }
 
             // cooling sound
-            if (CoolingCellsSound)
+            if (m_AudioSource.clip != null)
             {
                 if (!m_AudioSource.isPlaying
                     && currentAmmoRatio != 1

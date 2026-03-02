@@ -43,6 +43,8 @@ namespace Unity.FPS.Roguelike.Level
         [SerializeField] private float m_CloseJellyDuration = 0.35f;
         [SerializeField] private int m_CloseJellyVibrato = 5;
         [SerializeField] private float m_CloseJellyElasticity = 0.35f;
+        [SerializeField] private SfxKey m_OpenSfxKey = SfxKey.DoorOpen;
+        [SerializeField] private SfxKey m_CloseSfxKey = SfxKey.DoorClose;
 
         [Header("Open State Visual")]
         [Tooltip("门已打开时显示的预制体上的 Renderer，开门时会变为亮色")]
@@ -91,6 +93,10 @@ namespace Unity.FPS.Roguelike.Level
             IsOpen = true;
             SetCollidersEnabled(false);
             ApplyOpenStateIndicatorColor();
+            if (m_OpenSfxKey != SfxKey.None)
+            {
+                AudioUtility.PlaySfx(m_OpenSfxKey, transform.position);
+            }
             OnOpened?.Invoke(this);
 
             if (!HasValidDoors())
@@ -139,6 +145,10 @@ namespace Unity.FPS.Roguelike.Level
             ApplyOpenStateIndicatorColor();
             // 触发关门时立即启用碰撞，防止玩家触发关门后又退出门外导致进不去关卡
             SetCollidersEnabled(true);
+            if (m_CloseSfxKey != SfxKey.None)
+            {
+                AudioUtility.PlaySfx(m_CloseSfxKey, transform.position);
+            }
 
             if (!HasValidDoors())
             {

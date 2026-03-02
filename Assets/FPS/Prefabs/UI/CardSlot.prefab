@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 1.1282, y: -57.24183}
+  m_AnchoredPosition: {x: 1.1281738, y: -57.24183}
   m_SizeDelta: {x: -14.257, y: 52.2737}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2332907544792394201
@@ -248,10 +248,10 @@ RectTransform:
   - {fileID: 9152241727361659885}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 108.6087, y: -122.00664}
-  m_SizeDelta: {x: 111.6588, y: 176.5178}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1171.3914, y: 597.99335}
+  m_SizeDelta: {x: 111.65881, y: 176.51782}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9093420868176968653
 CanvasRenderer:
@@ -307,10 +307,14 @@ MonoBehaviour:
   m_IconImage: {fileID: 1707244911674275175}
   m_TitleText: {fileID: 8224599579400830378}
   m_DescriptionText: {fileID: 6381913533115278639}
+  m_HoverScale: 1.06
+  m_HoverDuration: 0.12
+  m_HoverEase: 6
+  m_IgnoreTimeScale: 1
   m_RarityBorderOrBackground: {fileID: 915621672670718319}
   m_CommonColor: {r: 0.5731577, g: 0.7107671, b: 0.754717, a: 1}
-  m_RareColor: {r: 0.9056604, g: 0.8818224, b: 0.31185475, a: 1}
-  m_EpicColor: {r: 0.5690415, g: 0.26072446, b: 0.8773585, a: 1}
+  m_RareColor: {r: 0.5686275, g: 0.25882354, b: 0.8784314, a: 1}
+  m_EpicColor: {r: 0.90588236, g: 0.88235295, b: 0.3137255, a: 1}
 --- !u!114 &1843502573576271507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,7 +468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -0.34410095, y: -11.7}
+  m_AnchoredPosition: {x: -0.3441162, y: -11.7}
   m_SizeDelta: {x: -17.2013, y: 29.9899}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &162444117326739944

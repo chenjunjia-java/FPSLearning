@@ -1,4 +1,4 @@
-﻿using Unity.FPS.Game;
+using Unity.FPS.Game;
 using UnityEngine;
 
 namespace Unity.FPS.Gameplay
@@ -32,11 +32,11 @@ namespace Unity.FPS.Gameplay
         [Tooltip("Idle spinning speed of the frame based on charge")]
         public MinMaxFloat SpinningSpeed;
 
-        [Header("Sound")] [Tooltip("Audio clip for charge SFX")]
-        public AudioClip ChargeSound;
-
-        [Tooltip("Sound played in loop after the change is full for this weapon")]
-        public AudioClip LoopChargeWeaponSfx;
+        [Header("Sound")]
+        [Tooltip("SFX key for charge buildup")]
+        [SerializeField] private SfxKey m_ChargeSfxKey = SfxKey.WeaponChargeStart;
+        [Tooltip("SFX key for charge loop when full")]
+        [SerializeField] private SfxKey m_LoopChargeSfxKey = SfxKey.WeaponChargeLoop;
 
         [Tooltip("Duration of the cross fade between the charge and the loop sound")]
         public float FadeLoopDuration = 0.5f;
@@ -56,6 +56,7 @@ namespace Unity.FPS.Gameplay
 
         AudioSource m_AudioSource;
         AudioSource m_AudioSourceLoop;
+        AudioClip m_ResolvedChargeClip;
 
         float m_LastChargeTriggerTimestamp;
         float m_ChargeRatio;
@@ -65,20 +66,23 @@ namespace Unity.FPS.Gameplay
         {
             m_LastChargeTriggerTimestamp = 0.0f;
 
-            // The charge effect needs it's own AudioSources, since it will play on top of the other gun sounds
             m_AudioSource = gameObject.AddComponent<AudioSource>();
-            m_AudioSource.clip = ChargeSound;
             m_AudioSource.playOnAwake = false;
-            m_AudioSource.outputAudioMixerGroup =
-                AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.WeaponChargeBuildup);
+            if (m_ChargeSfxKey != SfxKey.None && SfxService.TryGetCatalogEntry(m_ChargeSfxKey, out SfxCatalogSO.Entry chargeEntry) && chargeEntry.Clip != null)
+            {
+                m_ResolvedChargeClip = chargeEntry.Clip;
+                m_AudioSource.clip = chargeEntry.Clip;
+                m_AudioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(chargeEntry.Group);
+            }
 
-            // create a second audio source, to play the sound with a delay
             m_AudioSourceLoop = gameObject.AddComponent<AudioSource>();
-            m_AudioSourceLoop.clip = LoopChargeWeaponSfx;
             m_AudioSourceLoop.playOnAwake = false;
             m_AudioSourceLoop.loop = true;
-            m_AudioSourceLoop.outputAudioMixerGroup =
-                AudioUtility.GetAudioGroup(AudioUtility.AudioGroups.WeaponChargeLoop);
+            if (m_LoopChargeSfxKey != SfxKey.None && SfxService.TryGetCatalogEntry(m_LoopChargeSfxKey, out SfxCatalogSO.Entry loopEntry) && loopEntry.Clip != null)
+            {
+                m_AudioSourceLoop.clip = loopEntry.Clip;
+                m_AudioSourceLoop.outputAudioMixerGroup = AudioUtility.GetAudioGroup(loopEntry.Group);
+            }
         }
 
         void SpawnParticleSystem()
@@ -128,9 +132,9 @@ namespace Unity.FPS.Gameplay
                     m_WeaponController.LastChargeTriggerTimestamp > m_LastChargeTriggerTimestamp)
                 {
                     m_LastChargeTriggerTimestamp = m_WeaponController.LastChargeTriggerTimestamp;
-                    if (!UseProceduralPitchOnLoopSfx)
+                    if (!UseProceduralPitchOnLoopSfx && m_ResolvedChargeClip != null)
                     {
-                        m_EndchargeTime = Time.time + ChargeSound.length;
+                        m_EndchargeTime = Time.time + m_ResolvedChargeClip.length;
                         m_AudioSource.Play();
                     }
 

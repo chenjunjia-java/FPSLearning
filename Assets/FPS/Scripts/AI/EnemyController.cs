@@ -62,6 +62,16 @@ namespace Unity.FPS.AI
         [Tooltip("The duration of the flash on hit")]
         public float FlashOnHitDuration = 0.5f;
 
+        [Header("Hit Knockback")]
+        [Tooltip("If enabled, this enemy will be pushed back when taking damage.")]
+        [SerializeField] private bool m_CanBeKnockedBack = true;
+
+        [Tooltip("How long the knockback lasts.")]
+        [SerializeField] [Min(0f)] private float m_KnockbackDuration = 0.1f;
+
+        [Tooltip("Initial knockback momentum (units/second).")]
+        [SerializeField] [Min(0f)] private float m_KnockbackMomentum = 6f;
+
         [Header("Sounds")]
         [Tooltip("SFX key in SfxCatalog.")]
         [SerializeField] private SfxKey m_DamageTickSfxKey = SfxKey.DamageTick;
@@ -137,6 +147,9 @@ namespace Unity.FPS.AI
         float m_BaseNavAcceleration;
         bool m_IsRegistered;
         bool m_HasDied;
+        bool m_IsInKnockback;
+        float m_KnockbackRemainingTime;
+        Vector3 m_KnockbackVelocity;
 
         void Awake()
         {
@@ -172,7 +185,9 @@ namespace Unity.FPS.AI
         void OnEnable()
         {
             m_HasDied = false;
+            StopKnockback(false);
             RestoreAliveBodyState();
+            RestoreWorldspaceHealthBarImmediate();
             if (m_EnemyManager != null && !m_IsRegistered)
             {
                 m_EnemyManager.RegisterEnemy(this);
@@ -262,6 +277,7 @@ namespace Unity.FPS.AI
         void Update()
         {
             EnsureIsWithinLevelBounds();
+            TickKnockback(Time.deltaTime);
 
             DetectionModule.HandleTargetDetection(m_Actor, m_SelfColliders);
 
@@ -427,6 +443,7 @@ namespace Unity.FPS.AI
             {
                 // pursue the player
                 DetectionModule.OnDamaged(damageSource);
+                TryApplyKnockbackFromPosition(damageSource.transform.position);
                 
                 onDamaged?.Invoke();
                 m_LastTimeDamaged = Time.time;
@@ -447,6 +464,7 @@ namespace Unity.FPS.AI
             }
 
             m_HasDied = true;
+            StopKnockback(false);
             if (TryGetComponent<ExploderDeathSequence>(out var exploder) && exploder != null &&
                 exploder.isActiveAndEnabled)
             {
@@ -551,6 +569,25 @@ namespace Unity.FPS.AI
             }
         }
 
+        void RestoreWorldspaceHealthBarImmediate()
+        {
+            // 与 HideWorldspaceHealthBarImmediate 对称：池化复用时恢复血条脚本运行
+            MonoBehaviour[] behaviours = GetComponentsInChildren<MonoBehaviour>(true);
+            for (int i = 0; i < behaviours.Length; i++)
+            {
+                MonoBehaviour mb = behaviours[i];
+                if (mb == null)
+                {
+                    continue;
+                }
+
+                if (mb.GetType().Name == "WorldspaceHealthBar")
+                {
+                    mb.enabled = true;
+                }
+            }
+        }
+
         public void UnregisterEnemyFromManager()
         {
             if (m_EnemyManager != null)
@@ -562,6 +599,7 @@ namespace Unity.FPS.AI
 
         void OnDisable()
         {
+            StopKnockback(false);
             CancelInvoke(nameof(DespawnOrDestroy));
             UnregisterSilentlyIfNeeded();
         }
@@ -618,6 +656,7 @@ namespace Unity.FPS.AI
             Vector3 impulseDirection = GetDeathImpulseDirection();
             ApplyImpulseToGibs(gibsInstance, impulseDirection);
             IgnoreGibCollisionWithPlayer(gibsInstance);
+            DebrisRoot.RegisterSpawnedDebris(transform, gibsInstance);
         }
 
         Vector3 GetDeathImpulseDirection()
@@ -821,6 +860,9 @@ namespace Unity.FPS.AI
             if (m_HasDied)
                 return false;
 
+            if (m_IsInKnockback)
+                return false;
+
             if (m_GameFlowManager.GameIsEnding)
                 return false;
 
@@ -938,6 +980,96 @@ namespace Unity.FPS.AI
             }
 
             NavMeshAgent.speed = m_BaseNavSpeed * m_RoguelikeEnemyStats.MoveSpeedMultiplierFinal;
+        }
+
+        public bool TryApplyKnockbackFromPosition(Vector3 damageSourcePosition)
+        {
+            return TryStartKnockback(damageSourcePosition);
+        }
+
+        bool TryStartKnockback(Vector3 damageSourcePosition)
+        {
+            if (!m_CanBeKnockedBack || m_KnockbackDuration <= 0f || m_KnockbackMomentum <= 0f || m_HasDied)
+            {
+                return false;
+            }
+
+            Vector3 awayDirection = transform.position - damageSourcePosition;
+            awayDirection = Vector3.ProjectOnPlane(awayDirection, Vector3.up);
+            if (awayDirection.sqrMagnitude <= 0.0001f)
+            {
+                awayDirection = -transform.forward;
+                awayDirection = Vector3.ProjectOnPlane(awayDirection, Vector3.up);
+            }
+
+            if (awayDirection.sqrMagnitude <= 0.0001f)
+            {
+                return false;
+            }
+
+            awayDirection.Normalize();
+            m_IsInKnockback = true;
+            m_KnockbackRemainingTime = m_KnockbackDuration;
+            m_KnockbackVelocity = awayDirection * m_KnockbackMomentum;
+
+            if (NavMeshAgent != null && NavMeshAgent.enabled && NavMeshAgent.isOnNavMesh)
+            {
+                NavMeshAgent.isStopped = true;
+            }
+
+            return true;
+        }
+
+        void TickKnockback(float deltaTime)
+        {
+            if (!m_IsInKnockback)
+            {
+                return;
+            }
+
+            if (m_HasDied || m_KnockbackDuration <= 0f)
+            {
+                StopKnockback(true);
+                return;
+            }
+
+            float normalizedRemaining = m_KnockbackRemainingTime / m_KnockbackDuration;
+            normalizedRemaining = Mathf.Clamp01(normalizedRemaining);
+            Vector3 frameOffset = m_KnockbackVelocity * normalizedRemaining * deltaTime;
+            if (frameOffset.sqrMagnitude > 0f)
+            {
+                if (NavMeshAgent != null && NavMeshAgent.enabled && NavMeshAgent.isOnNavMesh)
+                {
+                    NavMeshAgent.Move(frameOffset);
+                }
+                else
+                {
+                    transform.position += frameOffset;
+                }
+            }
+
+            m_KnockbackRemainingTime -= deltaTime;
+            if (m_KnockbackRemainingTime <= 0f)
+            {
+                StopKnockback(true);
+            }
+        }
+
+        void StopKnockback(bool restoreAgentMove)
+        {
+            m_IsInKnockback = false;
+            m_KnockbackRemainingTime = 0f;
+            m_KnockbackVelocity = Vector3.zero;
+
+            if (!restoreAgentMove || m_HasDied)
+            {
+                return;
+            }
+
+            if (NavMeshAgent != null && NavMeshAgent.enabled && NavMeshAgent.isOnNavMesh)
+            {
+                NavMeshAgent.isStopped = false;
+            }
         }
     }
 }

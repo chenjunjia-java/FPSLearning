@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Id: weapon_additional_projectiles
   m_DisplayName: More Projectiles
-  m_DescriptionTemplate: Additional 3 projectiles per shot.
-  m_IconUiPrefab: {fileID: 0}
+  m_DescriptionTemplate: 3 projectiles per shot.
+  m_Icon: {fileID: 0}
   m_Rarity: 2
   m_Target: 1
   m_StatId: 6
