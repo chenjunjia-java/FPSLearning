@@ -384,12 +384,13 @@ GameObject:
   - component: {fileID: 814417836257332542}
   - component: {fileID: 1360575517897679518}
   - component: {fileID: 298744117520805562}
-  - component: {fileID: 783424908873546082}
   - component: {fileID: 3122855503829242450}
   - component: {fileID: 6268538116984687401}
   - component: {fileID: 4205022973215787166}
-  - component: {fileID: 1272397862697293493}
   - component: {fileID: 2766772472419430181}
+  - component: {fileID: 5436979897504441504}
+  - component: {fileID: 322249895209110289}
+  - component: {fileID: 8035807821965050327}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -451,13 +452,13 @@ MonoBehaviour:
   GravityDownForce: 20
   GroundCheckLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 8193
   GroundCheckDistance: 1
   MaxSpeedOnGround: 13
   MovementSharpnessOnGround: 15
   MaxSpeedCrouchedRatio: 0.5
-  MaxSpeedInAir: 10
-  AccelerationSpeedInAir: 25
+  MaxSpeedInAir: 8
+  AccelerationSpeedInAir: 18
   SprintSpeedModifier: 1.5
   KillHeight: -50
   RotationSpeed: 200
@@ -465,14 +466,14 @@ MonoBehaviour:
   JumpForce: 9
   EnableJumpAnticipation: 1
   JumpAnticipationDuration: 0.1
-  JumpAnticipationDepth: 0.1
+  JumpAnticipationDepth: 0.3
   JumpAnticipationHoldToCharge: 0
   JumpAnticipationMaxHoldDuration: 0.25
   CameraHeightRatio: 0.8
   CapsuleHeightStanding: 1.8
   CapsuleHeightCrouching: 0.9
   CrouchingSharpness: 15
-  FootstepSfxFrequency: 2
+  FootstepSfxFrequency: 0.6
   FootstepSfxFrequencyWhileSprinting: 0.2
   m_FootstepSfxKey: 10
   m_JumpSfxKey: 11
@@ -523,7 +524,7 @@ MonoBehaviour:
   RecoilSharpness: 50
   MaxRecoilDistance: 0.2
   RecoilRestitutionSharpness: 10
-  m_ShootCameraBackImpulseDistance: 0.3
+  m_ShootCameraBackImpulseDistance: 0.15
   m_ShootCameraImpulseReturnSharpness: 34
   m_MuzzleExtraPitchRecoilDegrees: 4.25
   m_ShootJellyDuration: 1.51
@@ -536,30 +537,6 @@ MonoBehaviour:
   FpsWeaponLayer:
     serializedVersion: 2
     m_Bits: 1024
---- !u!114 &783424908873546082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7253983127304857660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48f22a420493bcf4a8ca3e259797484f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_JetpackAudioSource: {fileID: 0}
-  JetpackVfx:
-  - {fileID: 8223674029651735323}
-  - {fileID: 8145349454922729230}
-  IsJetpackUnlockedAtStart: 0
-  JetpackAcceleration: 8
-  JetpackDownwardVelocityCancelingFactor: 1
-  ConsumeDuration: 1.5
-  RefillDurationGrounded: 2
-  RefillDurationInTheAir: 5
-  RefillDelay: 1
-  m_JetpackSfxKey: 14
 --- !u!143 &3122855503829242450
 CharacterController:
   m_ObjectHideFlags: 0
@@ -612,105 +589,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b0ce1bb69c96b49a7ac1098a7f5796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageMultiplier: 1
+  DamageMultiplier: 0.82
   SensibilityToSelfdamage: 0.25
---- !u!82 &1272397862697293493
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7253983127304857660}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243216109797877232, guid: fcc71635aab95ff4fbdf1880bf2afa2f,
-    type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &2766772472419430181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,11 +603,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c546828924e3c43b8cbde1d0fc36af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BaseMaxHealth: 10000
+  m_BaseMaxHealth: 600
   m_BaseAttackMultiplier: 1
   m_BaseCritChance: 1
   m_BaseCritDamageMultiplier: 2
   m_BaseMoveSpeedMultiplier: 1
+--- !u!114 &5436979897504441504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7253983127304857660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71b6d7146b9e5744b96a5884f407a0cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CameraFollowPoint: {fileID: 0}
+  m_MainCamera: {fileID: 0}
+  m_ForwardDamping: 0.01
+  m_LateralDamping: 0.01
+  m_VerticalDamping: 0.01
+  m_VerticalMaxSpeed: 18
+  m_MaxOffsetDistance: 0.1
+  m_LandingWobbleAmount: 0.025
+  m_LandingWobbleFrequency: 2.5
+  m_LandingWobbleDamping: 0.35
+  m_ReparentMainCameraAtRuntime: 1
+  m_SeparateWeaponCamera: 1
+--- !u!114 &322249895209110289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7253983127304857660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22b6ce6fe4c32c4b87d5a774a50cb40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DefaultTimeScale: 0.1
+  m_DefaultDuration: 0.06
+  m_PauseThreshold: 0.1
+--- !u!114 &8035807821965050327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7253983127304857660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dec20d7f9ee00e4eaddfc085f7bf281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DamageShakeIntensity: 0.4
+  m_DamageShakeDuration: 0.1
+  m_DamageUpImpulse: 0.06
+  m_DamageImpulseReturnSharpness: 42
+  m_DamageHitStopTimeScale: 0.1
+  m_DamageHitStopDuration: 0.06
 --- !u!1 &7383874627095517793
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,7 +772,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 6967
+    m_Bits: 15159
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1000,12 +937,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7263037753131886630}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &8145349454922729230 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1567646804738715432, guid: 7468cd18030a0204ab08baf7ac36ff1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 7263037753131886630}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7485331688856558643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1086,12 +1017,6 @@ PrefabInstance:
 --- !u!4 &3569620678541450849 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6226484437272429138, guid: 7468cd18030a0204ab08baf7ac36ff1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 7485331688856558643}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &8223674029651735323 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1567646804738715432, guid: 7468cd18030a0204ab08baf7ac36ff1e,
     type: 3}
   m_PrefabInstance: {fileID: 7485331688856558643}
   m_PrefabAsset: {fileID: 0}

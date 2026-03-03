@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f3421cdff3ac7e47b8e85e0b08ecd5c, type: 3}
-  m_Name: RoguelikeAffixDefinition_Attack Add
+  m_Name: RoguelikeAffixDefinition_DamageTaken_Mul
   m_EditorClassIdentifier: 
-  m_Id: attack_add
-  m_DisplayName: Attack Add
-  m_DescriptionTemplate: Power increased by {value}.
+  m_Id: damage_taken_mul
+  m_DisplayName: Reduce Damage
+  m_DescriptionTemplate: Increase Reducing Damage Percent {value}
   m_Icon: {fileID: 0}
-  m_Rarity: 0
+  m_Rarity: 1
   m_EffectType: 0
   m_Target: 0
-  m_StatId: 1
-  m_ModifierKind: 0
+  m_StatId: 50
+  m_ModifierKind: 1
   m_ValueRange:
-    Min: 5
-    Max: 10
-  m_ValueDisplayMode: 1
+    Min: 0.1
+    Max: 0.2
+  m_ValueDisplayMode: 2
   m_AllowedShootTypes: -1
   m_AllowDuplicateInRun: 1

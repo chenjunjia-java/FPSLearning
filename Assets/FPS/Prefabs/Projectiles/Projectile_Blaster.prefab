@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de99b30e1e73fd14e98cc5371da25d12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 1
+  Radius: 0.2
   Root: {fileID: 3659995153115176982}
   Tip: {fileID: 1135791333161367127}
   MaxLifeTime: 5
@@ -57,16 +57,16 @@ MonoBehaviour:
   HittableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  Speed: 50
+  Speed: 40
   GravityDownAcceleration: 0
   TrajectoryCorrectionDistance: 5
   InheritWeaponVelocity: 0
   Damage: 15
   AreaOfDamage: {fileID: 0}
-  m_PlayerHitEnemyShakeIntensity: 2
-  m_PlayerHitEnemyShakeDuration: 0.1
+  m_PlayerHitEnemyShakeIntensity: 1
+  m_PlayerHitEnemyShakeDuration: 0.3
   m_PlayerHitEnemyHitStopTimeScale: 0.1
-  m_PlayerHitEnemyHitStopDuration: 0.1
+  m_PlayerHitEnemyHitStopDuration: 0.06
   RadiusColor: {r: 0, g: 1, b: 0.9007921, a: 1}
 --- !u!1 &5564024855854763701
 GameObject:

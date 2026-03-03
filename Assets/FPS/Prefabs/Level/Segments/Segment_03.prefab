@@ -505,13 +505,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6732067766658673650}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.55, y: 0, z: 35.14}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 19.549997, y: 0, z: 35.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4952038673272777208}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &6852927657422408039
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +746,7 @@ MonoBehaviour:
   m_EnemyPrefabs:
   - {fileID: 9087143436424816424, guid: 25a1b0efadb966e44889fce712c8ff8d, type: 3}
   - {fileID: 9087143436424816424, guid: c090580a852000749a24e6c5b7e755de, type: 3}
+  m_ExploderSpawnChance: 0.2
   m_PoolMaxSize: 64
   m_PrewarmCount: 0
   m_BossPrefab: {fileID: 0}
@@ -954,6 +955,11 @@ PrefabInstance:
       propertyPath: m_PressDistance
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 4641760140566489239, guid: d5b9176e759f87c469c3f220ab7f60cc,
+        type: 3}
+      propertyPath: m_TargetEntranceDoor
+      value: 
+      objectReference: {fileID: 4278224030044994666}
     - target: {fileID: 5544831115316829558, guid: d5b9176e759f87c469c3f220ab7f60cc,
         type: 3}
       propertyPath: m_Name

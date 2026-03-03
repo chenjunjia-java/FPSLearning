@@ -20,15 +20,16 @@ namespace Unity.FPS.Roguelike.Waves
             const string sourceId = "WaveDifficulty";
             enemyStats.RemoveModifiersBySource(sourceId);
 
-            float d = Mathf.Max(0f, difficulty);
-            int s = Mathf.Max(0, stageIndex);
+            float dRaw = Mathf.Max(0f, difficulty);
+            int dSteps = Mathf.Max(0, Mathf.FloorToInt(dRaw));
             int w = Mathf.Max(0, waveIndex);
 
-            float healthMul = 1f + d * 0.25f + s * 0.05f;
-            float attackMul = 1f + d * 0.15f + w * 0.05f;
-            float moveMul = 1f + d * 0.05f;
+            // 难度调缓：每提升 1 级难度，最大血量仅 +5（加法），攻击/移速倍率斜率也降低。
+            float healthAdd = dSteps * 5f;
+            float attackMul = 1f + dSteps * 0.05f + w * 0.02f;
+            float moveMul = 1f + dSteps * 0.02f;
 
-            enemyStats.AddModifier(new Modifier(StatId.Enemy_MaxHealth, ModifierKind.Mul, healthMul, sourceId));
+            enemyStats.AddModifier(new Modifier(StatId.Enemy_MaxHealth, ModifierKind.Add, healthAdd, sourceId));
             enemyStats.AddModifier(new Modifier(StatId.Enemy_Attack, ModifierKind.Mul, attackMul, sourceId));
             enemyStats.AddModifier(new Modifier(StatId.Enemy_MoveSpeed, ModifierKind.Mul, moveMul, sourceId));
         }

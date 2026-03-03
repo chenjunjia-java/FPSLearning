@@ -15,10 +15,12 @@ namespace Unity.FPS.Roguelike.Stats
         [SerializeField] [Range(0f, 1f)] private float m_BaseCritChance = 0f;
         [SerializeField] [Min(1f)] private float m_BaseCritDamageMultiplier = 2f;
         [SerializeField] [Min(0.1f)] private float m_BaseMoveSpeedMultiplier = 1f;
+        [SerializeField] [Min(0.1f)] private float m_BaseDamageTakenMultiplier = 1f;
 
         private readonly List<Modifier> m_Modifiers = new List<Modifier>(32);
         private StatCache m_StatCache;
         private Health m_Health;
+        private Damageable m_Damageable;
         private bool m_Initialized;
 
         public event Action OnStatsChanged;
@@ -28,12 +30,14 @@ namespace Unity.FPS.Roguelike.Stats
         public float CritChanceFinal { get; private set; }
         public float CritDamageMultiplierFinal { get; private set; }
         public float MoveSpeedMultiplierFinal { get; private set; }
+        public float DamageTakenMultiplierFinal { get; private set; }
 
         public IReadOnlyList<Modifier> Modifiers => m_Modifiers;
 
         private void Awake()
         {
             m_Health = GetComponent<Health>();
+            m_Damageable = GetComponent<Damageable>();
             m_StatCache = new StatCache();
             InitializeBaseHealthIfNeeded();
             RebuildStats();
@@ -115,6 +119,7 @@ namespace Unity.FPS.Roguelike.Stats
             m_StatCache.SetBaseValue(StatId.Player_CritChance, m_BaseCritChance);
             m_StatCache.SetBaseValue(StatId.Player_CritDamage, m_BaseCritDamageMultiplier);
             m_StatCache.SetBaseValue(StatId.Player_MoveSpeed, m_BaseMoveSpeedMultiplier);
+            m_StatCache.SetBaseValue(StatId.Player_DamageTakenMultiplier, m_BaseDamageTakenMultiplier);
             m_StatCache.Rebuild(m_Modifiers);
 
             MaxHealthFinal = Mathf.Max(1f, m_StatCache.GetFinalValue(StatId.Player_MaxHealth));
@@ -122,8 +127,10 @@ namespace Unity.FPS.Roguelike.Stats
             CritChanceFinal = Mathf.Clamp01(m_StatCache.GetFinalValue(StatId.Player_CritChance));
             CritDamageMultiplierFinal = Mathf.Max(1f, m_StatCache.GetFinalValue(StatId.Player_CritDamage));
             MoveSpeedMultiplierFinal = Mathf.Max(0.1f, m_StatCache.GetFinalValue(StatId.Player_MoveSpeed));
+            DamageTakenMultiplierFinal = Mathf.Max(0.1f, m_StatCache.GetFinalValue(StatId.Player_DamageTakenMultiplier));
 
             ApplyMaxHealthRuntime(previousMaxHealth, isFirstBuild);
+            ApplyDamageTakenRuntime();
             OnStatsChanged?.Invoke();
         }
 
@@ -162,6 +169,16 @@ namespace Unity.FPS.Roguelike.Stats
 
             m_Health.MaxHealth = MaxHealthFinal;
             m_Health.CurrentHealth = Mathf.Clamp(MaxHealthFinal * previousRatio, 0f, MaxHealthFinal);
+        }
+
+        private void ApplyDamageTakenRuntime()
+        {
+            if (m_Damageable == null)
+            {
+                return;
+            }
+
+            m_Damageable.DamageMultiplier = DamageTakenMultiplierFinal;
         }
     }
 }

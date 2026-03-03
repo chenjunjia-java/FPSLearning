@@ -32,6 +32,7 @@ namespace Unity.FPS.Roguelike.Waves
 
         public event Action OnAllWavesCleared;
         public event Action<int, int> OnWaveStarted;
+        public event Action OnBossSpawned;
 
         public int CurrentWaveNumber => m_CurrentWaveIndex + 1;
         public int TotalWaveCount => m_Plan.Waves != null ? m_Plan.Waves.Length : 0;
@@ -203,6 +204,8 @@ namespace Unity.FPS.Roguelike.Waves
             }
 
             m_IsBossPhase = true;
+
+            OnBossSpawned?.Invoke();
 
             // Boss 阶段作为额外“第 N+1 波”广播，方便目标/UI 复用现有波次事件。
             int bossWaveNumber = TotalWaveCount + 1;

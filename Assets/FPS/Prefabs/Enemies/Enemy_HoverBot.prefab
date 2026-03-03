@@ -168,6 +168,9 @@ MonoBehaviour:
   m_GibPieceMass: 0.12
   m_GibLinearDrag: 0.1
   m_GibAngularDrag: 0.05
+  m_DeathCameraShakeIntensity: 1
+  m_DeathCameraShakeDuration: 0.2
+  m_DeathCameraShakeMaxDistance: 10
   LootPrefab: {fileID: 2529580269645609534, guid: 9973c412032becb4ca116ca08be62edf,
     type: 3}
   DropRate: 0.2

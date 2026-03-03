@@ -19,15 +19,17 @@ namespace Unity.FPS.Roguelike.Waves
             }
 
             var waves = new Wave[waveCount];
-            int stageBonus = Mathf.Max(0, stageIndex);
+            // 注意：本项目的 difficulty 已在关卡生成器侧做了“每 2 关 +1”的节流。
+            // 这里不再额外按 stageIndex 叠加，避免同一维度被重复加成导致曲线过陡。
+            int stageBonus = 0;
 
             for (int i = 0; i < waveCount; i++)
             {
                 float waveRamp = waveCount > 1 ? (float)i / (waveCount - 1) : 0f;
                 int count = baseEnemiesPerWave
-                            + Mathf.RoundToInt(d * enemiesPerWavePerDifficulty)
+                            + Mathf.FloorToInt(d * enemiesPerWavePerDifficulty * 0.5f)
                             + stageBonus
-                            + Mathf.RoundToInt(waveRamp * 2f);
+                            + Mathf.RoundToInt(waveRamp * 1f);
                 count = Mathf.Max(0, count);
                 waves[i] = new Wave
                 {

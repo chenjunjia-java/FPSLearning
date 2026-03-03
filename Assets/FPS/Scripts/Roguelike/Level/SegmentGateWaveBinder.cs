@@ -54,6 +54,15 @@ namespace Unity.FPS.Roguelike.Level
 
         private void OnEnable()
         {
+            // 重新启用时重置本段的运行时状态，避免上一轮流程残留导致“直接认为已经开始/已经打完”
+            m_HasStartedWaves = false;
+            if (m_RuntimeObjective != null && !m_Segment.IsBossSegment)
+            {
+                // 非 Boss 段在新一轮中重新创建目标，防止 UI 停留在上一关的最后一波
+                Destroy(m_RuntimeObjective);
+                m_RuntimeObjective = null;
+            }
+
             if (m_Segment == null)
             {
                 return;
@@ -74,6 +83,8 @@ namespace Unity.FPS.Roguelike.Level
                 waveController.OnAllWavesCleared += HandleAllWavesCleared;
                 waveController.OnWaveStarted -= HandleWaveStarted;
                 waveController.OnWaveStarted += HandleWaveStarted;
+                waveController.OnBossSpawned -= HandleBossSpawned;
+                waveController.OnBossSpawned += HandleBossSpawned;
             }
 
             if (m_EntranceDoorPlate != null)
@@ -102,6 +113,7 @@ namespace Unity.FPS.Roguelike.Level
             {
                 waveController.OnAllWavesCleared -= HandleAllWavesCleared;
                 waveController.OnWaveStarted -= HandleWaveStarted;
+                waveController.OnBossSpawned -= HandleBossSpawned;
             }
 
             if (m_EntranceDoorPlate != null)
@@ -222,6 +234,14 @@ namespace Unity.FPS.Roguelike.Level
             }
         }
 
+        private void HandleBossSpawned()
+        {
+            if (m_AudioDriver != null)
+            {
+                m_AudioDriver.HandleBossSpawned();
+            }
+        }
+
         private void EnsureStageObjective()
         {
             if (m_RuntimeObjective != null || m_Segment == null)
@@ -235,21 +255,20 @@ namespace Unity.FPS.Roguelike.Level
 
         private int ResolveStageNumber()
         {
-            if (m_LevelGenerator == null || m_LevelGenerator.SpawnedSegments == null)
+            if (m_LevelGenerator == null)
+            {
+                m_LevelGenerator = FindObjectOfType<RoguelikeLevelGenerator>();
+            }
+
+            if (m_LevelGenerator == null)
             {
                 return 1;
             }
 
-            var segments = m_LevelGenerator.SpawnedSegments;
-            for (int i = 0; i < segments.Count; i++)
-            {
-                if (segments[i] == m_Segment)
-                {
-                    return i + 1;
-                }
-            }
-
-            return 1;
+            // 使用关卡生成器当前段索引作为“第几关”的来源：
+            // CurrentSegmentIndex 从 0 开始计数，UI 显示从 1 开始。
+            int index = m_LevelGenerator.CurrentSegmentIndex;
+            return Mathf.Max(1, index + 1);
         }
 
         private void ResolveRunDifficulty(out float difficulty, out int stageIndex)
@@ -273,7 +292,7 @@ namespace Unity.FPS.Roguelike.Level
                 stageIndex = Mathf.Max(0, m_LevelGenerator.CurrentSegmentIndex);
             }
 
-            // 约定：每通过一个关卡 difficulty +1；默认与段索引同步。
+            // 约定：每通过 2 个关卡 difficulty +1（在关卡生成器侧节流），默认与段索引相关。
             difficulty = Mathf.Max(0, m_LevelGenerator.CurrentDifficulty);
         }
     }

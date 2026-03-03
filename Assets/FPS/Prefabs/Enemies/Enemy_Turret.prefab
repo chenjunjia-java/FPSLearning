@@ -303,6 +303,9 @@ MonoBehaviour:
   m_GibPieceMass: 0.12
   m_GibLinearDrag: 0.1
   m_GibAngularDrag: 0.05
+  m_DeathCameraShakeIntensity: 5
+  m_DeathCameraShakeDuration: 1
+  m_DeathCameraShakeMaxDistance: 20
   LootPrefab: {fileID: 0}
   DropRate: 0
   PathReachingRangeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -397,7 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CompassMarkerPrefab: {fileID: 4125838790012652590, guid: 513785daf84f2a243b0cda079e6835cd,
     type: 3}
-  TextDirection: 
+  TextDirection: Boss
 --- !u!195 &3444686158330356048
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -444,8 +447,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65d10e31d55ccac4a83ec4acacae3162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BaseMaxHealth: 1000
-  m_BaseAttackDamage: 10
+  m_BaseMaxHealth: 2000
+  m_BaseAttackDamage: 20
   m_BaseAttackMultiplier: 1
   m_BaseAttackSpeedMultiplier: 1
   m_BaseMoveSpeedMultiplier: 1
@@ -461,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b0ce1bb69c96b49a7ac1098a7f5796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageMultiplier: 0.7
+  DamageMultiplier: 0.6
   SensibilityToSelfdamage: 0.5
 --- !u!1 &2201913640410082181
 GameObject:
@@ -545,6 +548,7 @@ MonoBehaviour:
   KnownTargetTimeout: 4
   MinDistanceFromTarget: 0
   Animator: {fileID: 0}
+  m_IgnoreObstaclesForDetection: 1
 --- !u!1 &7448957880145452174
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,8 +792,8 @@ MonoBehaviour:
   DelayBetweenShots: 0.06
   BulletSpreadAngle: 0
   BulletsPerShot: 1
-  UseTripleShot: 0
   TripleShotAngleOffset: 20
+  TrajectoryRandomSpreadAngle: 0
   RecoilForce: 1
   AimZoomRatio: 1
   AimOffset: {x: 0, y: 0, z: 0}

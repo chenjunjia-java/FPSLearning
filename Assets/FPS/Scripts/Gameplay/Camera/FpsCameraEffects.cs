@@ -24,7 +24,7 @@ namespace Unity.FPS.Gameplay
 
         [Header("Shake")]
         [Tooltip("Noise frequency for shake")]
-        [SerializeField] float m_ShakeFrequency = 40f;
+        [SerializeField] float m_ShakeFrequency = 80f;
 
         [Tooltip("Shake position multiplier in meters")]
         [SerializeField] float m_PositionShakeMultiplier = 0.05f;

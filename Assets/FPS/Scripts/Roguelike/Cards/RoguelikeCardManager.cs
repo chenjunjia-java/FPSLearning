@@ -16,10 +16,21 @@ namespace Unity.FPS.Roguelike.Cards
         [SerializeField] private RoguelikeAffixPoolSO m_AffixPool;
         [SerializeField] [Min(1)] private int m_RewardOptionCount = 3;
 
+        [Header("Dynamic Rarity (by cleared segments)")]
+        [Tooltip("开启后，rare/epic 的抽到概率会随本局已通关关卡(=本局已触发奖励次数)逐渐提高。")]
+        [SerializeField] private bool m_EnableDynamicRarity = true;
+        [Tooltip("通关次数达到该值后，提升效果封顶（曲线输入 t = cleared/max）。")]
+        [SerializeField] [Min(1)] private int m_MaxClearCountForScaling = 10;
+        [Tooltip("t=0..1 -> 权重倍率。1 表示不变；>1 表示提高 rare 权重。")]
+        [SerializeField] private AnimationCurve m_RareWeightMultiplierByProgress = AnimationCurve.Linear(0f, 1f, 1f, 1.6f);
+        [Tooltip("t=0..1 -> 权重倍率。1 表示不变；>1 表示提高 epic 权重。")]
+        [SerializeField] private AnimationCurve m_EpicWeightMultiplierByProgress = AnimationCurve.Linear(0f, 1f, 1f, 2.4f);
+
         [Header("References")]
         [SerializeField] private RoguelikeCardSelectionUI m_SelectionUI;
         [SerializeField] private RoguelikePlayerStats m_PlayerStats;
         [SerializeField] private PlayerWeaponsManager m_WeaponsManager;
+        [SerializeField] private RoguelikeLevelGenerator m_LevelGenerator;
 
         private readonly List<CandidateEntry> m_CandidateBuffer = new List<CandidateEntry>(64);
         private readonly List<CandidateEntry> m_DrawBuffer = new List<CandidateEntry>(64);
@@ -27,6 +38,7 @@ namespace Unity.FPS.Roguelike.Cards
         private readonly List<RoguelikeCardPresentationData> m_PresentationData = new List<RoguelikeCardPresentationData>(4);
         private readonly HashSet<string> m_PickedUniqueAffixIds = new HashSet<string>();
         private Action m_OnSelectionResolved;
+        private int m_ClearedSegmentRewardCountThisRun;
 
         public bool IsSelectionInProgress { get; private set; }
 
@@ -36,6 +48,7 @@ namespace Unity.FPS.Roguelike.Cards
         public void ClearPickedUniqueAffixIds()
         {
             m_PickedUniqueAffixIds.Clear();
+            m_ClearedSegmentRewardCountThisRun = 0;
         }
 
         private void Awake()
@@ -54,6 +67,11 @@ namespace Unity.FPS.Roguelike.Cards
             {
                 m_PlayerStats = FindObjectOfType<RoguelikePlayerStats>();
             }
+
+            if (m_LevelGenerator == null)
+            {
+                m_LevelGenerator = FindObjectOfType<RoguelikeLevelGenerator>();
+            }
         }
 
         public bool RequestRewardForSegment(LevelSegment segment, Action onSelectionResolved)
@@ -71,18 +89,51 @@ namespace Unity.FPS.Roguelike.Cards
 
             m_OnSelectionResolved = onSelectionResolved;
 
-            if (!BuildOptions())
+            int clearedCountForThisReward = ResolveClearedCountForReward(segment);
+            if (!BuildOptions(clearedCountForThisReward))
             {
                 ResolveSelection();
                 return false;
             }
 
+            // 计数只增不减，确保曲线输入单调递增。
+            m_ClearedSegmentRewardCountThisRun = Mathf.Max(m_ClearedSegmentRewardCountThisRun, clearedCountForThisReward);
             IsSelectionInProgress = true;
             m_SelectionUI.ShowSelection(m_PresentationData, HandleCardSelected);
             return true;
         }
 
-        private bool BuildOptions()
+        private int ResolveClearedCountForReward(LevelSegment segment)
+        {
+            // 默认用“已触发奖励次数 + 1”作为通关次数（容错：即使拿不到关卡生成器也能工作）。
+            int fallback = m_ClearedSegmentRewardCountThisRun + 1;
+
+            if (segment == null)
+            {
+                return Mathf.Max(1, fallback);
+            }
+
+            if (m_LevelGenerator == null)
+            {
+                m_LevelGenerator = FindObjectOfType<RoguelikeLevelGenerator>();
+            }
+
+            if (m_LevelGenerator == null)
+            {
+                return Mathf.Max(1, fallback);
+            }
+
+            int index = m_LevelGenerator.GetSegmentIndex(segment);
+            if (index >= 0)
+            {
+                return Mathf.Max(1, index + 1);
+            }
+
+            // 退化：如果列表里找不到 segment，就用当前段索引。
+            return Mathf.Max(1, m_LevelGenerator.CurrentSegmentIndex + 1);
+        }
+
+        private bool BuildOptions(int clearedCountForThisReward)
         {
             m_RuntimeOptions.Clear();
             m_PresentationData.Clear();
@@ -109,7 +160,7 @@ namespace Unity.FPS.Roguelike.Cards
                     }
                 }
 
-                int drawIndex = PickWeightedIndex(m_DrawBuffer);
+                int drawIndex = PickWeightedIndex(m_DrawBuffer, clearedCountForThisReward);
                 if (drawIndex < 0)
                 {
                     drawIndex = 0;
@@ -169,7 +220,7 @@ namespace Unity.FPS.Roguelike.Cards
         /// <summary>
         /// 按卡池稀有度权重从候选中随机一个索引。
         /// </summary>
-        private int PickWeightedIndex(List<CandidateEntry> candidates)
+        private int PickWeightedIndex(List<CandidateEntry> candidates, int clearedCountForThisReward)
         {
             if (candidates == null || candidates.Count == 0 || m_AffixPool == null)
             {
@@ -179,7 +230,7 @@ namespace Unity.FPS.Roguelike.Cards
             float totalWeight = 0f;
             for (int i = 0; i < candidates.Count; i++)
             {
-                totalWeight += m_AffixPool.GetWeightForRarity(candidates[i].Affix.Rarity);
+                totalWeight += GetRuntimeWeightForRarity(candidates[i].Affix.Rarity, clearedCountForThisReward);
             }
 
             if (totalWeight <= 0f)
@@ -190,7 +241,7 @@ namespace Unity.FPS.Roguelike.Cards
             float roll = UnityEngine.Random.Range(0f, totalWeight);
             for (int i = 0; i < candidates.Count; i++)
             {
-                float w = m_AffixPool.GetWeightForRarity(candidates[i].Affix.Rarity);
+                float w = GetRuntimeWeightForRarity(candidates[i].Affix.Rarity, clearedCountForThisReward);
                 if (roll < w)
                 {
                     return i;
@@ -199,6 +250,32 @@ namespace Unity.FPS.Roguelike.Cards
             }
 
             return candidates.Count - 1;
+        }
+
+        private float GetRuntimeWeightForRarity(CardRarity rarity, int clearedCountForThisReward)
+        {
+            float baseWeight = m_AffixPool != null ? m_AffixPool.GetWeightForRarity(rarity) : 0f;
+            if (!m_EnableDynamicRarity || baseWeight <= 0f)
+            {
+                return baseWeight;
+            }
+
+            float t = m_MaxClearCountForScaling > 0
+                ? Mathf.Clamp01(clearedCountForThisReward / (float)m_MaxClearCountForScaling)
+                : 1f;
+
+            float multiplier = 1f;
+            switch (rarity)
+            {
+                case CardRarity.Rare:
+                    multiplier = m_RareWeightMultiplierByProgress != null ? m_RareWeightMultiplierByProgress.Evaluate(t) : 1f;
+                    break;
+                case CardRarity.Epic:
+                    multiplier = m_EpicWeightMultiplierByProgress != null ? m_EpicWeightMultiplierByProgress.Evaluate(t) : 1f;
+                    break;
+            }
+
+            return baseWeight * Mathf.Max(0f, multiplier);
         }
 
         private void BuildCandidates()
@@ -289,7 +366,17 @@ namespace Unity.FPS.Roguelike.Cards
                 return;
             }
 
-            Modifier modifier = new Modifier(option.Affix.StatId, option.Affix.ModifierKind, option.Value, sourceId);
+            float modifierValue = option.Value;
+
+            // 特殊处理：减伤词条按“减少随机百分比”叠加
+            // 配置的 ValueRange 表示减少百分比（0.1~0.2），实际乘数 = 1 - value。
+            if (option.Affix.StatId == StatId.Player_DamageTakenMultiplier &&
+                option.Affix.ModifierKind == ModifierKind.Mul)
+            {
+                modifierValue = 1f - Mathf.Clamp01(modifierValue);
+            }
+
+            Modifier modifier = new Modifier(option.Affix.StatId, option.Affix.ModifierKind, modifierValue, sourceId);
 
             if (option.Affix.Target == RoguelikeAffixTarget.Player)
             {

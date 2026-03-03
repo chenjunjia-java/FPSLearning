@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.FPS.Game;
 using Unity.FPS.GameFramework;
+using Unity.FPS.Gameplay;
 using Unity.FPS.Roguelike.Stats;
 using UnityEngine;
 using UnityEngine.AI;
@@ -91,6 +92,16 @@ namespace Unity.FPS.AI
         [SerializeField] [Min(0.01f)] private float m_GibPieceMass = 0.12f;
         [SerializeField] [Min(0f)] private float m_GibLinearDrag = 0.1f;
         [SerializeField] [Min(0f)] private float m_GibAngularDrag = 0.05f;
+
+        [Header("Death Camera Shake")]
+        [Tooltip("普通敌人死亡时相机震动强度，0 表示不震动（爆炸怪由 ExploderDeathSequence 控制）")]
+        [SerializeField] [Min(0f)] private float m_DeathCameraShakeIntensity = 0f;
+
+        [Tooltip("死亡相机震动持续时间")]
+        [SerializeField] [Min(0.01f)] private float m_DeathCameraShakeDuration = 0.2f;
+
+        [Tooltip("超过此距离不触发震动，0 表示不限制")]
+        [SerializeField] [Min(0f)] private float m_DeathCameraShakeMaxDistance = 0f;
 
         [Header("Loot")] [Tooltip("The object this enemy can drop when dying")]
         public GameObject LootPrefab;
@@ -477,6 +488,7 @@ namespace Unity.FPS.AI
 
             SpawnDeathGibs();
             HideDeadBodyImmediate();
+            TriggerDeathCameraShake();
 
             // spawn a particle system when dying
             if (DeathVfx != null)
@@ -531,6 +543,42 @@ namespace Unity.FPS.AI
                 CancelInvoke(nameof(DespawnOrDestroy));
                 Invoke(nameof(DespawnOrDestroy), DeathDuration);
             }
+        }
+
+        void TriggerDeathCameraShake()
+        {
+            if (m_DeathCameraShakeIntensity <= 0f || m_DeathCameraShakeDuration <= 0f)
+            {
+                return;
+            }
+
+            if (m_ActorsManager == null)
+            {
+                return;
+            }
+
+            GameObject player = m_ActorsManager.Player;
+            if (player == null)
+            {
+                return;
+            }
+
+            if (m_DeathCameraShakeMaxDistance > 0.001f)
+            {
+                float sqrDist = (player.transform.position - transform.position).sqrMagnitude;
+                if (sqrDist > m_DeathCameraShakeMaxDistance * m_DeathCameraShakeMaxDistance)
+                {
+                    return;
+                }
+            }
+
+            var cameraRig = player.GetComponent<FpsCameraRig>();
+            if (cameraRig == null)
+            {
+                return;
+            }
+
+            cameraRig.AddShake(m_DeathCameraShakeIntensity, m_DeathCameraShakeDuration);
         }
 
         void HideWorldspaceHealthBarImmediate()

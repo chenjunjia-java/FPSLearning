@@ -47,8 +47,15 @@ namespace Unity.FPS.Roguelike.Objectives
                 return;
             }
 
-            string prefix = isBossStage ? "Boss wave" : "Current wave";
-            string counter = string.Format("{0} {1}/{2}", prefix, currentWaveNumber, totalWaveCount);
+            // 显示为“当前波次 / 剩余波次”
+            int remainingWaves = Mathf.Max(0, totalWaveCount - currentWaveNumber);
+            string prefix = isBossStage ? "Boss waves" : "Stage waves";
+            string counter = string.Format("{0}: {1}/{2} (remaining: {3})",
+                prefix,
+                currentWaveNumber,
+                totalWaveCount,
+                remainingWaves);
+
             UpdateObjective(string.Empty, counter, string.Empty);
         }
 

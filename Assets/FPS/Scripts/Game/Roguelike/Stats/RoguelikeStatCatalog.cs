@@ -44,6 +44,7 @@ namespace Unity.FPS.Roguelike.Stats
             StatId.Player_MaxShield,
             StatId.Player_ShieldRegen,
             StatId.Player_PickupHeal,
+            StatId.Player_DamageTakenMultiplier,
         };
 
         private static readonly StatId[] s_MobilityStats =

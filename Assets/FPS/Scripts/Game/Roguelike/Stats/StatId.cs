@@ -71,5 +71,8 @@ namespace Unity.FPS.Roguelike.Stats
         Weapon_BurstShotCount = 47,
         Enemy_AttackSpeed = 48,
         Weapon_TrajectoryCount = 49,
+
+        // Incoming damage (bridged to Damageable)
+        Player_DamageTakenMultiplier = 50,
     }
 }

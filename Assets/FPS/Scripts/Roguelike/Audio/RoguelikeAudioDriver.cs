@@ -28,24 +28,36 @@ namespace Unity.FPS.Roguelike.Audio
 
         private void OnEnable()
         {
+            // 确保在玩家开始游戏时就完成音频系统与 BGM 的预热，
+            // 避免首次进入关卡门时才触发大块解压造成的卡顿。
+            AudioRoot.Instance.BootstrapServices();
+            PreloadMusicSet(m_NonCombatMusicSet);
+            PreloadMusicSet(m_CombatMusicSet);
+            PreloadMusicSet(m_BossMusicSet);
+
             if (!m_PlayNonCombatOnEnable)
             {
                 return;
             }
 
-            AudioRoot.Instance.BootstrapServices();
             TryPlaySet(m_NonCombatMusicSet);
         }
 
+        /// <summary>
+        /// 玩家进入关卡门时调用，统一切换为战斗 BGM。
+        /// Boss 段也在进门时先播战斗曲，等 Boss 实际生成时再由 HandleBossSpawned 切到 Boss 曲。
+        /// </summary>
         public void HandleSegmentEnterGateTriggered()
         {
-            if (m_Segment != null && m_Segment.IsBossSegment)
-            {
-                TryPlaySet(m_BossMusicSet);
-                return;
-            }
-
             TryPlaySet(m_CombatMusicSet);
+        }
+
+        /// <summary>
+        /// Boss 实际生成时调用，切换为 Boss BGM。
+        /// </summary>
+        public void HandleBossSpawned()
+        {
+            TryPlaySet(m_BossMusicSet);
         }
 
         public void HandleSegmentCleared()
@@ -66,6 +78,32 @@ namespace Unity.FPS.Roguelike.Audio
             }
 
             MusicPlayer.PlaySet(musicSet, m_DefaultCrossfadeSeconds);
+        }
+
+        private static void PreloadMusicSet(MusicSetSO musicSet)
+        {
+            if (musicSet == null)
+            {
+                return;
+            }
+
+            PreloadClip(musicSet.Wind);
+            PreloadClip(musicSet.Noise);
+            PreloadClip(musicSet.Environment);
+            PreloadClip(musicSet.Main);
+        }
+
+        private static void PreloadClip(AudioClip clip)
+        {
+            if (clip == null)
+            {
+                return;
+            }
+
+            if (clip.loadState == AudioDataLoadState.Unloaded)
+            {
+                clip.LoadAudioData();
+            }
         }
     }
 }

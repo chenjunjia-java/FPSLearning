@@ -49,9 +49,10 @@ namespace Unity.FPS.Roguelike.Level
         public int CurrentSegmentIndex => m_CurrentSegmentIndex;
 
         /// <summary>
-        /// 全局难度（从 0 开始），默认与 <see cref="CurrentSegmentIndex"/> 同步。
+        /// 全局难度（从 0 开始）。
+        /// 为了让曲线更平滑：每通过 2 关难度才 +1。
         /// </summary>
-        public int CurrentDifficulty => m_CurrentSegmentIndex;
+        public int CurrentDifficulty => m_CurrentSegmentIndex / 2;
 
         public int GetSegmentIndex(LevelSegment segment)
         {
@@ -415,11 +416,18 @@ namespace Unity.FPS.Roguelike.Level
 
             Transform nextRoot = nextSegment.transform;
 
-            Quaternion deltaRot = prevExit.rotation * Quaternion.Inverse(nextEnter.rotation);
-            nextRoot.rotation = deltaRot * nextRoot.rotation;
+            // 1. 先让下一段的入口朝向对齐到上一段的出口朝向
+            //    这里用 forward 向量对齐，保持世界空间的“行进方向”一致，
+            //    无论入口/出口在 prefab 里是 90° 还是其他角度，都能正确拐弯。
+            Quaternion rotationOffset = Quaternion.FromToRotation(nextEnter.forward, prevExit.forward);
+            nextRoot.rotation = rotationOffset * nextRoot.rotation;
 
-            Vector3 positionOffset = nextRoot.position - nextEnter.position;
-            nextRoot.position = prevExit.position + positionOffset;
+            // 2. 旋转后，重新取一次入口与根节点的位置，用它们的相对偏移来平移，
+            //    确保入口点与上一段出口点完全重合在同一条直线上。
+            Vector3 newEnterWorldPos = nextEnter.position;
+            Vector3 newRootWorldPos = nextRoot.position;
+            Vector3 enterToRoot = newRootWorldPos - newEnterWorldPos;
+            nextRoot.position = prevExit.position + enterToRoot;
         }
 
         private void RegisterDoorCallbacks(LevelSegment segment, bool closeEntranceDoor = true)
