@@ -156,12 +156,14 @@ namespace Unity.FPS.Gameplay
             transform.position += m_ProjectileBase.InheritedMuzzleVelocity * Time.deltaTime;
 
             float ownerAttackMultiplier = 1f;
+            float playerAttackFlatAdd = 0f;
             bool useEnemyAttackPower = false;
             if (m_ProjectileBase.Owner != null)
             {
                 if (m_ProjectileBase.Owner.TryGetComponent<RoguelikePlayerStats>(out var playerStats))
                 {
                     ownerAttackMultiplier = playerStats.AttackMultiplierFinal;
+                    playerAttackFlatAdd = playerStats.AttackFlatAddFinal;
 
                     if (Random.value < playerStats.CritChanceFinal)
                     {
@@ -184,11 +186,13 @@ namespace Unity.FPS.Gameplay
             }
 
             float weaponDamageMultiplier = 1f;
+            float weaponDamageFlatAdd = 0f;
             m_RemainingPierces = 0;
             var sourceWeapon = m_ProjectileBase.SourceWeapon;
             if (sourceWeapon != null && sourceWeapon.TryGetComponent<RoguelikeWeaponStatsRuntime>(out var weaponStats))
             {
                 weaponDamageMultiplier = weaponStats.DamageMultiplierFinal;
+                weaponDamageFlatAdd = weaponStats.DamageFlatAddFinal;
                 if (sourceWeapon.ShootType == WeaponShootType.Automatic)
                 {
                     m_RemainingBounces = weaponStats.ProjectileBouncesFinal;
@@ -200,6 +204,8 @@ namespace Unity.FPS.Gameplay
                 }
             }
 
+            // flat 加伤先加到基础伤害上，再乘倍率：(base + weaponFlatAdd + playerFlatAdd) * mult
+            m_RuntimeDamage += weaponDamageFlatAdd + playerAttackFlatAdd;
             if (useEnemyAttackPower)
             {
                 m_RuntimeDamage *= weaponDamageMultiplier;

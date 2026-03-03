@@ -25,6 +25,8 @@ namespace Unity.FPS.Roguelike.Stats
         private bool m_Initialized;
 
         public float DamageMultiplierFinal { get; private set; }
+        /// <summary> 武器 flat 加伤（与倍率分开，在子弹上先加再乘倍率）。 </summary>
+        public float DamageFlatAddFinal { get; private set; }
         public int AdditionalProjectilesFinal { get; private set; }
         public int ProjectileBouncesFinal { get; private set; }
         public int PierceCountFinal { get; private set; }
@@ -114,6 +116,7 @@ namespace Unity.FPS.Roguelike.Stats
         public void RebuildStats()
         {
             m_StatCache.SetBaseValue(StatId.Weapon_Damage, m_BaseDamageMultiplier);
+            m_StatCache.SetBaseValue(StatId.Weapon_DamageFlatAdd, 0f);
             m_StatCache.SetBaseValue(StatId.Weapon_AdditionalProjectiles, m_BaseAdditionalProjectiles);
             m_StatCache.SetBaseValue(StatId.Weapon_ProjectileBounces, m_BaseProjectileBounces);
             m_StatCache.SetBaseValue(StatId.Weapon_PierceCount, m_BasePierceCount);
@@ -125,6 +128,7 @@ namespace Unity.FPS.Roguelike.Stats
             m_StatCache.Rebuild(m_Modifiers);
 
             DamageMultiplierFinal = Mathf.Max(0f, m_StatCache.GetFinalValue(StatId.Weapon_Damage));
+            DamageFlatAddFinal = Mathf.Max(0f, m_StatCache.GetFinalValue(StatId.Weapon_DamageFlatAdd));
             AdditionalProjectilesFinal = Mathf.Max(0, Mathf.FloorToInt(m_StatCache.GetFinalValue(StatId.Weapon_AdditionalProjectiles)));
             ProjectileBouncesFinal = Mathf.Max(0, Mathf.FloorToInt(m_StatCache.GetFinalValue(StatId.Weapon_ProjectileBounces)));
             PierceCountFinal = Mathf.Max(0, Mathf.FloorToInt(m_StatCache.GetFinalValue(StatId.Weapon_PierceCount)));

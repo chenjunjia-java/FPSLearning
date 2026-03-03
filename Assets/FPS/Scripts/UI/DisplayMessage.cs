@@ -1,46 +1,12 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Unity.FPS.UI
 {
+    /// <summary>
+    /// 占位组件，实际消息由 DisplayMessageManager + DisplayMessageEvent 处理。
+    /// 仍挂在部分预制体上以保持引用兼容。
+    /// </summary>
     public class DisplayMessage : MonoBehaviour
     {
-        //[Tooltip("The text that will be displayed")] [TextArea]
-        //public string message;
-        //
-        //[Tooltip("Prefab for the message")] public GameObject messagePrefab;
-        //
-        //[Tooltip("Delay before displaying the message")]
-        //public float delayBeforeShowing;
-        //
-        //float m_InitTime = float.NegativeInfinity;
-        //bool m_WasDisplayed;
-        //DisplayMessageManager m_DisplayMessageManager;
-        //
-        //void Start()
-        //{
-        //    m_InitTime = Time.time;
-        //    m_DisplayMessageManager = FindObjectOfType<DisplayMessageManager>();
-        //    DebugUtility.HandleErrorIfNullFindObject<DisplayMessageManager, DisplayMessage>(m_DisplayMessageManager,
-        //        this);
-        //}
-        //
-        // Update is called once per frame
-        //void Update()
-        //{
-        //    if (m_WasDisplayed)
-        //        return;
-        //
-        //    if (Time.time - m_InitTime > delayBeforeShowing)
-        //    {
-        //        var messageInstance = Instantiate(messagePrefab, m_DisplayMessageManager.DisplayMessageRect);
-        //        var notification = messageInstance.GetComponent<NotificationToast>();
-        //        if (notification)
-        //        {
-        //            notification.Initialize(message);
-        //        }
-        //
-        //        m_WasDisplayed = true;
-        //    }
-        //}
     }
 }

@@ -15,14 +15,15 @@ MonoBehaviour:
   m_Id: weapon_damage_mul
   m_DisplayName: Weapon Damage Mul
   m_DescriptionTemplate: Weapon damage x{value}
-  m_IconUiPrefab: {fileID: 0}
+  m_Icon: {fileID: 0}
   m_Rarity: 1
+  m_EffectType: 0
   m_Target: 1
   m_StatId: 5
   m_ModifierKind: 1
   m_ValueRange:
-    Min: 1.1
-    Max: 1.35
+    Min: 1.05
+    Max: 1.1
   m_ValueDisplayMode: 0
   m_AllowedShootTypes: -1
   m_AllowDuplicateInRun: 1

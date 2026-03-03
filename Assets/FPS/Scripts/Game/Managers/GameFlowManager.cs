@@ -85,6 +85,11 @@ namespace Unity.FPS.Game
             EndGame(false);
         }
 
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
+
         void EndGame(bool win, string winMessageOverride = null)
         {
             if (GameIsEnding)
@@ -112,14 +117,6 @@ namespace Unity.FPS.Game
                     audioSource.outputAudioMixerGroup = AudioUtility.GetAudioGroup(victoryEntry.Group);
                     audioSource.PlayScheduled(AudioSettings.dspTime + DelayBeforeWinMessage);
                 }
-
-                // create a game message
-                //var message = Instantiate(WinGameMessagePrefab).GetComponent<DisplayMessage>();
-                //if (message)
-                //{
-                //    message.delayBeforeShowing = delayBeforeWinMessage;
-                //    message.GetComponent<Transform>().SetAsLastSibling();
-                //}
 
                 DisplayMessageEvent displayMessage = Events.DisplayMessageEvent;
                 displayMessage.Message = string.IsNullOrEmpty(winMessageOverride) ? WinGameMessage : winMessageOverride;

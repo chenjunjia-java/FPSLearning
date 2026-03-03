@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e3253b843c3bad84ea4173a2f5c76543, type: 2}
   - {fileID: 11400000, guid: c2000000000000000000000000000002, type: 2}
   - {fileID: 11400000, guid: c3000000000000000000000000000003, type: 2}
+  - {fileID: 11400000, guid: 5f1c2a4b8d9347f9b3b6c2d9a7e3f1c2, type: 2}
   - {fileID: 11400000, guid: 23c4b1e63dd7a264180377cca45b9eaf, type: 2}
   - {fileID: 11400000, guid: 8c2c2e2f11f043f4a3b35d2d7b1b6f6a, type: 2}
   - {fileID: 11400000, guid: c4000000000000000000000000000004, type: 2}
@@ -28,9 +29,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c5000000000000000000000000000005, type: 2}
   - {fileID: 11400000, guid: c6000000000000000000000000000006, type: 2}
   - {fileID: 11400000, guid: c9000000000000000000000000000009, type: 2}
+  - {fileID: 11400000, guid: c7649a22ae198204ca08d83b858bb760, type: 2}
   - {fileID: 11400000, guid: cb00000000000000000000000000000b, type: 2}
   - {fileID: 11400000, guid: 97d9eb585f9a2814ca8f526eeffa13e5, type: 2}
-  - {fileID: 11400000, guid: 5f1c2a4b8d9347f9b3b6c2d9a7e3f1c2, type: 2}
   m_RarityWeights:
   - Rarity: 0
     Weight: 10

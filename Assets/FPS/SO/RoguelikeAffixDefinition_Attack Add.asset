@@ -19,7 +19,7 @@ MonoBehaviour:
   m_Rarity: 0
   m_EffectType: 0
   m_Target: 0
-  m_StatId: 1
+  m_StatId: 52
   m_ModifierKind: 0
   m_ValueRange:
     Min: 5

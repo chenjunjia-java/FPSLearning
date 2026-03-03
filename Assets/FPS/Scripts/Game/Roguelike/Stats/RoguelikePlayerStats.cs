@@ -27,6 +27,8 @@ namespace Unity.FPS.Roguelike.Stats
 
         public float MaxHealthFinal { get; private set; }
         public float AttackMultiplierFinal { get; private set; }
+        /// <summary> 玩家 flat 加伤（与倍率分开，在子弹上先加再乘倍率）。 </summary>
+        public float AttackFlatAddFinal { get; private set; }
         public float CritChanceFinal { get; private set; }
         public float CritDamageMultiplierFinal { get; private set; }
         public float MoveSpeedMultiplierFinal { get; private set; }
@@ -116,6 +118,7 @@ namespace Unity.FPS.Roguelike.Stats
 
             m_StatCache.SetBaseValue(StatId.Player_MaxHealth, m_BaseMaxHealth);
             m_StatCache.SetBaseValue(StatId.Player_Attack, m_BaseAttackMultiplier);
+            m_StatCache.SetBaseValue(StatId.Player_AttackFlatAdd, 0f);
             m_StatCache.SetBaseValue(StatId.Player_CritChance, m_BaseCritChance);
             m_StatCache.SetBaseValue(StatId.Player_CritDamage, m_BaseCritDamageMultiplier);
             m_StatCache.SetBaseValue(StatId.Player_MoveSpeed, m_BaseMoveSpeedMultiplier);
@@ -124,6 +127,7 @@ namespace Unity.FPS.Roguelike.Stats
 
             MaxHealthFinal = Mathf.Max(1f, m_StatCache.GetFinalValue(StatId.Player_MaxHealth));
             AttackMultiplierFinal = Mathf.Max(0f, m_StatCache.GetFinalValue(StatId.Player_Attack));
+            AttackFlatAddFinal = Mathf.Max(0f, m_StatCache.GetFinalValue(StatId.Player_AttackFlatAdd));
             CritChanceFinal = Mathf.Clamp01(m_StatCache.GetFinalValue(StatId.Player_CritChance));
             CritDamageMultiplierFinal = Mathf.Max(1f, m_StatCache.GetFinalValue(StatId.Player_CritDamage));
             MoveSpeedMultiplierFinal = Mathf.Max(0.1f, m_StatCache.GetFinalValue(StatId.Player_MoveSpeed));

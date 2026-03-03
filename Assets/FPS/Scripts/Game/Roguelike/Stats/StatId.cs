@@ -15,6 +15,8 @@ namespace Unity.FPS.Roguelike.Stats
 
         // Weapon core
         Weapon_Damage = 5,
+        /// <summary> 武器 flat 加伤（加到基础伤害上再乘倍率），与 Weapon_Damage 倍率分开。 </summary>
+        Weapon_DamageFlatAdd = 51,
         Weapon_AdditionalProjectiles = 6,
         Weapon_ProjectileBounces = 7,
         Weapon_MaxAmmo = 8,
@@ -74,5 +76,8 @@ namespace Unity.FPS.Roguelike.Stats
 
         // Incoming damage (bridged to Damageable)
         Player_DamageTakenMultiplier = 50,
+
+        /// <summary> 玩家 flat 加伤（加到基础伤害上再乘倍率），与 Player_Attack 倍率分开。 </summary>
+        Player_AttackFlatAdd = 52,
     }
 }

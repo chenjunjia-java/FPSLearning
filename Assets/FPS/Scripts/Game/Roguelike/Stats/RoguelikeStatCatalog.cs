@@ -17,6 +17,7 @@ namespace Unity.FPS.Roguelike.Stats
         private static readonly StatId[] s_OutputStats =
         {
             StatId.Weapon_Damage,
+            StatId.Weapon_DamageFlatAdd,
             StatId.Weapon_AdditionalProjectiles,
             StatId.Weapon_ProjectileBounces,
             StatId.Weapon_FireRate,

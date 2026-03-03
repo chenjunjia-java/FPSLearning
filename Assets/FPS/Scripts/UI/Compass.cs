@@ -95,9 +95,27 @@ namespace Unity.FPS.UI
 
         public void RegisterCompassElement(Transform element, CompassMarker marker)
         {
-            marker.transform.SetParent(CompasRect);
+            // 防止同一 Transform 重复注册（如跨关卡时多次初始化）
+            if (m_ElementsDictionnary.ContainsKey(element))
+                UnregisterCompassElement(element);
+            // 主角只保留一个点：若当前注册的是玩家或其子物体，先移除所有已有的“玩家”相关标记（避免每关新建子物体导致多个主角点）
+            if (m_PlayerTransform != null && (element == m_PlayerTransform || element.IsChildOf(m_PlayerTransform)))
+                RemoveExistingPlayerMarkers();
 
+            marker.transform.SetParent(CompasRect);
             m_ElementsDictionnary.Add(element, marker);
+        }
+
+        void RemoveExistingPlayerMarkers()
+        {
+            m_ToRemoveBuffer.Clear();
+            foreach (var kv in m_ElementsDictionnary)
+            {
+                if (kv.Key == m_PlayerTransform || kv.Key.IsChildOf(m_PlayerTransform))
+                    m_ToRemoveBuffer.Add(kv.Key);
+            }
+            for (int i = 0; i < m_ToRemoveBuffer.Count; i++)
+                UnregisterCompassElement(m_ToRemoveBuffer[i]);
         }
 
         public void UnregisterCompassElement(Transform element)

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f3421cdff3ac7e47b8e85e0b08ecd5c, type: 3}
-  m_Name: RoguelikeAffixDefinition_Weapon_MaxAmmo_Add
+  m_Name: RoguelikeAffixDefinition_Weapon_MaxAmmo_Add_ShotGun
   m_EditorClassIdentifier: 
-  m_Id: weapon_max_ammo_add
+  m_Id: weapon_max_ammo_add_shotgun
   m_DisplayName: Max Ammo
-  m_DescriptionTemplate: Blaster Max ammo +{value}
+  m_DescriptionTemplate: Shotgun Max ammo +{value}
   m_Icon: {fileID: 0}
   m_Rarity: 1
   m_EffectType: 0
@@ -22,8 +22,8 @@ MonoBehaviour:
   m_StatId: 8
   m_ModifierKind: 0
   m_ValueRange:
-    Min: 5
-    Max: 15
+    Min: 1
+    Max: 4
   m_ValueDisplayMode: 1
-  m_AllowedShootTypes: 2
+  m_AllowedShootTypes: 1
   m_AllowDuplicateInRun: 1
