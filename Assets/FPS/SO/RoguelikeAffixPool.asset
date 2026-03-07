@@ -36,6 +36,6 @@ MonoBehaviour:
   - Rarity: 0
     Weight: 10
   - Rarity: 1
-    Weight: 5
+    Weight: 6
   - Rarity: 2
-    Weight: 3
+    Weight: 8
